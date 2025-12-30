@@ -19,25 +19,36 @@ import {
   Image,
   Archive
 } from 'lucide-react';
-import { useBusquedaDocumentos } from '@/hooks/busqueda-documentos';
 import { busquedaDocumentosService } from '@/services/busqueda-documentos';
-import { formatearTamanioArchivo } from '@/services/busqueda-documentos/types';
+import { formatearTamanioArchivo, Documento, Paginacion, FiltrosBusqueda } from '@/services/busqueda-documentos/types';
 
-export function TablaResultados() {
-  const {
-    documentos,
-    paginacion,
-    loading,
-    error,
-    filtros,
-    cambiarPagina,
-    cambiarOrdenamiento,
-    descargarDocumento,
-    esDocumentoDescargable,
-    totalDocumentos,
-    hayResultados,
-  } = useBusquedaDocumentos();
+interface TablaResultadosProps {
+  documentos: Documento[];
+  paginacion: Paginacion;
+  loading: boolean;
+  error: string | null;
+  filtros: FiltrosBusqueda;
+  cambiarPagina: (pagina: number) => void;
+  cambiarOrdenamiento: (campo: string, direccion: 'asc' | 'desc') => void;
+  descargarDocumento: (id: number, nombreArchivo?: string) => void;
+  esDocumentoDescargable: (documento: Documento) => boolean;
+  totalDocumentos: number;
+  hayResultados: boolean;
+}
 
+export function TablaResultados({
+  documentos,
+  paginacion,
+  loading,
+  error,
+  filtros,
+  cambiarPagina,
+  cambiarOrdenamiento,
+  descargarDocumento,
+  esDocumentoDescargable,
+  totalDocumentos,
+  hayResultados,
+}: TablaResultadosProps) {
   // Log para depuración
   useEffect(() => {
     console.log('TablaResultados - Estado actual:', {

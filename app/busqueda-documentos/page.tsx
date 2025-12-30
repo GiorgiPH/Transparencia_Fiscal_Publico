@@ -3,8 +3,12 @@
 import { PortalLayout } from "@/components/portal-layout"
 import { FiltrosBusqueda, TablaResultados } from "@/components/busqueda-documentos"
 import { Suspense } from "react"
+import { useBusquedaDocumentos } from "@/hooks/busqueda-documentos"
 
 function BusquedaContent() {
+  // Hook a nivel del componente padre para compartir estado
+  const busquedaState = useBusquedaDocumentos();
+
   return (
     <PortalLayout activeSection="busqueda-documentos">
       <div className="p-6 lg:p-12 max-w-[1600px] mx-auto">
@@ -20,12 +24,12 @@ function BusquedaContent() {
         <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr] gap-6">
           {/* Left Side - Filters */}
           <div className="space-y-4">
-            <FiltrosBusqueda />
+            <FiltrosBusqueda {...busquedaState} />
           </div>
 
           {/* Right Side - Table */}
           <div className="space-y-4">
-            <TablaResultados />
+            <TablaResultados {...busquedaState} />
           </div>
         </div>
       </div>

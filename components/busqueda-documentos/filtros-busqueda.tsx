@@ -7,19 +7,25 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import { Search, Filter, X } from 'lucide-react';
-import { useBusquedaDocumentos } from '@/hooks/busqueda-documentos';
 import { useState, useEffect } from 'react';
 import { yearSelectHelper, textSelectHelper, SELECT_ALL_VALUE } from '@/lib/select-helpers';
+import { FiltrosBusqueda as FiltrosBusquedaType, Documento, Paginacion, OpcionesFiltros } from '@/services/busqueda-documentos/types';
 
-export function FiltrosBusqueda() {
-  const {
-    filtros,
-    opcionesFiltros,
-    actualizarFiltro,
-    buscarDocumentos,
-    limpiarFiltros,
-  } = useBusquedaDocumentos();
+interface FiltrosBusquedaProps {
+  filtros: FiltrosBusquedaType;
+  opcionesFiltros: OpcionesFiltros;
+  actualizarFiltro: <K extends keyof FiltrosBusquedaType>(campo: K, valor: FiltrosBusquedaType[K]) => void;
+  buscarDocumentos: (nuevosFiltros?: Partial<FiltrosBusquedaType>) => Promise<void>;
+  limpiarFiltros: () => void;
+}
 
+export function FiltrosBusqueda({
+  filtros,
+  opcionesFiltros,
+  actualizarFiltro,
+  buscarDocumentos,
+  limpiarFiltros,
+}: FiltrosBusquedaProps) {
   const [busquedaLocal, setBusquedaLocal] = useState(filtros.search || '');
   const [categoriasSeleccionadas, setCategoriasSeleccionadas] = useState<number[]>(filtros.categorias || []);
 

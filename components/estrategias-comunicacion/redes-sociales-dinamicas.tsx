@@ -83,7 +83,6 @@ export function RedesSocialesDinamicas() {
       {redesSociales.map((red) => {
         const IconoComponente = ICONOS_COMPONENTES[red.icono] || Globe;
         const color = obtenerColor(red.nombre);
-        const nombreUsuario = obtenerNombreUsuario(red.url);
 
         return (
           <a
@@ -99,7 +98,7 @@ export function RedesSocialesDinamicas() {
               </div>
               <div className="min-w-0">
                 <p className="font-medium group-hover:text-primary truncate">{red.nombre}</p>
-                <p className="text-xs text-muted-foreground truncate">{nombreUsuario}</p>
+                <p className="text-xs text-muted-foreground truncate">{red.descripcion}</p>
               </div>
             </div>
           </a>

@@ -55,27 +55,5 @@ export const estrategiasComunicacionService = {
   },
 
   // Obtener nombre de usuario de la URL (para mostrar en la UI)
-  getNombreUsuarioDeUrl(url: string): string {
-    try {
-      const urlObj = new URL(url);
-      const path = urlObj.pathname.replace(/^\//, '').replace(/\/$/, '');
-      
-      // Extraer nombre de usuario común de redes sociales
-      if (url.includes('facebook.com')) return `@${path.split('/')[0]}`;
-      if (url.includes('instagram.com')) return `@${path.split('/')[0]}`;
-      if (url.includes('twitter.com') || url.includes('x.com')) return `@${path.split('/')[0]}`;
-      if (url.includes('youtube.com')) {
-        if (path.includes('@')) return path.split('/')[0];
-        return 'Gobierno Morelos';
-      }
-      if (url.includes('linkedin.com')) {
-        if (path.includes('company/')) return path.split('/')[1].replace(/-/g, ' ');
-        return path.split('/')[0];
-      }
-      
-      return urlObj.hostname;
-    } catch {
-      return url;
-    }
-  },
+ 
 };

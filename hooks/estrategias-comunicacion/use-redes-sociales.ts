@@ -36,9 +36,7 @@ export function useRedesSociales() {
     return estrategiasComunicacionService.getColorPorRedSocial(nombreRedSocial);
   }, []);
 
-  const obtenerNombreUsuario = useCallback((url: string) => {
-    return estrategiasComunicacionService.getNombreUsuarioDeUrl(url);
-  }, []);
+
 
   const redesSocialesActivas = redesSociales.filter(red => red.activo);
 
@@ -49,6 +47,6 @@ export function useRedesSociales() {
     recargar: cargarRedesSociales,
     obtenerIcono,
     obtenerColor,
-    obtenerNombreUsuario,
+    
   };
 }

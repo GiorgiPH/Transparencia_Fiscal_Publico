@@ -1,8 +1,10 @@
 'use client';
 
-import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useState, useEffect, useCallback, useMemo, useRef } from 'react';
 import { busquedaDocumentosService } from '@/services/busqueda-documentos';
 import { Documento, FiltrosBusqueda, Paginacion, OpcionesFiltros } from '@/services/busqueda-documentos/types';
+
+// ... (PAGINACION_POR_DEFECTO y FILTROS_POR_DEFECTO se mantienen igual)
 
 interface UseBusquedaDocumentosReturn {
   // Estado
@@ -42,50 +44,64 @@ const FILTROS_POR_DEFECTO: FiltrosBusqueda = {
   orderBy: 'fecha_publicacion',
   order: 'desc',
 };
-
 export function useBusquedaDocumentos(filtrosIniciales: Partial<FiltrosBusqueda> = {}): UseBusquedaDocumentosReturn {
   const [documentos, setDocumentos] = useState<Documento[]>([]);
   const [paginacion, setPaginacion] = useState<Paginacion>(PAGINACION_POR_DEFECTO);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  
+  // 1. Los filtros son la "Fuente de Verdad"
   const [filtros, setFiltros] = useState<FiltrosBusqueda>({
     ...FILTROS_POR_DEFECTO,
     ...filtrosIniciales,
   });
 
+  // Referencia para evitar colisiones en peticiones asíncronas (Race Conditions)
+  const abortControllerRef = useRef<AbortController | null>(null);
+
   const opcionesFiltros = useMemo(() => busquedaDocumentosService.getOpcionesFiltros(), []);
 
-  const buscarDocumentos = useCallback(async (nuevosFiltros?: Partial<FiltrosBusqueda>) => {
+  // 2. Función de carga centralizada
+  // No recibe parámetros, usa directamente el estado 'filtros'
+  const ejecutarBusqueda = useCallback(async () => {
+    // Cancelar petición anterior si aún está en curso
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+
     try {
-      // Forzar un nuevo array de referencia para asegurar re-renderizado
-      setDocumentos(() => []);
       setLoading(true);
       setError(null);
 
-      // Combinar filtros actuales con nuevos
-      const filtrosActualizados = nuevosFiltros 
-        ? { ...filtros, ...nuevosFiltros, page: 1 } // Resetear a página 1 cuando cambian filtros
-        : filtros;
-
-      setFiltros(filtrosActualizados);
-
-      const resultado = await busquedaDocumentosService.buscarDocumentos(filtrosActualizados);
-      console.log('Resultado de búsqueda:', resultado);
+      const resultado = await busquedaDocumentosService.buscarDocumentos(filtros);
       
-      // Siempre establecer documentos, incluso si está vacío, para forzar re-renderizado
-      setDocumentos(resultado.documentos);
-      setPaginacion(resultado.paginacion);
+      // IMPORTANTE: Si el servicio no trae documentos, garantizamos un array vacío
+      setDocumentos(resultado.documentos || []);
+      setPaginacion(resultado.paginacion || PAGINACION_POR_DEFECTO);
+      
     } catch (err: any) {
+      if (err.name === 'AbortError') return; // Ignorar si fue cancelada manualmente
+      
       console.error('Error al buscar documentos:', err);
-      setError(err?.message || 'Error al buscar documentos. Por favor, intenta nuevamente.');
-      // Forzar un nuevo array vacío
-      setDocumentos(() => []);
+      setError(err?.message || 'Error al buscar documentos.');
+      setDocumentos([]); // Limpiar tabla en caso de error
       setPaginacion(PAGINACION_POR_DEFECTO);
     } finally {
       setLoading(false);
     }
-  }, [filtros]);
+  }, [filtros]); // Se recrea cada vez que 'filtros' cambia
 
+  // 3. Efecto reactivo: Cualquier cambio en filtros dispara la búsqueda
+  useEffect(() => {
+    ejecutarBusqueda();
+    
+    return () => {
+      if (abortControllerRef.current) abortControllerRef.current.abort();
+    };
+  }, [ejecutarBusqueda]);
+
+  // 4. Helpers para actualizar el estado de filtros
   const actualizarFiltro = useCallback(<K extends keyof FiltrosBusqueda>(
     campo: K, 
     valor: FiltrosBusqueda[K]
@@ -93,30 +109,38 @@ export function useBusquedaDocumentos(filtrosIniciales: Partial<FiltrosBusqueda>
     setFiltros(prev => ({
       ...prev,
       [campo]: valor,
+      page: 1, // Siempre reseteamos a página 1 al filtrar
     }));
   }, []);
 
+  const buscarDocumentos = useCallback(async (nuevosFiltros?: Partial<FiltrosBusqueda>) => {
+    if (nuevosFiltros) {
+      setFiltros(prev => ({ ...prev, ...nuevosFiltros, page: 1 }));
+    } else {
+      // Si se llama sin argumentos (ej. botón refrescar), forzamos ejecución
+      ejecutarBusqueda();
+    }
+  }, [ejecutarBusqueda]);
+
   const limpiarFiltros = useCallback(() => {
-    const filtrosLimpios: FiltrosBusqueda = {
+    setFiltros({
       ...FILTROS_POR_DEFECTO,
       ...filtrosIniciales,
-    };
-    
-    setFiltros(filtrosLimpios);
-    buscarDocumentos(filtrosLimpios);
-  }, [buscarDocumentos, filtrosIniciales]);
+    });
+  }, [filtrosIniciales]);
 
   const cambiarPagina = useCallback((pagina: number) => {
-    buscarDocumentos({ page: pagina });
-  }, [buscarDocumentos]);
+    setFiltros(prev => ({ ...prev, page: pagina }));
+  }, []);
 
   const cambiarOrdenamiento = useCallback((campo: string, direccion: 'asc' | 'desc') => {
-    buscarDocumentos({ 
+    setFiltros(prev => ({ 
+      ...prev, 
       orderBy: campo, 
       order: direccion,
-      page: 1, // Resetear a primera página
-    });
-  }, [buscarDocumentos]);
+      page: 1 
+    }));
+  }, []);
 
   const descargarDocumento = useCallback((id: number, nombreArchivo?: string) => {
     busquedaDocumentosService.descargarDocumento(id, nombreArchivo);
@@ -126,39 +150,7 @@ export function useBusquedaDocumentos(filtrosIniciales: Partial<FiltrosBusqueda>
     return busquedaDocumentosService.esDocumentoDescargable(documento);
   }, []);
 
-  // Buscar documentos al montar el componente
-  useEffect(() => {
-    buscarDocumentos();
-  }, []);
-
-  const totalDocumentos = paginacion.total;
-  const hayResultados = documentos.length > 0;
-  console.log("valor hayResultados: " + hayResultados, "documentos.length: " + documentos.length);
-
-  // Usar useMemo para evitar recrear el objeto de retorno innecesariamente,
-  // pero asegurarse de que cambie cuando documentos cambie
-  const resultado = useMemo(() => ({
-    // Estado
-    documentos,
-    paginacion,
-    loading,
-    error,
-    filtros,
-    opcionesFiltros,
-    
-    // Funciones
-    buscarDocumentos,
-    actualizarFiltro,
-    limpiarFiltros,
-    cambiarPagina,
-    cambiarOrdenamiento,
-    descargarDocumento,
-    
-    // Utilidades
-    totalDocumentos,
-    hayResultados,
-    esDocumentoDescargable,
-  }), [
+  return {
     documentos,
     paginacion,
     loading,
@@ -171,10 +163,8 @@ export function useBusquedaDocumentos(filtrosIniciales: Partial<FiltrosBusqueda>
     cambiarPagina,
     cambiarOrdenamiento,
     descargarDocumento,
-    totalDocumentos,
-    hayResultados,
+    totalDocumentos: paginacion.total,
+    hayResultados: documentos.length > 0,
     esDocumentoDescargable,
-  ]);
-
-  return resultado;
+  };
 }

@@ -2,6 +2,7 @@
 export interface RedSocial {
   id: number;
   nombre: string;
+  descripcion : string;
   url: string;
   icono: string;
   activo: boolean;
