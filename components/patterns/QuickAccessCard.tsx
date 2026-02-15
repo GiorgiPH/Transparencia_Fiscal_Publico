@@ -138,7 +138,7 @@ export function QuickAccessCard({
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.3, duration: 0.4 }}
                 >
-                  <CardTitle className="text-2xl font-bold text-foreground mb-3">
+                  <CardTitle className="text-4xl font-bold text-foreground mb-3">
                     {title}
                   </CardTitle>
                 </motion.div>
@@ -148,14 +148,14 @@ export function QuickAccessCard({
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.4, duration: 0.5 }}
                 >
-                  <CardDescription className="text-base text-muted-foreground mb-4">
+                  <CardDescription className="text-lg text-muted-foreground mb-4">
                     {description}
                   </CardDescription>
                 </motion.div>
               </div>
               
               {/* Botón con animación */}
-              <motion.div
+              {/* <motion.div
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.5, duration: 0.4 }}
@@ -170,7 +170,7 @@ export function QuickAccessCard({
                   Ir al módulo
                   <ChevronRight className="h-5 w-5 transition-transform group-hover:translate-x-1" />
                 </Button>
-              </motion.div>
+              </motion.div> */}
             </div>
           </div>
         </Card>

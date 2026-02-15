@@ -25,6 +25,8 @@ import { SectionTitle } from "@/components/patterns/SectionTitle"
 import { InstitutionalCard } from "@/components/patterns/InstitutionalCard"
 import { CoverflowCarousel } from "@/components/patterns/CoverflowCarousel"
 import { QuickAccessCard } from "@/components/patterns/QuickAccessCard"
+import { CircularButton, CircularButtonWithSideLabel } from "@/components/patterns/CircularButton"
+import { LinksCarousel } from "@/components/patterns/LinksCarousel"
 import { motion } from "framer-motion"
 import { newsItems } from "@/lib/news-data"
 
@@ -59,10 +61,10 @@ export function HomeContent() {
       {/* Main Content */}
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative bg-cover bg-center border-b" style={{ backgroundImage: "url('/images/hero-background.jpg')" }}>
+        <section className="relative  min-h-[40vh] bg-cover bg-center bg-no-repeat border-b" style={{ backgroundImage: "url('/images/hero-background.png')" }}>
           <div className="absolute inset-0 bg-black/30"></div>
-          <div className="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20 relative z-10">
-            <div className="text-center max-w-3xl mx-auto mb-10">
+          <div className="max-w-none mx-auto px-4 lg:px-24 py-12 lg:py-20 relative z-10">
+            <div className="text-center max-w-4xl mx-auto mb-10">
               <motion.h1 
                 className="text-4xl lg:text-5xl font-bold text-white mb-4 text-balance"
                 initial={{ opacity: 0, y: 30 }}
@@ -93,17 +95,196 @@ export function HomeContent() {
           </div>
         </section>
 
+        {/* Search Section */}
+        <section className="py-12 lg:py-16 bg-gradient-to-b from-background to-muted/30">
+          <div className="max-w-none mx-auto px-4 lg:px-24">
+            <SectionTitle
+              title="¿Qué buscaremos el día de hoy?"
+              subtitle="Encuentra información fiscal, documentos públicos y datos abiertos del Estado de Morelos"
+              titleClassName="text-2xl lg:text-5xl"
+              subtitleClassName="max-w-4xl mx-auto"
+            />
+
+            {/* Search Bar */}
+            <div className="max-w-4xl mx-auto mb-12">
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <Search className="h-5 w-5 text-muted-foreground" />
+                </div>
+                <input
+                  type="text"
+                  placeholder="Buscar información, documentos o datos..."
+                  className="w-full pl-10 pr-4 py-4 text-lg rounded-xl border-2 border-primary/20 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white shadow-lg"
+                />
+                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors font-medium">
+                  Buscar
+                </button>
+              </div>
+            </div>
+
+            {/* Popular Searches */}
+            <div className="max-w-5xl mx-auto">
+              <h3 className="text-2xl font-semibold text-center mb-6 text-foreground">
+                Búsquedas más realizadas
+              </h3>
+              <div className="flex flex-wrap justify-center gap-6">
+                {[
+                  { label: "Presupuesto 2024", count: "1,234" },
+                  { label: "Deuda Pública", count: "987" },
+                  { label: "Rendición de Cuentas", count: "856" }
+                ].map((search, index) => (
+                  <button
+                    key={index}
+                    className="group flex items-center gap-3 px-6 py-4 bg-white border border-primary/10 rounded-xl hover:border-primary/30 hover:shadow-lg transition-all duration-300"
+                  >
+                    <div className="relative">
+                      <div className="text-2xl text-gray-300 group-hover:text-yellow-400 transition-colors">
+                        ★
+                      </div>
+                      <div className="absolute inset-0 text-2xl text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                        ★
+                      </div>
+                    </div>
+                    <div className="text-left">
+                      <span className="text-foreground font-medium group-hover:text-primary transition-colors block">
+                        {search.label}
+                      </span>
+                      <span className="text-sm text-muted-foreground">
+                        {search.count} búsquedas
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* Two Column Section - Estatua Morelos + Vertical Cards */}
+        <section className="py-12 lg:py-16">
+          <div className="max-w-none mx-auto px-4 lg:px-24">
+            <div className="grid lg:grid-cols-4 gap-16 items-start">
+              {/* Left Column - Estatua Morelos Image (3/4) */}
+              <div className="lg:col-span-3 relative">
+                <div className="sticky top-24">
+                  <div className="relative rounded-2xl overflow-hidden shadow-2xl">
+                    <Image
+                      src="/images/estatua-morelos.png"
+                      alt="Estatua de Morelos - Símbolo de transparencia fiscal"
+                      width={1200}
+                      height={1500}
+                      className="w-full h-auto object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                    <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
+                      <h3 className="text-3xl font-bold mb-3">Transparencia Fiscal</h3>
+                      <p className="text-white/90 text-lg">
+                        Comprometidos con la rendición de cuentas y el acceso a la información pública
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Right Column - Vertical Cards (1/4) */}
+              <div className="lg:col-span-1 space-y-4">
+                {[
+                  {
+                    title: "Conoce tu Portal",
+                    subtitle: "Navega y Explora",
+                    description: "Descubre las secciones, funcionalidades y contenidos disponibles para consultar información de manera clara y organizada.",
+                    color: "tertiary",
+                    href: "/mecanismos-acceso"
+                  },
+                  {
+                    title: "Participa y Opina",
+                    subtitle: "Tu Voz Importa",
+                    description: "Participa en el envio de comentarios y contribuye al presupuesto participativo.",
+                    color: "tertiary",
+                    href: "/participacion-ciudadana"
+                  },
+                  {
+                    title: "Estrategias de Comunicación",
+                    subtitle: "Mantente Informado",
+                    description: "Mantente informado a través de nuestros canales oficiales, redes sociales y campañas de comunicación.",
+                    color: "tertiary",
+                    href: "/estrategias-comunicacion"
+                  },
+                  {
+                    title: "Política de Datos Abiertos",
+                    subtitle: "Datos para Análisis",
+                    description: "Accede y reutiliza conjuntos de datos públicos en formatos abiertos para análisis e investigación.",
+                    color: "tertiary",
+                    href: "/datos-abiertos"
+                  },
+                  {
+                    title: "Conoce las Leyes",
+                    subtitle: "Fundamentos Legales",
+                    description: "Consulta las leyes, reglamentos y normativas que fundamentan la transparencia fiscal en Morelos.",
+                    color: "tertiary",
+                    href: "/marco-normativo"
+                  }
+                ].map((card, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: 20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className="group"
+                  >
+                    <Card className="border-2 hover:border-tertiary/30 hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02] min-h-[120px]">
+                      <CardContent className="p-4">
+                        <div className="flex items-start justify-between gap-3">
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-start justify-between mb-2">
+                              <div>
+                                <h3 className="text-lg font-bold text-tertiary group-hover:text-tertiary/80 transition-colors leading-tight">
+                                  {card.title}
+                                </h3>
+                                {card.subtitle && (
+                                  <p className="text-lg font-medium text-muted-foreground mt-1">
+                                    {card.subtitle}
+                                  </p>
+                                )}
+                              </div>
+                              <CircularButton
+                                href={card.href}
+                                size="sm"
+                                color="tertiary"
+                                label=""
+                                description=""
+                                className="scale-75 -mt-1 -mr-1"
+                                showPing={false}
+                              />
+                            </div>
+                            <p className="text-md text-muted-foreground leading-relaxed line-clamp-2">
+                              {card.description}
+                            </p>
+                            <div className="mt-2">
+                              
+                            </div>
+                          </div>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </motion.div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
         {/* Quick Access Block */}
         <section className="py-12 lg:py-16">
-          <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="max-w-none mx-auto px-4 lg:px-24">
             <SectionTitle
-              title="Módulos de Consulta"
+              title="Accede a tu Información"
               subtitle="Acceso directo a las herramientas de fiscalización y datos abiertos."
               titleClassName="text-3xl lg:text-4xl"
 
             />
 
-            <div className="grid gap-8 md:grid-cols-2 max-w-7xl mx-auto">
+            <div className="grid gap-8 md:grid-cols-2 max-w-none mx-auto">
               {/* Public Finance Card */}
               <QuickAccessCard
                 title="Infórmate"
@@ -129,89 +310,96 @@ export function HomeContent() {
           </div>
         </section>
 
-        {/* Informational Block */}
-        <section className="py-12 lg:py-16  opacity-80">
-        <div className="max-w-7xl mx-auto px-4 lg:px-8">
-            <SectionTitle
-              title="Información y Recursos"
-              subtitle="Conoce más sobre transparencia fiscal y cómo participar"
+        {/* Citizen Participation Section */}
+        <section className="py-12 lg:py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5">
+          <div className="max-w-none mx-auto px-4 lg:px-24">
+            <div className="grid lg:grid-cols-2 gap-12 items-center">
+              {/* Left Column - Chica Image */}
+              <div className="relative">
+                <motion.div
+                  initial={{ opacity: 0, x: -30 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.8, ease: "easeOut" }}
+                  className="relative rounded-3xl overflow-hidden shadow-2xl"
+                >
+                  <Image
+                    src="/images/chica.jpeg"
+                    alt="Ciudadana participando en transparencia fiscal"
+                    width={600}
+                    height={700}
+                    className="w-full h-auto object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
+                    <p className="text-lg font-medium">Tu participación construye un gobierno más transparente</p>
+                  </div>
+                </motion.div>
+              </div>
+
+              {/* Right Column - Content */}
+              <motion.div
+                initial={{ opacity: 0, x: 30 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+                className="space-y-8"
+              >
+                 <SectionTitle
+              title="Participacion Ciudadana"
               titleClassName="text-3xl lg:text-4xl"
 
             />
+                <div>
+             
+                  <p className="text-lg text-muted-foreground mb-6">
+                    Tu voz es fundamental para construir un gobierno más transparente y cercano a la ciudadanía. 
+                    En el Portal de Transparencia Fiscal, creemos que la participación activa de la comunidad 
+                    es clave para mejorar la gestión pública y fortalecer la confianza en las instituciones.
+                  </p>
+                  <p className="text-lg text-muted-foreground">
+                    Únete a la conversación, comparte tus ideas, propuestas y comentarios sobre el manejo de 
+                    recursos públicos. Juntos podemos crear un Estado de Morelos más justo, eficiente y 
+                    comprometido con el bienestar de todos sus habitantes.
+                  </p>
+                </div>
 
-            <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
-              {/* Access Mechanisms */}
-              <InstitutionalCard
-                title="Conoce tu Portal"
-                subtitle="Navega y Explora"
-                description="Descubre las secciones, funcionalidades y contenidos disponibles para consultar información de manera clara y organizada."
-                icon={<Lock className="h-14 w-14 text-primary" />}
-                iconBackgroundColor="bg-primary/10"
-                iconRotation={3}
-                actionText="Conocer más"
-                actionHref="/mecanismos-acceso"
-                ariaLabel="Conocer más sobre mecanismos de acceso"
-              />
+                <div className="flex flex-col sm:flex-row gap-6 items-start sm:items-center">
+                  <CircularButtonWithSideLabel
+                    href="/participacion-ciudadana"
+                    size="md"
+                    color="primary"
+                    label="Haz clic para participar"
+                    description="Tu contribución marca la diferencia"
+                    className="flex-shrink-0"
+                  />
 
-              {/* Citizen Participation */}
-              <InstitutionalCard
-                title="Participa y Opina"
-                subtitle="Tu Voz Importa"
-                description="Participa en el envio de comentarios y contribuye al presupuesto participativo."
-                icon={<Users className="h-14 w-14 text-accent" />}
-                iconBackgroundColor="bg-accent/10"
-                iconRotation={-3}
-                actionText="Enviar mensaje"
-                actionHref="/participacion-ciudadana"
-                ariaLabel="Enviar mensaje sobre participación ciudadana"
-              />
-
-              {/* Communication Strategies */}
-              <InstitutionalCard
-                title="Estrategias de Comunicación"
-                subtitle="Mantente Informado"
-                description="Mantente informado a través de nuestros canales oficiales, redes sociales y campañas de comunicación."
-                icon={<Megaphone className="h-14 w-14 text-secondary" />}
-                iconBackgroundColor="bg-secondary/10"
-                iconRotation={6}
-                actionText="Ver canales de contacto"
-                actionHref="/estrategias-comunicacion"
-                ariaLabel="Ver canales de contacto de comunicación"
-              />
-
-              {/* Open Data Policy */}
-              <InstitutionalCard
-                title="Política de Datos Abiertos"
-                subtitle="Datos para Análisis"
-                description="Accede y reutiliza conjuntos de datos públicos en formatos abiertos para análisis e investigación."
-                icon={<Database className="h-14 w-14 text-primary" />}
-                iconBackgroundColor="bg-primary/10"
-                iconRotation={-6}
-                actionText="Ver política"
-                actionHref="/datos-abiertos"
-                ariaLabel="Ver política de datos abiertos"
-              />
-
-              {/* Regulatory Framework */}
-              <InstitutionalCard
-                title="Conoce las Leyes"
-                subtitle="Fundamentos Legales"
-                description="Consulta las leyes, reglamentos y normativas que fundamentan la transparencia fiscal en Morelos."
-                icon={<Scale className="h-14 w-14 text-accent" />}
-                iconBackgroundColor="bg-accent/10"
-                iconRotation={3}
-                actionText="Consultar marco normativo"
-                actionHref="/marco-normativo"
-                ariaLabel="Consultar marco normativo"
-                className="sm:col-span-2 lg:col-span-1"
-              />
+                  <div className="flex-1">
+                    <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-primary/10">
+                      <h4 className="font-semibold text-foreground mb-2">¿Cómo puedes participar?</h4>
+                      <ul className="space-y-2 text-sm text-muted-foreground">
+                        <li className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-primary"></div>
+                          Envía comentarios y sugerencias
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-accent"></div>
+                          Participa en consultas públicas
+                        </li>
+                        <li className="flex items-center gap-2">
+                          <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                          Contribuye al presupuesto participativo
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
         {/* News Section */}
         <section className="py-12 lg:py-16">
-          <div className="max-w-7xl mx-auto px-4 lg:px-8">
+          <div className="max-w-none mx-auto px-4 lg:px-24">
             <SectionTitle
               title="Noticias y Anuncios"
               subtitle="Mantente al día con las últimas novedades y eventos"
@@ -220,7 +408,7 @@ export function HomeContent() {
             />
 
             {/* Coverflow Carousel */}
-            <div className="relative max-w-6xl mx-auto">
+            <div className="relative max-w-none mx-auto">
               <CoverflowCarousel
                 items={newsItems.map((item, index) => ({
                   id: item.id,
@@ -248,6 +436,17 @@ export function HomeContent() {
             </div>
           </div>
         </section>
+
+        {/* Links of Interest Section */}
+        <LinksCarousel
+          title="Ligas de Interés"
+          subtitle="Portales y recursos relacionados con transparencia fiscal y gobierno digital"
+          itemsToShow={5}
+          autoPlay={true}
+          autoPlayInterval={6000}
+          showNavigation={true}
+          className="bg-gradient-to-b from-muted/30 to-background"
+        />
       </main>
 
       <PortalFooter />
