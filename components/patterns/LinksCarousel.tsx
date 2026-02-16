@@ -83,36 +83,44 @@ export function LinksCarousel({
         id: "1",
         title: "AREGIONAL",
         image: "/images/aregional.png",
-        url: "#",
+        url: "https://aregionalmx.com/",
         alt: "AREGIONAL"
       },
       {
         id: "2",
         title: "Portal Transparencia Nacional",
         image: "/images/portal-transparencia-nacional.png",
-        url: "#",
+        url: "https://www.plataformadetransparencia.org.mx/Inicio",
         alt: "Portal Transparencia Nacional"
       },
       {
         id: "3",
         title: "Digital Morelos",
         image: "/images/digital-morelos.png",
-        url: "#",
+        url: "https://digital.morelos.gob.mx/tramitesdigitales/",
         alt: "Digital Morelos"
       },
       {
         id: "4",
         title: "Morelos Portal",
         image: "/images/morelos-portal.png",
-        url: "#",
+        url: "https://www.morelos.gob.mx/",
         alt: "Morelos Portal"
       },
       {
         id: "5",
-        title: "Gobierno del Estado",
-        image: "/images/gobierno-estado.png",
+        title: "COESPO",
+        image: "/images/COESPO.jpeg",
         url: "#",
-        alt: "Gobierno del Estado"
+        alt: "Coespo"
+      }
+      ,
+      {
+        id: "6",
+        title: "CEIEG",
+        image: "/images/CEIEG.jpeg",
+        url: "https://ceieg.morelos.gob.mx/",
+        alt: "CEIEG"
       }
     ]
   }
@@ -159,15 +167,15 @@ export function LinksCarousel({
                       className="block"
                     >
                       <div className="relative overflow-hidden rounded-xl border-2 border-primary/10 bg-white shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary/30 h-full">
-                        <div className="aspect-square relative overflow-hidden">
+                        <div className="aspect-[4/3] relative overflow-hidden bg-white">
                           <Image
                             src={link.image}
                             alt={link.alt || link.title}
                             fill
-                            className="object-cover transition-transform duration-500 group-hover:scale-105"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw"
+                            className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                           />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
                         </div>
                         <div className="p-4">
                           <h3 className="text-center font-semibold text-foreground text-sm lg:text-base line-clamp-2 group-hover:text-primary transition-colors">

@@ -6,19 +6,22 @@ import { Button } from '@/components/ui/button';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Badge } from '@/components/ui/badge';
 import { CatalogoBase, CatalogoConDocumentos } from '@/services/catalogos/types';
+import { BuscarCatalogosResponse } from '@/services/catalogos/catalogo.service';
 import { TiposDocumento } from './tipos-documento';
 import { cn } from '@/lib/utils';
 import { ICON_MAP, IconName } from '@/lib/icons';
 import { InstitutionalCard, GenericCatalogCard } from '@/components/patterns/InstitutionalCard';
 
 interface CatalogoListProps {
-  catalogos: CatalogoBase[] | CatalogoConDocumentos[];
+  catalogos: CatalogoBase[] | CatalogoConDocumentos[] | BuscarCatalogosResponse[];
   loading: boolean;
   error: string | null;
   nivelActual: number;
-  onCatalogoClick: (catalogo: CatalogoBase | CatalogoConDocumentos) => void;
+  onCatalogoClick: (catalogo: CatalogoBase | CatalogoConDocumentos | BuscarCatalogosResponse) => void;
   onBackClick?: () => void;
   puedeNavegarAtras?: boolean;
+  isSearching?: boolean;
+  searchResults?: BuscarCatalogosResponse[];
 }
 
 export function CatalogoList({

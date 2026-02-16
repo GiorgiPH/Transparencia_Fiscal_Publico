@@ -115,8 +115,28 @@ export function HomeContent() {
                   type="text"
                   placeholder="Buscar información, documentos o datos..."
                   className="w-full pl-10 pr-4 py-4 text-lg rounded-xl border-2 border-primary/20 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white shadow-lg"
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter') {
+                      const input = e.target as HTMLInputElement;
+                      const searchText = input.value.trim();
+                      if (searchText.length >= 2) {
+                        // Redirigir a la sección de finanzas (catálogos) con el texto de búsqueda
+                        window.location.href = `/finanzas?buscar=${encodeURIComponent(searchText)}`;
+                      }
+                    }
+                  }}
                 />
-                <button className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors font-medium">
+                <button 
+                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors font-medium"
+                  onClick={() => {
+                    const input = document.querySelector('input[type="text"]') as HTMLInputElement;
+                    const searchText = input?.value.trim();
+                    if (searchText && searchText.length >= 2) {
+                      // Redirigir a la sección de finanzas (catálogos) con el texto de búsqueda
+                      window.location.href = `/finanzas?buscar=${encodeURIComponent(searchText)}`;
+                    }
+                  }}
+                >
                   Buscar
                 </button>
               </div>

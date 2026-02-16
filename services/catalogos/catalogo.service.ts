@@ -6,6 +6,14 @@ import {
   CatalogoHijosResponse
 } from './types';
 
+export interface BuscarCatalogosResponse extends CatalogoConDocumentos {
+  path: Array<{
+    id: number;
+    nombre: string;
+    nivel: number;
+  }>;
+}
+
 export const catalogoService = {
   async getCatalogoRaiz(): Promise<CatalogoBase[]> {
     return apiClient.get<CatalogoBase[]>('/catalogos/raiz');
@@ -54,5 +62,13 @@ export const catalogoService = {
       4: 'bg-emerald-100 text-emerald-800 border-emerald-300', // Excel
     };
     return colores[tipoDocumentoId] || 'bg-gray-100 text-gray-800 border-gray-300';
+  },
+
+  // Buscar catálogos por texto
+  async buscarCatalogos(texto: string): Promise<BuscarCatalogosResponse[]> {
+    if (!texto || texto.trim().length < 2) {
+      return [];
+    }
+    return apiClient.get<BuscarCatalogosResponse[]>(`/catalogos/buscar?q=${encodeURIComponent(texto.trim())}`);
   },
 };
