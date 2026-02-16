@@ -331,27 +331,27 @@ export function HomeContent() {
         </section>
 
         {/* Citizen Participation Section */}
-        <section className="py-12 lg:py-16 bg-gradient-to-r from-primary/5 via-accent/5 to-secondary/5">
+        <section className="py-12 lg:py-16 bg-tertiary/5">
           <div className="max-w-none mx-auto px-4 lg:px-24">
-            <div className="grid lg:grid-cols-2 gap-12 items-center">
-              {/* Left Column - Chica Image */}
+            <div className="grid lg:grid-cols-2 gap-8 items-center">
+              {/* Left Column - Chica Image (más pequeña) */}
               <div className="relative">
                 <motion.div
                   initial={{ opacity: 0, x: -30 }}
                   animate={{ opacity: 1, x: 0 }}
                   transition={{ duration: 0.8, ease: "easeOut" }}
-                  className="relative rounded-3xl overflow-hidden shadow-2xl"
+                  className="relative rounded-2xl overflow-hidden shadow-xl"
                 >
                   <Image
                     src="/images/chica.jpeg"
                     alt="Ciudadana participando en transparencia fiscal"
-                    width={600}
-                    height={700}
-                    className="w-full h-auto object-cover"
+                    width={500}
+                    height={600}
+                    className="w-full h-auto object-cover max-h-[500px]"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent"></div>
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white">
-                    <p className="text-lg font-medium">Tu participación construye un gobierno más transparente</p>
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
+                  <div className="absolute bottom-0 left-0 right-0 p-4 text-white">
+                    <p className="text-base font-medium">Tu participación construye un gobierno más transparente</p>
                   </div>
                 </motion.div>
               </div>
@@ -361,21 +361,19 @@ export function HomeContent() {
                 initial={{ opacity: 0, x: 30 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
-                className="space-y-8"
+                className="space-y-6"
               >
-                 <SectionTitle
-              title="Participacion Ciudadana"
-              titleClassName="text-3xl lg:text-4xl"
-
-            />
+                <SectionTitle
+                  title="Participación Ciudadana"
+                  titleClassName="text-3xl lg:text-4xl text-tertiary"
+                />
                 <div>
-             
-                  <p className="text-lg text-muted-foreground mb-6">
+                  <p className="text-base text-foreground mb-4">
                     Tu voz es fundamental para construir un gobierno más transparente y cercano a la ciudadanía. 
                     En el Portal de Transparencia Fiscal, creemos que la participación activa de la comunidad 
                     es clave para mejorar la gestión pública y fortalecer la confianza en las instituciones.
                   </p>
-                  <p className="text-lg text-muted-foreground">
+                  <p className="text-base text-foreground">
                     Únete a la conversación, comparte tus ideas, propuestas y comentarios sobre el manejo de 
                     recursos públicos. Juntos podemos crear un Estado de Morelos más justo, eficiente y 
                     comprometido con el bienestar de todos sus habitantes.
@@ -386,26 +384,26 @@ export function HomeContent() {
                   <CircularButtonWithSideLabel
                     href="/participacion-ciudadana"
                     size="md"
-                    color="primary"
+                    color="tertiary"
                     label="Haz clic para participar"
                     description="Tu contribución marca la diferencia"
                     className="flex-shrink-0"
                   />
 
                   <div className="flex-1">
-                    <div className="bg-white/50 backdrop-blur-sm rounded-xl p-4 border border-primary/10">
+                    <div className="bg-white/80 backdrop-blur-sm rounded-xl p-4 border border-tertiary/20">
                       <h4 className="font-semibold text-foreground mb-2">¿Cómo puedes participar?</h4>
-                      <ul className="space-y-2 text-sm text-muted-foreground">
+                      <ul className="space-y-2 text-sm text-foreground">
                         <li className="flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-full bg-primary"></div>
+                          <div className="w-2 h-2 rounded-full bg-tertiary"></div>
                           Envía comentarios y sugerencias
                         </li>
                         <li className="flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-full bg-accent"></div>
+                          <div className="w-2 h-2 rounded-full bg-tertiary/70"></div>
                           Participa en consultas públicas
                         </li>
                         <li className="flex items-center gap-2">
-                          <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                          <div className="w-2 h-2 rounded-full bg-tertiary/40"></div>
                           Contribuye al presupuesto participativo
                         </li>
                       </ul>
@@ -465,7 +463,7 @@ export function HomeContent() {
           autoPlay={true}
           autoPlayInterval={6000}
           showNavigation={true}
-          className="bg-gradient-to-b from-muted/30 to-background"
+          className=" to-background"
         />
       </main>
 

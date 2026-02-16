@@ -80,7 +80,7 @@ export function NewsCard({
       whileHover="hover"
     >
       <Card className={cn(
-        "overflow-hidden border-tertiary/30 text-white p-0 h-full bg-tertiary",
+        "overflow-hidden border-primary/30 text-white p-0 h-full bg-primary",
         "relative before:absolute before:inset-0 before:bg-gradient-to-br before:from-transparent before:via-transparent before:to-white/5",
         "before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
       )}>

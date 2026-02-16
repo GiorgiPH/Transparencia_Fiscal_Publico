@@ -18,11 +18,11 @@
   --card-foreground: oklch(0.798, 0, 0);
   --popover: oklch(1 0 0);
   --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
+  --primary: oklch(0.28 0.03 120); /* Bosque - #2E3A2B */
   --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
+  --secondary: oklch(0.48 0.04 110); /* Dorado - #D1B68B */
   --secondary-foreground: oklch(0.205 0 0);
-  --tertiary: oklch(0.33 0.11 345);
+  --tertiary: oklch(0.33 0.11 345); /* Bugambilia - #753245 */
   --tertiary-foreground: oklch(0.985 0 0);
   --muted: oklch(0.97 0 0);
   --muted-foreground: oklch(0.556 0 0);

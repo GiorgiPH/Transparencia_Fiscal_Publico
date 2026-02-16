@@ -141,13 +141,13 @@ export function CoverflowCarousel({
         </AnimatePresence>
       </div>
 
-      {/* Navegación */}
+      {/* Navegación - Estilo similar al carrusel de ligas */}
       {showNavigation && items.length > 1 && (
         <>
           <Button
             variant="outline"
             size="icon"
-            className="absolute left-4 top-1/2 -translate-y-1/2 z-40 bg-tertiary/80 backdrop-blur-sm text-white border-white/30 hover:bg-tertiary hover:text-white"
+            className="absolute left-0 lg:-left-12 top-1/2 -translate-y-1/2 z-40 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40 text-primary"
             onClick={onPrev}
             aria-label="Noticia anterior"
           >
@@ -157,7 +157,7 @@ export function CoverflowCarousel({
           <Button
             variant="outline"
             size="icon"
-            className="absolute right-4 top-1/2 -translate-y-1/2 z-40 bg-tertiary/80 backdrop-blur-sm text-white border-white/30 hover:bg-tertiary hover:text-white"
+            className="absolute right-0 lg:-right-12 top-1/2 -translate-y-1/2 z-40 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40 text-primary"
             onClick={onNext}
             aria-label="Siguiente noticia"
           >
@@ -166,7 +166,7 @@ export function CoverflowCarousel({
         </>
       )}
 
-      {/* Indicadores de puntos */}
+      {/* Indicadores de puntos - Estilo similar al carrusel de ligas */}
       {showDots && items.length > 1 && (
         <div className="absolute bottom-4 left-1/2 -translate-x-1/2 flex gap-2 z-40">
           {items.map((_, index) => (
@@ -174,10 +174,10 @@ export function CoverflowCarousel({
               key={index}
               onClick={() => onSelect(index)}
               className={cn(
-                "h-2 rounded-full transition-all",
+                "h-2 rounded-full transition-all duration-300",
                 index === currentIndex 
-                  ? "w-8 bg-tertiary" 
-                  : "w-2 bg-muted-foreground/30 hover:bg-muted-foreground/50"
+                  ? "w-8 bg-primary" 
+                  : "w-2 bg-primary/30 hover:bg-primary/50"
               )}
               aria-label={`Ir a noticia ${index + 1}`}
             />
