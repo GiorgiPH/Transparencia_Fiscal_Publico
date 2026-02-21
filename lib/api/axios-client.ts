@@ -24,7 +24,7 @@ class ApiClient {
 
   constructor() {
     this.instance = axios.create({
-      baseURL: process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api',
+      baseURL: process.env.NEXT_PUBLIC_API_URL || 'https://app.administracionyfinanzas.morelos.gob.mx/transparencia-fiscal-api',
       timeout: 30000,
       headers: {
         'Content-Type': 'application/json',

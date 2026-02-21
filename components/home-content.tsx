@@ -27,6 +27,7 @@ import { CoverflowCarousel } from "@/components/patterns/CoverflowCarousel"
 import { QuickAccessCard } from "@/components/patterns/QuickAccessCard"
 import { CircularButton, CircularButtonWithSideLabel } from "@/components/patterns/CircularButton"
 import { LinksCarousel } from "@/components/patterns/LinksCarousel"
+import { NewsCarousel } from "@/components/patterns/NewsCarousel"
 import { motion } from "framer-motion"
 import { newsItems } from "@/lib/news-data"
 
@@ -95,96 +96,12 @@ export function HomeContent() {
           </div>
         </section>
 
-        {/* Search Section */}
-        <section className="py-12 lg:py-16 bg-gradient-to-b from-background to-muted/30">
-          <div className="max-w-none mx-auto px-4 lg:px-24">
-            <SectionTitle
-              title="¿Qué buscaremos el día de hoy?"
-              subtitle="Encuentra información fiscal, documentos públicos y datos abiertos del Estado de Morelos"
-              titleClassName="text-2xl lg:text-5xl"
-              subtitleClassName="max-w-4xl mx-auto"
-            />
-
-            {/* Search Bar */}
-            <div className="max-w-4xl mx-auto mb-12">
-              <div className="relative">
-                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Search className="h-5 w-5 text-muted-foreground" />
-                </div>
-                <input
-                  type="text"
-                  placeholder="Buscar información, documentos o datos..."
-                  className="w-full pl-10 pr-4 py-4 text-lg rounded-xl border-2 border-primary/20 focus:border-primary focus:ring-4 focus:ring-primary/10 transition-all duration-300 bg-white shadow-lg"
-                  onKeyDown={(e) => {
-                    if (e.key === 'Enter') {
-                      const input = e.target as HTMLInputElement;
-                      const searchText = input.value.trim();
-                      if (searchText.length >= 2) {
-                        // Redirigir a la sección de finanzas (catálogos) con el texto de búsqueda
-                        window.location.href = `/finanzas?buscar=${encodeURIComponent(searchText)}`;
-                      }
-                    }
-                  }}
-                />
-                <button 
-                  className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-primary text-white px-6 py-2 rounded-lg hover:bg-primary/90 transition-colors font-medium"
-                  onClick={() => {
-                    const input = document.querySelector('input[type="text"]') as HTMLInputElement;
-                    const searchText = input?.value.trim();
-                    if (searchText && searchText.length >= 2) {
-                      // Redirigir a la sección de finanzas (catálogos) con el texto de búsqueda
-                      window.location.href = `/finanzas?buscar=${encodeURIComponent(searchText)}`;
-                    }
-                  }}
-                >
-                  Buscar
-                </button>
-              </div>
-            </div>
-
-            {/* Popular Searches */}
-            <div className="max-w-5xl mx-auto">
-              <h3 className="text-2xl font-semibold text-center mb-6 text-foreground">
-                Búsquedas más realizadas
-              </h3>
-              <div className="flex flex-wrap justify-center gap-6">
-                {[
-                  { label: "Presupuesto 2024", count: "1,234" },
-                  { label: "Deuda Pública", count: "987" },
-                  { label: "Rendición de Cuentas", count: "856" }
-                ].map((search, index) => (
-                  <button
-                    key={index}
-                    className="group flex items-center gap-3 px-6 py-4 bg-white border border-primary/10 rounded-xl hover:border-primary/30 hover:shadow-lg transition-all duration-300"
-                  >
-                    <div className="relative">
-                      <div className="text-2xl text-gray-300 group-hover:text-yellow-400 transition-colors">
-                        ★
-                      </div>
-                      <div className="absolute inset-0 text-2xl text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                        ★
-                      </div>
-                    </div>
-                    <div className="text-left">
-                      <span className="text-foreground font-medium group-hover:text-primary transition-colors block">
-                        {search.label}
-                      </span>
-                      <span className="text-sm text-muted-foreground">
-                        {search.count} búsquedas
-                      </span>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          </div>
-        </section>
 
         {/* Two Column Section - Estatua Morelos + Vertical Cards */}
         <section className="py-12 lg:py-16">
           <div className="max-w-none mx-auto px-4 lg:px-24">
             <div className="grid lg:grid-cols-4 gap-16 items-start">
-              {/* Left Column - Estatua Morelos Image (3/4) */}
+              {/* Left Column - Estatua Morelos Image with Title and Search (3/4) */}
               <div className="lg:col-span-3 relative">
                 <div className="sticky top-24">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl">
@@ -197,10 +114,81 @@ export function HomeContent() {
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent"></div>
                     <div className="absolute bottom-0 left-0 right-0 p-8 text-white">
-                      <h3 className="text-3xl font-bold mb-3">Transparencia Fiscal</h3>
-                      <p className="text-white/90 text-lg">
-                        Comprometidos con la rendición de cuentas y el acceso a la información pública
+                      <h3 className="text-3xl font-bold mb-3 text-white">¿Qué buscaremos el día de hoy?</h3>
+                      <p className="text-white/90 text-lg mb-6">
+                        Encuentra información fiscal, documentos públicos y datos abiertos del Estado de Morelos
                       </p>
+                      
+                      {/* Search Bar - Wider and Transparent */}
+                      <div className="relative w-full">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+                          <Search className="h-6 w-6 text-white/80" />
+                        </div>
+                        <input
+                          type="text"
+                          placeholder="Buscar información, documentos o datos..."
+                          className="w-full pl-12 pr-32 py-5 text-lg rounded-xl border-2 border-white/30 focus:border-white/50 focus:ring-4 focus:ring-white/20 transition-all duration-300 bg-white/20 backdrop-blur-sm shadow-lg text-white placeholder-white/70"
+                          onKeyDown={(e) => {
+                            if (e.key === 'Enter') {
+                              const input = e.target as HTMLInputElement;
+                              const searchText = input.value.trim();
+                              if (searchText.length >= 2) {
+                                // Redirigir a la sección de finanzas (catálogos) con el texto de búsqueda
+                                window.location.href = `/finanzas?buscar=${encodeURIComponent(searchText)}`;
+                              }
+                            }
+                          }}
+                        />
+                        <button 
+                          className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-white/20 hover:bg-white/30 text-white px-8 py-3 rounded-lg border border-white/30 backdrop-blur-sm transition-all duration-300 font-medium hover:scale-105"
+                          onClick={() => {
+                            const input = document.querySelector('input[type="text"]') as HTMLInputElement;
+                            const searchText = input?.value.trim();
+                            if (searchText && searchText.length >= 2) {
+                              // Redirigir a la sección de finanzas (catálogos) con el texto de búsqueda
+                              window.location.href = `/finanzas?buscar=${encodeURIComponent(searchText)}`;
+                            }
+                          }}
+                        >
+                          Buscar
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  {/* Popular Searches Below Image - Larger and Aligned with Original Star Design */}
+                  <div className="mt-12">
+                    <h3 className="text-3xl font-bold text-center mb-8 text-foreground">
+                      Búsquedas más realizadas
+                    </h3>
+                    <div className="flex flex-wrap justify-center gap-8">
+                      {[
+                        { label: "Presupuesto", count: "1,234" },
+                        { label: "Deuda Pública", count: "987" },
+                        { label: "Rendición de Cuentas", count: "856" }
+                      ].map((search, index) => (
+                        <button
+                          key={index}
+                          className="group flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
+                        >
+                          <div className="relative">
+                            <div className="text-3xl text-gray-300 group-hover:text-yellow-400 transition-colors">
+                              ★
+                            </div>
+                            <div className="absolute inset-0 text-3xl text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                              ★
+                            </div>
+                          </div>
+                          <div className="text-left">
+                            <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors block">
+                              {search.label}
+                            </span>
+                            <span className="text-lg text-muted-foreground font-medium">
+                              {search.count} búsquedas
+                            </span>
+                          </div>
+                        </button>
+                      ))}
                     </div>
                   </div>
                 </div>
@@ -415,45 +403,25 @@ export function HomeContent() {
           </div>
         </section>
 
-        {/* News Section */}
-        <section className="py-12 lg:py-16">
-          <div className="max-w-none mx-auto px-4 lg:px-24">
-            <SectionTitle
-              title="Noticias y Anuncios"
-              subtitle="Mantente al día con las últimas novedades y eventos"
-              titleClassName="text-3xl lg:text-4xl"
-
-            />
-
-            {/* Coverflow Carousel */}
-            <div className="relative max-w-none mx-auto">
-              <CoverflowCarousel
-                items={newsItems.map((item, index) => ({
-                  id: item.id,
-                  content: (
-                    <div className="w-full h-full p-2">
-                      <NewsCard
-                        title={item.title}
-                        date={item.date}
-                        excerpt={item.excerpt}
-                        image={item.image}
-                        imageAlt={item.title}
-                        url={item.url}
-                        className="h-full"
-                      />
-                    </div>
-                  )
-                }))}
-                currentIndex={currentNewsIndex}
-                onNext={nextNews}
-                onPrev={prevNews}
-                onSelect={setCurrentNewsIndex}
-                showNavigation={true}
-                showDots={true}
-              />
-            </div>
-          </div>
-        </section>
+        {/* News Section - Usando NewsCarousel */}
+        <NewsCarousel
+          title="Noticias y Anuncios"
+          subtitle="Mantente al día con las últimas novedades y eventos"
+          news={newsItems.map((item) => ({
+            id: item.id.toString(),
+            title: item.title,
+            date: item.date,
+            excerpt: item.excerpt,
+            image: item.image,
+            imageAlt: item.title,
+            url: item.url
+          }))}
+          itemsToShow={3}
+          autoPlay={true}
+          autoPlayInterval={5000}
+          showNavigation={true}
+          className=""
+        />
 
         {/* Links of Interest Section */}
         <LinksCarousel

@@ -1,12 +1,11 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import Image from "next/image"
-import Link from "next/link"
 import { motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { SectionTitle } from "@/components/patterns/SectionTitle"
+import { NewsCard } from "@/components/patterns/NewsCard"
 import {
   Carousel,
   CarouselContent,
@@ -15,20 +14,20 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel"
 
-export interface LinkItem {
+export interface NewsItem {
   id: string
   title: string
+  date: string
+  excerpt: string
   image: string
+  imageAlt: string
   url: string
-  alt?: string
-  date?: string
-  excerpt?: string
 }
 
-interface LinksCarouselProps {
+interface NewsCarouselProps {
   title?: string
   subtitle?: string
-  links?: LinkItem[]
+  news?: NewsItem[]
   itemsToShow?: number
   autoPlay?: boolean
   autoPlayInterval?: number
@@ -36,16 +35,16 @@ interface LinksCarouselProps {
   className?: string
 }
 
-export function LinksCarousel({
-  title = "Ligas de Interés",
-  subtitle = "Recursos y portales relacionados con transparencia fiscal",
-  links = [],
-  itemsToShow = 5,
+export function NewsCarousel({
+  title = "Noticias y Anuncios",
+  subtitle = "Mantente al día con las últimas novedades y eventos",
+  news = [],
+  itemsToShow = 3,
   autoPlay = false,
   autoPlayInterval = 5000,
   showNavigation = true,
   className = ""
-}: LinksCarouselProps) {
+}: NewsCarouselProps) {
   const [api, setApi] = useState<any>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
 
@@ -78,51 +77,35 @@ export function LinksCarousel({
     }
   }, [api])
 
-  // Si no hay links, mostrar placeholder
-  if (links.length === 0) {
-    links = [
+  // Si no hay noticias, mostrar placeholder
+  if (news.length === 0) {
+    news = [
       {
         id: "1",
-        title: "AREGIONAL",
-        image: "/images/aregional.png",
-        url: "https://aregionalmx.com/",
-        alt: "AREGIONAL"
+        title: "Portal de Transparencia Fiscal lanza nueva plataforma",
+        date: "15 Feb 2026",
+        excerpt: "El Gobierno del Estado de Morelos presenta una plataforma renovada para mejorar el acceso a la información pública.",
+        image: "/images/noticia1.jpeg",
+        imageAlt: "Lanzamiento de nueva plataforma",
+        url: "#"
       },
       {
         id: "2",
-        title: "Portal Transparencia Nacional",
-        image: "/images/portal-transparencia-nacional.png",
-        url: "https://www.plataformadetransparencia.org.mx/Inicio",
-        alt: "Portal Transparencia Nacional"
+        title: "Más de 1,000 documentos públicos disponibles en línea",
+        date: "10 Feb 2026",
+        excerpt: "La Secretaría de Finanzas ha digitalizado y publicado más de 1,000 documentos fiscales para consulta ciudadana.",
+        image: "/images/noticia2.jpeg",
+        imageAlt: "Documentos públicos digitalizados",
+        url: "#"
       },
       {
         id: "3",
-        title: "Digital Morelos",
-        image: "/images/digital-morelos.png",
-        url: "https://digital.morelos.gob.mx/tramitesdigitales/",
-        alt: "Digital Morelos"
-      },
-      {
-        id: "4",
-        title: "Morelos Portal",
-        image: "/images/morelos-portal.png",
-        url: "https://www.morelos.gob.mx/",
-        alt: "Morelos Portal"
-      },
-      {
-        id: "5",
-        title: "COESPO",
-        image: "/images/COESPO.jpeg",
-        url: "#",
-        alt: "Coespo"
-      }
-      ,
-      {
-        id: "6",
-        title: "CEIEG",
-        image: "/images/CEIEG.jpeg",
-        url: "https://ceieg.morelos.gob.mx/",
-        alt: "CEIEG"
+        title: "Foro de Participación Ciudadana en transparencia fiscal",
+        date: "5 Feb 2026",
+        excerpt: "Se realizará un foro abierto para recibir propuestas ciudadanas sobre mejora en la transparencia fiscal.",
+        image: "/images/noticia3.jpg",
+        imageAlt: "Foro de participación ciudadana",
+        url: "#"
       }
     ]
   }
@@ -150,9 +133,9 @@ export function LinksCarousel({
             className="w-full"
           >
             <CarouselContent className="-ml-4">
-              {links.map((link, index) => (
+              {news.map((item, index) => (
                 <CarouselItem
-                  key={link.id}
+                  key={item.id}
                   className="pl-4"
                   style={{ flexBasis: itemWidth }}
                 >
@@ -160,52 +143,31 @@ export function LinksCarousel({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
-                    className="group"
                   >
-                    <Link
-                      href={link.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="block"
-                    >
-                      <div className="relative overflow-hidden rounded-xl border-2 border-primary/10 bg-white shadow-lg hover:shadow-xl transition-all duration-300 group-hover:border-primary/30 h-full">
-                        <div className="aspect-[4/3] relative overflow-hidden bg-white">
-                          <Image
-                            src={link.image}
-                            alt={link.alt || link.title}
-                            fill
-                            className="object-contain p-4 transition-transform duration-500 group-hover:scale-105"
-                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                          />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                        </div>
-                        <div className="p-4">
-                          <h3 className="text-center font-semibold text-foreground text-sm lg:text-base line-clamp-2 group-hover:text-primary transition-colors">
-                            {link.title}
-                          </h3>
-                        </div>
-                        <div className="absolute top-3 right-3 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                          <div className="bg-primary text-white text-xs px-2 py-1 rounded-full">
-                            Visitar
-                          </div>
-                        </div>
-                      </div>
-                    </Link>
+                    <NewsCard
+                      title={item.title}
+                      date={item.date}
+                      excerpt={item.excerpt}
+                      image={item.image}
+                      imageAlt={item.imageAlt}
+                      url={item.url}
+                      className="h-full"
+                    />
                   </motion.div>
                 </CarouselItem>
               ))}
             </CarouselContent>
 
-            {showNavigation && links.length > itemsToShow && (
+            {showNavigation && news.length > itemsToShow && (
               <>
-                <CarouselPrevious className="left-0 lg:-left-12 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40" />
-                <CarouselNext className="right-0 lg:-right-12 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40" />
+                <CarouselPrevious className="left-0 lg:-left-12 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40 text-primary" />
+                <CarouselNext className="right-0 lg:-right-12 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40 text-primary" />
               </>
             )}
           </Carousel>
 
           {/* Indicadores de posición */}
-          {links.length > itemsToShow && (
+          {news.length > itemsToShow && (
             <div className="flex justify-center items-center gap-2 mt-8">
               <Button
                 variant="ghost"
@@ -218,7 +180,7 @@ export function LinksCarousel({
               </Button>
               
               <div className="flex items-center gap-1">
-                {Array.from({ length: Math.ceil(links.length / itemsToShow) }).map((_, i) => (
+                {Array.from({ length: Math.ceil(news.length / itemsToShow) }).map((_, i) => (
                   <button
                     key={i}
                     onClick={() => api?.scrollTo(i * itemsToShow)}
@@ -248,7 +210,7 @@ export function LinksCarousel({
         {/* Información adicional */}
         <div className="mt-8 text-center">
           <p className="text-sm text-muted-foreground">
-            Desplaza el carrusel para ver más ligas de interés. Haz clic en cualquier imagen para visitar el portal.
+            Desplaza el carrusel para ver más noticias. Haz clic en cualquier noticia para leerla completa.
           </p>
         </div>
       </div>
@@ -257,6 +219,6 @@ export function LinksCarousel({
 }
 
 // Componente simplificado para uso rápido
-export function SimpleLinksCarousel({ links }: { links: LinkItem[] }) {
-  return <LinksCarousel links={links} />
+export function SimpleNewsCarousel({ news }: { news: NewsItem[] }) {
+  return <NewsCarousel news={news} />
 }
