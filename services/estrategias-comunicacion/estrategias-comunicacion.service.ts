@@ -1,5 +1,5 @@
 import { apiClient } from '@/lib/api/axios-client';
-import { RedSocial } from './types';
+import { RedSocial, NoticiaCarousel } from './types';
 
 export const estrategiasComunicacionService = {
   // Obtener redes sociales activas
@@ -12,6 +12,28 @@ export const estrategiasComunicacionService = {
         .sort((a: RedSocial, b: RedSocial) => a.orden - b.orden);
     } catch (error) {
       console.error('Error al obtener redes sociales:', error);
+      return [];
+    }
+  },
+
+  // Obtener noticias optimizadas para carrusel (máximo 5 activas)
+  async getNoticiasCarousel(limit: number = 5): Promise<NoticiaCarousel[]> {
+    try {
+      // Asegurar que el límite máximo sea 5 para optimización
+      const finalLimit = Math.min(limit, 5);
+      const noticias = await apiClient.get<NoticiaCarousel[]>(
+        `/estrategias-comunicacion/noticias/carousel?limit=${finalLimit}`
+      );
+      
+      // La API ya devuelve imagen_url como URL completa (http://host:3001/uploads/noticias/xxx.jpg)
+      return noticias.map(noticia => ({
+        ...noticia,
+        imagen_url: noticia.imagen_url || '/images/placeholder-news.jpg',
+        imagen_alt: noticia.imagen_alt || noticia.titulo,
+        url: noticia.url || `/estrategias-comunicacion/noticias/${noticia.id}`
+      }));
+    } catch (error) {
+      console.error('Error al obtener noticias para carrusel:', error);
       return [];
     }
   },
@@ -55,5 +77,32 @@ export const estrategiasComunicacionService = {
   },
 
   // Obtener nombre de usuario de la URL (para mostrar en la UI)
- 
+  getNombreUsuarioDeUrl(url: string): string {
+    try {
+      const urlObj = new URL(url);
+      const pathname = urlObj.pathname;
+      
+      // Extraer el nombre de usuario de diferentes plataformas
+      if (url.includes('facebook.com')) {
+        const match = pathname.match(/\/([^\/?]+)/);
+        return match ? match[1] : 'Usuario';
+      } else if (url.includes('instagram.com')) {
+        const match = pathname.match(/\/([^\/?]+)/);
+        return match ? `@${match[1]}` : '@usuario';
+      } else if (url.includes('twitter.com') || url.includes('x.com')) {
+        const match = pathname.match(/\/([^\/?]+)/);
+        return match ? `@${match[1]}` : '@usuario';
+      } else if (url.includes('youtube.com')) {
+        const match = pathname.match(/\/@([^\/?]+)/);
+        return match ? `@${match[1]}` : 'Canal';
+      } else if (url.includes('linkedin.com')) {
+        const match = pathname.match(/\/in\/([^\/?]+)/);
+        return match ? match[1] : 'Perfil';
+      }
+      
+      return 'Usuario';
+    } catch (error) {
+      return 'Usuario';
+    }
+  }
 };

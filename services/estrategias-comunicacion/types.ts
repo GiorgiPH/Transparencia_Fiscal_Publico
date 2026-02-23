@@ -11,11 +11,33 @@ export interface RedSocial {
   fecha_actualizacion: string;
 }
 
+// Tipos para noticias del carrusel
+export interface NoticiaCarousel {
+  id: number;
+  titulo: string;
+  fecha_formateada: string;
+  descripcion_corta: string;
+  imagen_url?: string;
+  link: string;
+  imagen_alt: string;
+  url: string;
+  fecha_publicacion: Date;
+}
+
 // Respuesta de la API para redes sociales
 export interface RedesSocialesResponse {
   statusCode: number;
   message: string;
   data: RedSocial[];
+  timestamp: string;
+  path: string;
+}
+
+// Respuesta de la API para noticias del carrusel
+export interface NoticiasCarouselResponse {
+  statusCode: number;
+  message: string;
+  data: NoticiaCarousel[];
   timestamp: string;
   path: string;
 }

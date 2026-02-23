@@ -14,6 +14,8 @@ interface NewsCardProps {
   url: string
 }
 
+const FALLBACK_URL = '#'
+
 export function NewsCard({
   title,
   date,
@@ -26,7 +28,7 @@ export function NewsCard({
   return (
     <div className={cn("h-full", className)}>
       <Link
-        href={url}
+        href={url || FALLBACK_URL}
         target="_blank"
         rel="noopener noreferrer"
         className="block h-full"

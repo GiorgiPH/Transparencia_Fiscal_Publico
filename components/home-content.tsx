@@ -29,19 +29,16 @@ import { CircularButton, CircularButtonWithSideLabel } from "@/components/patter
 import { LinksCarousel } from "@/components/patterns/LinksCarousel"
 import { NewsCarousel } from "@/components/patterns/NewsCarousel"
 import { motion } from "framer-motion"
-import { newsItems } from "@/lib/news-data"
+import { useNoticiasCarouselMapped } from "@/hooks/estrategias-comunicacion"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
 
 export function HomeContent() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
-  const [currentNewsIndex, setCurrentNewsIndex] = useState(0)
-
-  const nextNews = () => {
-    setCurrentNewsIndex((prev) => (prev + 1) % newsItems.length)
-  }
-
-  const prevNews = () => {
-    setCurrentNewsIndex((prev) => (prev - 1 + newsItems.length) % newsItems.length)
-  }
+  
+  // Usar el hook para obtener noticias del carrusel desde la API
+  const { noticias, loading, error } = useNoticiasCarouselMapped(5)
 
   const handleMenuClick = () => {
     setSidebarOpen(!sidebarOpen)
@@ -403,25 +400,44 @@ export function HomeContent() {
           </div>
         </section>
 
-        {/* News Section - Usando NewsCarousel */}
-        <NewsCarousel
-          title="Noticias y Anuncios"
-          subtitle="Mantente al día con las últimas novedades y eventos"
-          news={newsItems.map((item) => ({
-            id: item.id.toString(),
-            title: item.title,
-            date: item.date,
-            excerpt: item.excerpt,
-            image: item.image,
-            imageAlt: item.title,
-            url: item.url
-          }))}
-          itemsToShow={3}
-          autoPlay={true}
-          autoPlayInterval={5000}
-          showNavigation={true}
-          className=""
-        />
+        {/* News Section - NewsCarousel consume noticias desde estrategias-comunicacion API */}
+        {loading && (
+          <section className="py-12 lg:py-16">
+            <div className="max-w-none mx-auto px-4 lg:px-24">
+              <Skeleton className="h-10 w-64 mb-2" />
+              <Skeleton className="h-5 w-96 mb-8" />
+              <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
+                {[1, 2, 3].map((i) => (
+                  <Skeleton key={i} className="h-[320px] rounded-xl" />
+                ))}
+              </div>
+            </div>
+          </section>
+        )}
+
+        {error && (
+          <section className="py-12 lg:py-16">
+            <div className="max-w-none mx-auto px-4 lg:px-24">
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            </div>
+          </section>
+        )}
+
+        {!loading && !error && (
+          <NewsCarousel
+            title="Noticias y Anuncios"
+            subtitle="Mantente al día con las últimas novedades y eventos"
+            news={noticias}
+            itemsToShow={3}
+            autoPlay={true}
+            autoPlayInterval={5000}
+            showNavigation={true}
+            className=""
+          />
+        )}
 
         {/* Links of Interest Section */}
         <LinksCarousel
