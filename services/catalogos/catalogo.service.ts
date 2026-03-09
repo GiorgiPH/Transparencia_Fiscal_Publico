@@ -3,7 +3,8 @@ import {
   CatalogoBase,
   CatalogoConDocumentos,
   CatalogoRaizResponse,
-  CatalogoHijosResponse
+  CatalogoHijosResponse,
+  TopCatalogo
 } from './types';
 
 export interface BuscarCatalogosResponse extends CatalogoConDocumentos {
@@ -70,5 +71,10 @@ export const catalogoService = {
       return [];
     }
     return apiClient.get<BuscarCatalogosResponse[]>(`/catalogos/buscar?q=${encodeURIComponent(texto.trim())}`);
+  },
+
+  // Obtener los catálogos con más documentos (top 5)
+  async getTopCatalogos(): Promise<TopCatalogo[]> {
+    return apiClient.get<TopCatalogo[]>('/catalogos/top');
   },
 };

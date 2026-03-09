@@ -13,6 +13,35 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { useIsMobile } from "@/hooks/use-mobile"
+
+// Hook personalizado para determinar cuántos items mostrar basado en el tamaño de pantalla
+function useResponsiveItemsToShow() {
+  const isMobile = useIsMobile()
+  const [isMedium, setIsMedium] = useState<boolean>(false)
+  const [isLarge, setIsLarge] = useState<boolean>(false)
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth
+      // Definimos breakpoints:
+      // - Mobile: < 768px (ya manejado por useIsMobile)
+      // - Medium: 768px - 1024px
+      // - Large: > 1024px
+      setIsMedium(width >= 768 && width < 1024)
+      setIsLarge(width >= 1024)
+    }
+
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
+
+  // Retornar número de items basado en tamaño de pantalla
+  if (isMobile) return 1
+  if (isMedium) return 2
+  return 4 // Para pantallas grandes - MOSTRAR 4 NOTICIAS COMO SE SOLICITA
+}
 
 export interface NewsItem {
   id: string
@@ -40,7 +69,7 @@ export function NewsCarousel({
   title = "Noticias y Anuncios",
   subtitle = "Mantente al día con las últimas novedades y eventos",
   news = [],
-  itemsToShow = 3,
+  itemsToShow = 5,
   autoPlay = false,
   autoPlayInterval = 5000,
   showNavigation = true,
@@ -48,6 +77,11 @@ export function NewsCarousel({
 }: NewsCarouselProps) {
   const [api, setApi] = useState<any>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
+  
+  // Usar el hook responsive para determinar cuántos items mostrar
+  const responsiveItemsToShow = useResponsiveItemsToShow()
+  // Sobrescribir itemsToShow con el valor responsive si no se proporciona explícitamente
+  const actualItemsToShow = itemsToShow === 5 ? responsiveItemsToShow : itemsToShow
 
   // Configurar autoplay
   useEffect(() => {
@@ -111,8 +145,8 @@ export function NewsCarousel({
     ]
   }
 
-  // Calcular el tamaño de cada item basado en itemsToShow
-  const itemWidth = `${100 / itemsToShow}%`
+  // Calcular el tamaño de cada item basado en actualItemsToShow
+  const itemWidth = `${100 / actualItemsToShow}%`
 
   return (
     <section className={`py-12 lg:py-16 ${className}`}>
@@ -159,7 +193,7 @@ export function NewsCarousel({
               ))}
             </CarouselContent>
 
-            {showNavigation && news.length > itemsToShow && (
+            {showNavigation && news.length > actualItemsToShow && (
               <>
                 <CarouselPrevious className="left-0 lg:-left-12 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40 text-primary" />
                 <CarouselNext className="right-0 lg:-right-12 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40 text-primary" />
@@ -168,7 +202,7 @@ export function NewsCarousel({
           </Carousel>
 
           {/* Indicadores de posición */}
-          {news.length > itemsToShow && (
+          {news.length > actualItemsToShow && (
             <div className="flex justify-center items-center gap-2 mt-8">
               <Button
                 variant="ghost"
@@ -181,12 +215,12 @@ export function NewsCarousel({
               </Button>
               
               <div className="flex items-center gap-1">
-                {Array.from({ length: Math.ceil(news.length / itemsToShow) }).map((_, i) => (
+                {Array.from({ length: Math.ceil(news.length / actualItemsToShow) }).map((_, i) => (
                   <button
                     key={i}
-                    onClick={() => api?.scrollTo(i * itemsToShow)}
+                    onClick={() => api?.scrollTo(i * actualItemsToShow)}
                     className={`h-2 rounded-full transition-all duration-300 ${
-                      Math.floor(currentIndex / itemsToShow) === i
+                      Math.floor(currentIndex / actualItemsToShow) === i
                         ? "w-8 bg-primary"
                         : "w-2 bg-primary/30 hover:bg-primary/50"
                     }`}

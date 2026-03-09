@@ -12,7 +12,7 @@ export default function BusquedaDatosPage() {
     <PortalLayout activeSection="finanzas">
       <div className="p-6 lg:p-12 max-w-7xl mx-auto">
         <SectionTitle
-          title="Búsqueda de Datos y Documentos"
+          title="Explora los Datos"
           subtitle="Encuentra documentos fiscales, informes y datos específicos de manera rápida y eficiente."
           className="mb-8"
           titleClassName="text-3xl lg:text-4xl"

@@ -48,6 +48,11 @@ export interface BreadcrumbItem {
   nivel: number;
 }
 
+export interface TopCatalogo extends CatalogoConDocumentos {
+  totalDocumentos: number;
+  posicion: number;
+}
+
 export interface CatalogoState {
   currentCatalogoId: number | null;
   currentCatalogoNombre: string;

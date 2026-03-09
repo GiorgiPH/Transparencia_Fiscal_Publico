@@ -14,6 +14,35 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { useIsMobile } from "@/hooks/use-mobile"
+
+// Hook personalizado para determinar cuántos items mostrar basado en el tamaño de pantalla
+function useResponsiveItemsToShow() {
+  const isMobile = useIsMobile()
+  const [isMedium, setIsMedium] = useState<boolean>(false)
+  const [isLarge, setIsLarge] = useState<boolean>(false)
+
+  useEffect(() => {
+    const checkScreenSize = () => {
+      const width = window.innerWidth
+      // Definimos breakpoints:
+      // - Mobile: < 768px (ya manejado por useIsMobile)
+      // - Medium: 768px - 1024px
+      // - Large: > 1024px
+      setIsMedium(width >= 768 && width < 1024)
+      setIsLarge(width >= 1024)
+    }
+
+    checkScreenSize()
+    window.addEventListener('resize', checkScreenSize)
+    return () => window.removeEventListener('resize', checkScreenSize)
+  }, [])
+
+  // Retornar número de items basado en tamaño de pantalla
+  if (isMobile) return 1
+  if (isMedium) return 2
+  return 3 // Para pantallas grandes
+}
 
 export interface LinkItem {
   id: string
@@ -48,6 +77,11 @@ export function LinksCarousel({
 }: LinksCarouselProps) {
   const [api, setApi] = useState<any>(null)
   const [currentIndex, setCurrentIndex] = useState(0)
+  
+  // Usar el hook responsive para determinar cuántos items mostrar
+  const responsiveItemsToShow = useResponsiveItemsToShow()
+  // Sobrescribir itemsToShow con el valor responsive si no se proporciona explícitamente
+  const actualItemsToShow = itemsToShow === 5 ? responsiveItemsToShow : itemsToShow
 
   // Configurar autoplay
   useEffect(() => {
@@ -81,12 +115,13 @@ export function LinksCarousel({
   // Si no hay links, mostrar placeholder
   if (links.length === 0) {
     links = [
+      
       {
         id: "1",
-        title: "AREGIONAL",
-        image: "/images/aregional.png",
-        url: "https://aregionalmx.com/",
-        alt: "AREGIONAL"
+        title: "MTID",
+        image: "/images/modelo_europeo.png",
+        url: "https://ceieg.morelos.gob.mx/",
+        alt: "MITD"
       },
       {
         id: "2",
@@ -123,12 +158,19 @@ export function LinksCarousel({
         image: "/images/CEIEG.jpeg",
         url: "https://ceieg.morelos.gob.mx/",
         alt: "CEIEG"
-      }
+      },
+      {
+        id: "7",
+        title: "AREGIONAL",
+        image: "/images/aregional.png",
+        url: "https://aregionalmx.com/",
+        alt: "AREGIONAL"
+      },
     ]
   }
 
-  // Calcular el tamaño de cada item basado en itemsToShow
-  const itemWidth = `${100 / itemsToShow}%`
+  // Calcular el tamaño de cada item basado en actualItemsToShow
+  const itemWidth = `${100 / actualItemsToShow}%`
 
   return (
     <section className={`py-12 lg:py-16 ${className}`}>
@@ -196,7 +238,7 @@ export function LinksCarousel({
               ))}
             </CarouselContent>
 
-            {showNavigation && links.length > itemsToShow && (
+            {showNavigation && links.length > actualItemsToShow && (
               <>
                 <CarouselPrevious className="left-0 lg:-left-12 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40" />
                 <CarouselNext className="right-0 lg:-right-12 top-1/2 -translate-y-1/2 bg-white/80 backdrop-blur-sm border-primary/20 hover:bg-white hover:border-primary/40" />
@@ -205,7 +247,7 @@ export function LinksCarousel({
           </Carousel>
 
           {/* Indicadores de posición */}
-          {links.length > itemsToShow && (
+          {links.length > actualItemsToShow && (
             <div className="flex justify-center items-center gap-2 mt-8">
               <Button
                 variant="ghost"
@@ -218,12 +260,12 @@ export function LinksCarousel({
               </Button>
               
               <div className="flex items-center gap-1">
-                {Array.from({ length: Math.ceil(links.length / itemsToShow) }).map((_, i) => (
+                {Array.from({ length: Math.ceil(links.length / actualItemsToShow) }).map((_, i) => (
                   <button
                     key={i}
-                    onClick={() => api?.scrollTo(i * itemsToShow)}
+                    onClick={() => api?.scrollTo(i * actualItemsToShow)}
                     className={`h-2 rounded-full transition-all duration-300 ${
-                      Math.floor(currentIndex / itemsToShow) === i
+                      Math.floor(currentIndex / actualItemsToShow) === i
                         ? "w-8 bg-primary"
                         : "w-2 bg-primary/30 hover:bg-primary/50"
                     }`}

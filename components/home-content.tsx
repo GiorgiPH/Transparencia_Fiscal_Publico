@@ -30,6 +30,7 @@ import { LinksCarousel } from "@/components/patterns/LinksCarousel"
 import { NewsCarousel } from "@/components/patterns/NewsCarousel"
 import { motion } from "framer-motion"
 import { useNoticiasCarouselMapped } from "@/hooks/estrategias-comunicacion"
+import { useTopCatalogos } from "@/hooks/catalogos/use-top-catalogos"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
@@ -39,6 +40,9 @@ export function HomeContent() {
   
   // Usar el hook para obtener noticias del carrusel desde la API
   const { noticias, loading, error } = useNoticiasCarouselMapped(5)
+  
+  // Usar el hook para obtener los catálogos más populares
+  const { topCatalogos, loading: loadingTopCatalogos, error: errorTopCatalogos, handleTopCatalogoClick } = useTopCatalogos()
 
   const handleMenuClick = () => {
     setSidebarOpen(!sidebarOpen)
@@ -97,8 +101,8 @@ export function HomeContent() {
         {/* Two Column Section - Estatua Morelos + Vertical Cards */}
         <section className="py-12 lg:py-16">
           <div className="max-w-none mx-auto px-4 lg:px-24">
-            <div className="grid lg:grid-cols-4 gap-16 items-start">
-              {/* Left Column - Estatua Morelos Image with Title and Search (3/4) */}
+            <div className="grid lg:grid-cols-5 gap-16 items-start">
+              {/* Left Column - Estatua Morelos Image with Title and Search (3/5) */}
               <div className="lg:col-span-3 relative">
                 <div className="sticky top-24">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl">
@@ -156,43 +160,72 @@ export function HomeContent() {
                   {/* Popular Searches Below Image - Larger and Aligned with Original Star Design */}
                   <div className="mt-12">
                     <h3 className="text-3xl font-bold text-center mb-8 text-foreground">
-                      Búsquedas más realizadas
+                      Catálogos más consultados
                     </h3>
-                    <div className="flex flex-wrap justify-center gap-8">
-                      {[
-                        { label: "Presupuesto", count: "1,234" },
-                        { label: "Deuda Pública", count: "987" },
-                        { label: "Rendición de Cuentas", count: "856" }
-                      ].map((search, index) => (
-                        <button
-                          key={index}
-                          className="group flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02]"
-                        >
-                          <div className="relative">
-                            <div className="text-3xl text-gray-300 group-hover:text-yellow-400 transition-colors">
-                              ★
-                            </div>
-                            <div className="absolute inset-0 text-3xl text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                              ★
+                    
+                    {loadingTopCatalogos && (
+                      <div className="flex flex-wrap justify-center gap-8">
+                        {[1, 2, 3].map((i) => (
+                          <div key={i} className="flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl">
+                            <Skeleton className="w-8 h-8 rounded-full" />
+                            <div className="text-left">
+                              <Skeleton className="h-6 w-32 mb-2" />
+                              <Skeleton className="h-4 w-24" />
                             </div>
                           </div>
-                          <div className="text-left">
-                            <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors block">
-                              {search.label}
-                            </span>
-                            <span className="text-lg text-muted-foreground font-medium">
-                              {search.count} búsquedas
-                            </span>
-                          </div>
-                        </button>
-                      ))}
-                    </div>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {errorTopCatalogos && (
+                      <div className="text-center">
+                        <Alert variant="destructive" className="max-w-md mx-auto">
+                          <AlertCircle className="h-4 w-4" />
+                          <AlertDescription>Error al cargar los catálogos más consultados</AlertDescription>
+                        </Alert>
+                      </div>
+                    )}
+                    
+                    {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length > 0 && (
+                      <div className="flex flex-wrap justify-center gap-8">
+                        {topCatalogos.slice(0, 5).map((catalogo, index) => (
+                          <button
+                            key={catalogo.id}
+                            onClick={() => handleTopCatalogoClick(catalogo.id)}
+                            className="group flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                          >
+                            <div className="relative">
+                              <div className="text-3xl text-gray-300 group-hover:text-yellow-400 transition-colors">
+                                ★
+                              </div>
+                              <div className="absolute inset-0 text-3xl text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                                ★
+                              </div>
+                            </div>
+                            <div className="text-left">
+                              <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors block">
+                                {catalogo.nombre}
+                              </span>
+                              <span className="text-lg text-muted-foreground font-medium">
+                                ({catalogo.totalDocumentos} descargas)
+                              </span>
+                            </div>
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                    
+                    {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length === 0 && (
+                      <div className="text-center text-muted-foreground">
+                        No hay catálogos disponibles
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
 
-              {/* Right Column - Vertical Cards (1/4) */}
-              <div className="lg:col-span-1 space-y-4">
+              {/* Right Column - Vertical Cards (2/5) - Más ancho */}
+              <div className="lg:col-span-2 space-y-4">
                 {[
                   {
                     title: "Conoce tu Portal",
