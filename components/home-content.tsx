@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { HomeHeader } from "@/components/home-header"
 import { PortalSidebar } from "@/components/portal-sidebar"
 import { PortalFooter } from "@/components/portal-footer"
@@ -22,7 +22,6 @@ import Link from "next/link"
 import Image from "next/image"
 import { NewsCard } from "@/components/patterns/NewsCard"
 import { SectionTitle } from "@/components/patterns/SectionTitle"
-import { InstitutionalCard } from "@/components/patterns/InstitutionalCard"
 import { CoverflowCarousel } from "@/components/patterns/CoverflowCarousel"
 import { QuickAccessCard } from "@/components/patterns/QuickAccessCard"
 import { CircularButton, CircularButtonWithSideLabel } from "@/components/patterns/CircularButton"
@@ -34,6 +33,13 @@ import { useTopCatalogos } from "@/hooks/catalogos/use-top-catalogos"
 import { Skeleton } from "@/components/ui/skeleton"
 import { Alert, AlertDescription } from "@/components/ui/alert"
 import { AlertCircle } from "lucide-react"
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
+} from "@/components/ui/carousel"
 
 export function HomeContent() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -43,6 +49,62 @@ export function HomeContent() {
   
   // Usar el hook para obtener los catálogos más populares
   const { topCatalogos, loading: loadingTopCatalogos, error: errorTopCatalogos, handleTopCatalogoClick } = useTopCatalogos()
+
+  const [infoCardsApi, setInfoCardsApi] = useState<any>(null)
+
+  const infoCards = [
+    {
+      title: "Conoce tu Portal",
+      subtitle: "Navega y Explora",
+      description:
+        "Descubre las secciones, funcionalidades y contenidos disponibles para consultar información de manera clara y organizada.",
+      color: "tertiary",
+      href: "/mecanismos-acceso",
+    },
+    {
+      title: "Participa y Opina",
+      subtitle: "Tu Voz Importa",
+      description: "Participa en el envio de comentarios y contribuye al presupuesto participativo.",
+      color: "tertiary",
+      href: "/participacion-ciudadana",
+    },
+    {
+      title: "Estrategias de Comunicación",
+      subtitle: "Mantente Informado",
+      description: "Mantente informado a través de nuestros canales oficiales, redes sociales y campañas de comunicación.",
+      color: "tertiary",
+      href: "/estrategias-comunicacion",
+    },
+    {
+      title: "Política de Datos Abiertos",
+      subtitle: "Datos para Análisis",
+      description: "Accede y reutiliza conjuntos de datos públicos en formatos abiertos para análisis e investigación.",
+      color: "tertiary",
+      href: "/datos-abiertos",
+    },
+    {
+      title: "Conoce las Leyes",
+      subtitle: "Fundamentos Legales",
+      description: "Consulta las leyes, reglamentos y normativas que fundamentan la transparencia fiscal en Morelos.",
+      color: "tertiary",
+      href: "/marco-normativo",
+    },
+  ]
+
+  // Autoplay similar a NewsCarousel (sin indicadores inferiores)
+  useEffect(() => {
+    if (!infoCardsApi) return
+
+    const interval = setInterval(() => {
+      if (infoCardsApi.canScrollNext()) {
+        infoCardsApi.scrollNext()
+      } else {
+        infoCardsApi.scrollTo(0)
+      }
+    }, 4500)
+
+    return () => clearInterval(interval)
+  }, [infoCardsApi])
 
   const handleMenuClick = () => {
     setSidebarOpen(!sidebarOpen)
@@ -63,24 +125,22 @@ export function HomeContent() {
       {/* Main Content */}
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative  min-h-[40vh] bg-cover bg-center bg-no-repeat border-b" style={{ backgroundImage: "url('/images/hero-background.png')" }}>
+        <section className="relative  min-h-[40vh] bg-cover bg-center bg-no-repeat border-b" style={{ backgroundImage: "url('/images/BANNER.jpg')" }}>
           <div className="absolute inset-0 bg-black/30"></div>
           <div className="max-w-none mx-auto px-4 lg:px-24 py-12 lg:py-20 relative z-10">
             <div className="text-center max-w-4xl mx-auto mb-10">
-              <motion.h1 
-                className="text-4xl lg:text-5xl font-bold text-white mb-4 text-balance"
-                initial={{ opacity: 0, y: 30 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ 
-                  duration: 0.8,
-                  ease: "easeOut",
-                  delay: 0.2
-                }}
-              >
-                Portal de Transparencia Fiscal
-              </motion.h1>
+              
+            </div>
+
+          </div>
+        </section>
+
+        {/* Description Section */}
+        <section className="py-8 lg:py-12 bg-white">
+          <div className="max-w-none mx-auto px-4 lg:px-24">
+            <div className="text-center max-w-4xl mx-auto">
               <motion.p 
-                className="text-lg lg:text-xl text-white/90 text-pretty"
+                className="text-lg lg:text-xl text-foreground text-pretty"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ 
@@ -93,7 +153,6 @@ export function HomeContent() {
                 cómo se administra el presupuesto y participa en la construcción de un gobierno transparente.
               </motion.p>
             </div>
-
           </div>
         </section>
 
@@ -107,7 +166,7 @@ export function HomeContent() {
                 <div className="sticky top-24">
                   <div className="relative rounded-2xl overflow-hidden shadow-2xl">
                     <Image
-                      src="/images/estatua-morelos.png"
+                      src="/images/BANNER_conoce_tu_portal.jpg"
                       alt="Estatua de Morelos - Símbolo de transparencia fiscal"
                       width={1200}
                       height={1500}
@@ -157,164 +216,192 @@ export function HomeContent() {
                     </div>
                   </div>
                   
-                  {/* Popular Searches Below Image - Larger and Aligned with Original Star Design */}
-                  <div className="mt-12">
-                    <h3 className="text-3xl font-bold text-center mb-8 text-foreground">
-                      Catálogos más consultados
-                    </h3>
-                    
-                    {loadingTopCatalogos && (
-                      <div className="flex flex-wrap justify-center gap-8">
-                        {[1, 2, 3].map((i) => (
-                          <div key={i} className="flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl">
-                            <Skeleton className="w-8 h-8 rounded-full" />
-                            <div className="text-left">
-                              <Skeleton className="h-6 w-32 mb-2" />
-                              <Skeleton className="h-4 w-24" />
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                    
-                    {errorTopCatalogos && (
-                      <div className="text-center">
-                        <Alert variant="destructive" className="max-w-md mx-auto">
-                          <AlertCircle className="h-4 w-4" />
-                          <AlertDescription>Error al cargar los catálogos más consultados</AlertDescription>
-                        </Alert>
-                      </div>
-                    )}
-                    
-                    {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length > 0 && (
-                      <div className="flex flex-wrap justify-center gap-8">
-                        {topCatalogos.slice(0, 5).map((catalogo, index) => (
-                          <button
-                            key={catalogo.id}
-                            onClick={() => handleTopCatalogoClick(catalogo.id)}
-                            className="group flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
-                          >
-                            <div className="relative">
-                              <div className="text-3xl text-gray-300 group-hover:text-yellow-400 transition-colors">
-                                ★
-                              </div>
-                              <div className="absolute inset-0 text-3xl text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                                ★
-                              </div>
-                            </div>
-                            <div className="text-left">
-                              <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors block">
-                                {catalogo.nombre}
-                              </span>
-                              <span className="text-lg text-muted-foreground font-medium">
-                                ({catalogo.totalDocumentos} descargas)
-                              </span>
-                            </div>
-                          </button>
-                        ))}
-                      </div>
-                    )}
-                    
-                    {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length === 0 && (
-                      <div className="text-center text-muted-foreground">
-                        No hay catálogos disponibles
-                      </div>
-                    )}
-                  </div>
                 </div>
               </div>
 
               {/* Right Column - Vertical Cards (2/5) - Más ancho */}
-              <div className="lg:col-span-2 space-y-4">
-                {[
-                  {
-                    title: "Conoce tu Portal",
-                    subtitle: "Navega y Explora",
-                    description: "Descubre las secciones, funcionalidades y contenidos disponibles para consultar información de manera clara y organizada.",
-                    color: "tertiary",
-                    href: "/mecanismos-acceso"
-                  },
-                  {
-                    title: "Participa y Opina",
-                    subtitle: "Tu Voz Importa",
-                    description: "Participa en el envio de comentarios y contribuye al presupuesto participativo.",
-                    color: "tertiary",
-                    href: "/participacion-ciudadana"
-                  },
-                  {
-                    title: "Estrategias de Comunicación",
-                    subtitle: "Mantente Informado",
-                    description: "Mantente informado a través de nuestros canales oficiales, redes sociales y campañas de comunicación.",
-                    color: "tertiary",
-                    href: "/estrategias-comunicacion"
-                  },
-                  {
-                    title: "Política de Datos Abiertos",
-                    subtitle: "Datos para Análisis",
-                    description: "Accede y reutiliza conjuntos de datos públicos en formatos abiertos para análisis e investigación.",
-                    color: "tertiary",
-                    href: "/datos-abiertos"
-                  },
-                  {
-                    title: "Conoce las Leyes",
-                    subtitle: "Fundamentos Legales",
-                    description: "Consulta las leyes, reglamentos y normativas que fundamentan la transparencia fiscal en Morelos.",
-                    color: "tertiary",
-                    href: "/marco-normativo"
-                  }
-                ].map((card, index) => (
-                  <motion.div
-                    key={index}
-                    initial={{ opacity: 0, x: 20 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ delay: index * 0.1 }}
-                    className="group"
-                  >
-                    <Card className="border-2 hover:border-tertiary/30 hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02] min-h-[120px]">
-                      <CardContent className="p-4">
-                        <div className="flex items-start justify-between gap-3">
-                          <div className="flex-1 min-w-0">
-                            <div className="flex items-start justify-between mb-2">
-                              <div>
-                                <h3 className="text-lg font-bold text-tertiary group-hover:text-tertiary/80 transition-colors leading-tight">
-                                  {card.title}
-                                </h3>
-                                {card.subtitle && (
-                                  <p className="text-lg font-medium text-muted-foreground mt-1">
-                                    {card.subtitle}
-                                  </p>
-                                )}
+              <div className="lg:col-span-2">
+                {/* Mobile/Tablet: lista normal */}
+                <div className="space-y-4 lg:hidden">
+                  {infoCards.map((card, index) => (
+                    <motion.div
+                      key={index}
+                      initial={{ opacity: 0, x: 20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: index * 0.1 }}
+                      className="group"
+                    >
+                      <Card className="border-2 hover:border-tertiary/30 hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02] min-h-[120px]">
+                        <CardContent className="p-4">
+                          <div className="flex items-start justify-between gap-3">
+                            <div className="flex-1 min-w-0">
+                              <div className="flex items-start justify-between mb-2">
+                                <div>
+                                  <h3 className="text-lg font-bold text-tertiary group-hover:text-tertiary/80 transition-colors leading-tight">
+                                    {card.title}
+                                  </h3>
+                                  {card.subtitle && (
+                                    <p className="text-lg font-medium text-muted-foreground mt-1">{card.subtitle}</p>
+                                  )}
+                                </div>
+                                <CircularButton
+                                  href={card.href}
+                                  size="sm"
+                                  color="tertiary"
+                                  label=""
+                                  description=""
+                                  className="scale-75 -mt-1 -mr-1"
+                                  showPing={false}
+                                />
                               </div>
-                              <CircularButton
-                                href={card.href}
-                                size="sm"
-                                color="tertiary"
-                                label=""
-                                description=""
-                                className="scale-75 -mt-1 -mr-1"
-                                showPing={false}
-                              />
-                            </div>
-                            <p className="text-md text-muted-foreground leading-relaxed line-clamp-2">
-                              {card.description}
-                            </p>
-                            <div className="mt-2">
-                              
+                              <p className="text-md text-muted-foreground leading-relaxed line-clamp-2">{card.description}</p>
                             </div>
                           </div>
-                        </div>
-                      </CardContent>
-                    </Card>
-                  </motion.div>
-                ))}
+                        </CardContent>
+                      </Card>
+                    </motion.div>
+                  ))}
+                </div>
+
+                {/* Desktop: carrusel vertical sin scrollbar */}
+                <div className="hidden lg:block">
+                  <div className="relative">
+                    <Carousel
+                      orientation="vertical"
+                      opts={{
+                        align: "start",
+                        slidesToScroll: 1,
+                        containScroll: "trimSnaps",
+                      }}
+                      setApi={setInfoCardsApi}
+                      className="w-full"
+                    >
+                      <CarouselContent className="h-[calc(100vh-6rem)]">
+                        {infoCards.map((card, index) => (
+                          <CarouselItem key={index} className="basis-[150px]">
+                            <motion.div
+                              initial={{ opacity: 0, x: 20 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: index * 0.06 }}
+                              className="group"
+                            >
+                              <Card className="border-2 hover:border-tertiary/30 hover:shadow-xl transition-all duration-300 overflow-hidden hover:scale-[1.02] min-h-[120px]">
+                                <CardContent className="p-4">
+                                  <div className="flex items-start justify-between gap-3">
+                                    <div className="flex-1 min-w-0">
+                                      <div className="flex items-start justify-between mb-2">
+                                        <div>
+                                          <h3 className="text-lg font-bold text-tertiary group-hover:text-tertiary/80 transition-colors leading-tight">
+                                            {card.title}
+                                          </h3>
+                                          {card.subtitle && (
+                                            <p className="text-lg font-medium text-muted-foreground mt-1">
+                                              {card.subtitle}
+                                            </p>
+                                          )}
+                                        </div>
+                                        <CircularButton
+                                          href={card.href}
+                                          size="sm"
+                                          color="tertiary"
+                                          label=""
+                                          description=""
+                                          className="scale-75 -mt-1 -mr-1"
+                                          showPing={false}
+                                        />
+                                      </div>
+                                      <p className="text-md text-muted-foreground leading-relaxed line-clamp-2">
+                                        {card.description}
+                                      </p>
+                                    </div>
+                                  </div>
+                                </CardContent>
+                              </Card>
+                            </motion.div>
+                          </CarouselItem>
+                        ))}
+                      </CarouselContent>
+
+                      {infoCards.length > 1 && (
+                        <>
+                          <CarouselPrevious className="top-0 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-sm border-tertiary/20 hover:bg-white hover:border-tertiary/40 text-tertiary" />
+                          <CarouselNext className="bottom-0 left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-sm border-tertiary/20 hover:bg-white hover:border-tertiary/40 text-tertiary" />
+                        </>
+                      )}
+                    </Carousel>
+                  </div>
+                </div>
               </div>
+            </div>
+
+            {/* Catálogos más consultados (full width) */}
+            <div className="mt-14">
+              <h3 className="text-3xl font-bold text-center mb-8 text-foreground">Catálogos más consultados</h3>
+
+              {loadingTopCatalogos && (
+                <div className="flex flex-wrap justify-center gap-8">
+                  {[1, 2, 3].map((i) => (
+                    <div
+                      key={i}
+                      className="flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl"
+                    >
+                      <Skeleton className="w-8 h-8 rounded-full" />
+                      <div className="text-left">
+                        <Skeleton className="h-6 w-32 mb-2" />
+                        <Skeleton className="h-4 w-24" />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {errorTopCatalogos && (
+                <div className="text-center">
+                  <Alert variant="destructive" className="max-w-md mx-auto">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertDescription>Error al cargar los catálogos más consultados</AlertDescription>
+                  </Alert>
+                </div>
+              )}
+
+              {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length > 0 && (
+                <div className="flex flex-wrap justify-center gap-8">
+                  {topCatalogos.slice(0, 5).map((catalogo) => (
+                    <button
+                      key={catalogo.id}
+                      onClick={() => handleTopCatalogoClick(catalogo.id)}
+                      className="group flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                    >
+                      <div className="relative">
+                        <div className="text-3xl text-gray-300 group-hover:text-yellow-400 transition-colors">★</div>
+                        <div className="absolute inset-0 text-3xl text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity">
+                          ★
+                        </div>
+                      </div>
+                      <div className="text-left">
+                        <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors block">
+                          {catalogo.nombre}
+                        </span>
+                        <span className="text-lg text-muted-foreground font-medium">
+                          ({catalogo.totalDocumentos} descargas)
+                        </span>
+                      </div>
+                    </button>
+                  ))}
+                </div>
+              )}
+
+              {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length === 0 && (
+                <div className="text-center text-muted-foreground">No hay catálogos disponibles</div>
+              )}
             </div>
           </div>
         </section>
 
         {/* Quick Access Block */}
         <section className="py-12 lg:py-16">
-          <div className="max-w-none mx-auto px-4 lg:px-24">
+          <div className="mx-auto px-4 lg:px-24">
+            <div className="max-w-7xl mx-auto">
             <SectionTitle
               title="Accede a tu Información"
               subtitle="Acceso directo a las herramientas de fiscalización y datos abiertos."
@@ -322,15 +409,13 @@ export function HomeContent() {
 
             />
 
-            <div className="grid gap-8 md:grid-cols-2 max-w-none mx-auto">
+            <div className="grid gap-8 md:grid-cols-2 mx-auto">
               {/* Public Finance Card */}
               <QuickAccessCard
                 title="Infórmate"
                 description="Consulta información detallada sobre ingresos, egresos, deuda pública, rendición de cuentas y más."
-                icon={<BarChart3 className="h-10 w-10" />}
                 href="/finanzas"
-                backgroundImage="/images/Green Texture.png"
-                iconBackgroundColor="bg-secondary/90"
+                backgroundImage="/images/BANNER_INFORMATE.jpg"
                 ariaLabel="Ir al módulo de información de finanzas públicas"
               />
 
@@ -338,12 +423,11 @@ export function HomeContent() {
               <QuickAccessCard
                 title="Explora los Datos"
                 description="Encuentra documentos fiscales, informes y datos específicos de manera rápida y eficiente."
-                icon={<Search className="h-10 w-10" />}
                 href="/busqueda-documentos"
-                backgroundImage="/images/Green Texture.png"
-                iconBackgroundColor="bg-secondary/90"
+                backgroundImage="/images/BANNER_EXPLORA_DATOS.jpg"
                 ariaLabel="Ir al módulo de búsqueda de datos y documentos"
               />
+            </div>
             </div>
           </div>
         </section>
@@ -361,7 +445,7 @@ export function HomeContent() {
                   className="relative rounded-2xl overflow-hidden shadow-xl"
                 >
                   <Image
-                    src="/images/chica.jpeg"
+                    src="/images/BANNER_cell_phone.jpg"
                     alt="Ciudadana participando en transparencia fiscal"
                     width={500}
                     height={600}

@@ -6,7 +6,6 @@ import { Phone, Mail, MessageCircle, Calendar } from "lucide-react"
 import Image from "next/image"
 import { RedesSocialesDinamicas } from "@/components/estrategias-comunicacion/redes-sociales-dinamicas"
 import { SectionTitle } from "@/components/patterns/SectionTitle"
-import { newsItems } from "@/lib/news-data"
 
 export default function EstrategiasComunicacionPage() {
   return (
@@ -24,7 +23,7 @@ export default function EstrategiasComunicacionPage() {
           <CardHeader>
             <CardTitle>Noticias y Eventos Recientes</CardTitle>
           </CardHeader>
-          <CardContent>
+          {/* <CardContent>
             <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin">
               {newsItems.map((news) => (
                 <div key={news.id} className="group flex-shrink-0 w-80 space-y-3 snap-start">
@@ -61,7 +60,7 @@ export default function EstrategiasComunicacionPage() {
                 </div>
               ))}
             </div>
-          </CardContent>
+          </CardContent> */}
         </Card>
 
         {/* Social Media Section - Dinámica */}

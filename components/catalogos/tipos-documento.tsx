@@ -29,7 +29,7 @@ const getLucideIcon = (extension: string) => {
 };
 
 export function TiposDocumento({ tiposDocumento, catalogoId, catalogoNombre }: TiposDocumentoProps) {
-  const { descargarDocumento, visualizarDocumento, documentoDisponible } = useDocumentos();
+  const { descargarDocumento, documentoDisponible } = useDocumentos();
 
   if (!tiposDocumento || tiposDocumento.length === 0) {
     return (

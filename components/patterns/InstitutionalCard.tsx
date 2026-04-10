@@ -1,334 +1,19 @@
-import { ReactNode } from "react"
+import { ReactNode, useEffect, useMemo, useState } from "react"
+import Image from "next/image"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import {  ChevronRight, FileText, Folder } from "lucide-react"
-import Link from "next/link"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Label } from "@/components/ui/label"
+import { ChevronRight, FileText, Folder } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { motion } from "framer-motion"
 import { Badge } from "../ui/badge"
+import { usePeriodicidad } from "@/hooks/periodicidad"
+import { ANIOS_DISPONIBLES } from "@/lib/constants"
+import { TipoDocumentoDisponibilidad } from "@/services/catalogos"
+import { TiposDocumento } from "../catalogos/tipos-documento"
 
-export interface InstitutionalCardProps {
-  // Header
-  title: string
-  headerBackgroundImage?: string
-  headerClassName?: string
-  
-  // Content
-  icon?: ReactNode
-  iconBackgroundColor?: string
-  iconRotation?: number
-  
-  // Text content
-  subtitle?: string
-  description: string | ReactNode
-  
-  // Action
-  actionText?: string
-  actionHref?: string
-  onClick?: () => void
-  ariaLabel?: string
-  
-  // Layout
-  className?: string
-  iconSize?: "sm" | "md" | "lg"
-  showActionButton?: boolean
-  
-  // Custom content (overrides default)
-  children?: ReactNode
-}
 
-export function InstitutionalCard({
-  title,
-  headerBackgroundImage = "/images/Brown Texture.png",
-  headerClassName = "",
-  
-  icon,
-  iconBackgroundColor = "bg-primary/10",
-  iconRotation = 3,
-  
-  subtitle,
-  description,
-  
-  actionText = "Conocer más",
-  actionHref,
-  onClick,
-  ariaLabel,
-  
-  className = "",
-  iconSize = "md",
-  showActionButton = true,
-  
-  children,
-}: InstitutionalCardProps) {
-  const iconSizeClasses = {
-    sm: "h-10 w-10",
-    md: "h-14 w-14",
-    lg: "h-16 w-16",
-  }
-  
-  const iconContainerSize = {
-    sm: "w-1/3 max-w-24",
-    md: "w-1/2 max-w-36",
-    lg: "w-3/5 max-w-40",
-  }
-  
-  const handleClick = () => {
-    if (onClick) {
-      onClick()
-    }
-  }
-  
-  const renderMainContent = () => (
-    <>
-      {/* Header Section - Full Width */}
-      <motion.div 
-        className={cn(
-          "relative h-20 bg-cover bg-center rounded-t-xl",
-          headerClassName
-        )}
-        style={{ backgroundImage: `url('${headerBackgroundImage}')`,      backgroundPosition: "left bottom"   }}
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.1, duration: 0.4 }}
-      >
-        <div className="absolute inset-0 bg-secondary/30 rounded-t-xl"></div>
-        <div className="absolute inset-0 flex items-center justify-start px-6">
-          <motion.h3 
-            className="text-xl font-bold text-white drop-shadow-sm"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ delay: 0.2, duration: 0.4 }}
-          >
-            {title}
-          </motion.h3>
-        </div>
-      </motion.div>
 
-      {/* Content Section */}
-      <div className="p-6 bg-white flex flex-col flex-grow relative">
-        {/* Text Content - Left Aligned */}
-        <motion.div 
-          className="mb-4"
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.2, duration: 0.4 }}
-        >
-          {/* Subtitle */}
-          {subtitle && (
-            <motion.h4 
-              className="text-lg font-semibold text-foreground mb-2 text-left"
-              initial={{ opacity: 0, x: -5 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.3, duration: 0.4 }}
-            >
-              {subtitle}
-            </motion.h4>
-          )}
-
-          {/* Description */}
-          <motion.div 
-            className="text-muted-foreground text-left text-sm leading-relaxed"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.4, duration: 0.5 }}
-          >
-            {description}
-          </motion.div>
-        </motion.div>
-
-        {/* Icon/Illustration - Centered and pushed down */}
-        {icon && (
-          <motion.div 
-            className="flex-grow flex items-end justify-center pb-4"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ 
-              type: "spring" as const,
-              stiffness: 150,
-              damping: 12,
-              delay: 0.3,
-              duration: 0.5
-            }}
-          >
-            <div className={cn("flex items-center justify-center", iconContainerSize[iconSize])}>
-              <motion.div 
-                className="relative w-full aspect-square flex items-center justify-center"
-                style={{ transform: `rotate(${iconRotation}deg)` }}
-                whileHover={{ 
-                  rotate: iconRotation + 5,
-                  scale: 1.05,
-                  transition: { type: "spring", stiffness: 200, damping: 10 }
-                }}
-              >
-                <div className={cn("absolute inset-0 rounded-2xl", iconBackgroundColor)}></div>
-                <div className="relative z-10" style={{ transform: `rotate(-${iconRotation}deg)` }}>
-                  {icon}
-                </div>
-              </motion.div>
-            </div>
-          </motion.div>
-        )}
-      </div>
-    </>
-  )
-  
-  // Variantes de animación para el card
-  const cardVariants = {
-    initial: {
-      y: 20,
-      opacity: 0,
-      scale: 0.95,
-      boxShadow: "0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)"
-    },
-    animate: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        type: "spring" as const,
-        stiffness: 200,
-        damping: 20,
-        duration: 0.5
-      }
-    },
-    hover: {
-      y: -8,
-      scale: 1.02,
-      boxShadow: "0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04)",
-      transition: {
-        type: "spring" as const,
-        stiffness: 300,
-        damping: 15,
-        duration: 0.3
-      }
-    },
-    tap: {
-      y: -4,
-      scale: 0.98,
-      boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
-      transition: {
-        type: "spring" as const,
-        stiffness: 400,
-        damping: 20,
-        duration: 0.2
-      }
-    }
-  }
-
-  const renderBanner = () => (
-    <motion.div
-      className={cn(
-        "h-12 bg-cover bg-center relative rounded-b-xl",
-        headerClassName
-      )}
-      style={{ backgroundImage: `url('${headerBackgroundImage}')` }}
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ delay: 0.4, duration: 0.4 }}
-    >
-      <div className="absolute inset-0 bg-secondary/30 rounded-b-xl"></div>
-      {/* Action Button positioned at bottom right of the band */}
-      {showActionButton && (actionHref || onClick) && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.6, duration: 0.4 }}
-          className="absolute inset-0 flex items-center justify-end px-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        >
-          <Button 
-            variant="link" 
-            className="p-0 h-auto font-semibold text-white hover:text-white/80 flex items-center"
-            onClick={!actionHref ? handleClick : undefined}
-            aria-label={ariaLabel || actionText}
-            asChild={!!actionHref}
-          >
-            {actionHref ? (
-              <Link href={actionHref} className="flex items-center">
-                {actionText}
-                <ChevronRight className="ml-2 h-4 w-4" />
-              </Link>
-            ) : (
-              <span className="flex items-center">
-                {actionText}
-                <ChevronRight className="ml-2 h-4 w-4" />
-              </span>
-            )}
-          </Button>
-        </motion.div>
-      )}
-    </motion.div>
-  )
-
-  const cardContent = (
-    <>
-      {renderMainContent()}
-      {children && (
-        <div className="p-6 pt-0 bg-white">
-          {children}
-        </div>
-      )}
-      {renderBanner()}
-    </>
-  )
-
-  return (
-    <motion.div
-      className={cn("h-full", className)}
-      variants={cardVariants}
-      initial="initial"
-      animate="animate"
-      whileHover="hover"
-      whileTap="tap"
-      onClick={handleClick}
-      style={{ cursor: onClick || actionHref ? "pointer" : "default" }}
-    >
-      <Card className={cn(
-        "h-full p-0 border-2 overflow-hidden relative flex flex-col rounded-xl",
-        "before:absolute before:inset-0 before:bg-gradient-to-br before:from-transparent before:via-transparent before:to-secondary/5",
-        "before:opacity-0 hover:before:opacity-100 before:transition-opacity before:duration-300"
-      )}>
-        {cardContent}
-      </Card>
-    </motion.div>
-  )
-}
-
-// Variant for catalog items
-export function CatalogInstitutionalCard({
-  title,
-  description,
-  icon,
-  level,
-  isFolder = true,
-  onClick,
-  className,
-}: {
-  title: string
-  description: string
-  icon: ReactNode
-  level: number
-  isFolder?: boolean
-  onClick?: () => void
-  className?: string
-}) {
-  return (
-    <InstitutionalCard
-      title={title}
-      description={description}
-      icon={icon}
-      iconSize="sm"
-      iconBackgroundColor="bg-muted"
-      iconRotation={0}
-      headerClassName="bg-muted"
-      headerBackgroundImage=""
-      subtitle={`Nivel ${level}`}
-      actionText={isFolder ? "Abrir" : "Ver documentos"}
-      onClick={onClick}
-      ariaLabel={isFolder ? `Abrir ${title}` : `Ver documentos de ${title}`}
-      className={className}
-    />
-  )
-}
 
 // Generic card component for catalogs and documents (not currently used)
 export interface GenericCatalogCardProps {
@@ -340,12 +25,14 @@ export interface GenericCatalogCardProps {
   onClick?: () => void
   className?: string
   children?: ReactNode
-  showDocumentTypes?: boolean
-  documentTypes?: Array<{
-    id: number
-    nombre: string
-    descripcion?: string
-  }>
+  icono?: string,
+  // New props for periodicity selectors
+  catalogoId: number
+  showPeriodicitySelectors?: boolean
+  onYearChange?: (year: number | null) => void
+  onPeriodChange?: (period: number | null, isAnnual: boolean) => void
+  onLoadDocuments?: (catalogoId: number, year: number, period: number | null, isAnnual: boolean) => void
+
 }
 
 export function GenericCatalogCard({
@@ -357,8 +44,14 @@ export function GenericCatalogCard({
   onClick,
   className = "",
   children,
-  showDocumentTypes = false,
-  documentTypes = [],
+  icono,
+
+  // New props for periodicity selectors
+  catalogoId,
+  showPeriodicitySelectors = false,
+
+ 
+  
 }: GenericCatalogCardProps) {
   const handleClick = (e: React.MouseEvent) => {
     if (onClick) {
@@ -367,73 +60,238 @@ export function GenericCatalogCard({
     }
   }
 
-  return (
-    <Card
+  const [selectedYear, setSelectedYear] = useState<number | null>(null);
+  const [selectedPeriod, setSelectedPeriod] = useState<number | null>( null);
+  const [isAnnual, setIsAnnual] = useState<boolean>(false);
+  
+  const {
+    periodos,
+    disponibilidad,
+    loading,
+    obtenerPeriodicidad,
+    obtenerDisponibilidad,
+    limpiarPeriodicidad,
+    limpiarDisponibilidad,
+  } = usePeriodicidad();
+
+ 
+
+  // Fetch periodicity when year changes
+  useEffect(() => {
+    
+    if (!selectedYear || !catalogoId) {
+      limpiarPeriodicidad();
+      limpiarDisponibilidad();
+      return;
+    }
+
+    const fetchPeriodicity = async () => {
+      await obtenerPeriodicidad(catalogoId, selectedYear);
+    };
+
+    fetchPeriodicity();
+  }, [selectedYear, catalogoId]);
+
+  const handleYearChange = (value: string) => {
+    const year = value ? parseInt(value) : null;
+    
+ 
+    setSelectedYear(year);
+    setSelectedPeriod(null);
+    setIsAnnual(false);
+  
+  };
+
+  const handlePeriodChange = (value: string) => {
+    const period = value ? parseInt(value) : null;
+    const isAnnualPeriod = period === 0;
+    limpiarDisponibilidad();
+    setSelectedPeriod(period);
+    setIsAnnual(isAnnualPeriod);
+    
+    
+    if (selectedYear && period !== null && catalogoId) {
+      void obtenerDisponibilidad(
+        catalogoId,
+        selectedYear,
+        isAnnualPeriod ? undefined : period
+      );
+    }
+  };
+
+  const tiposDocumentoPeriodo = useMemo<TipoDocumentoDisponibilidad[]>(() => {
+    const disponibilidadSafe = Array.isArray(disponibilidad) ? disponibilidad : [];
+
+    return disponibilidadSafe.map((d) => ({
+        tipoDocumentoId: d.tipoDocumentoId,
+        nombre: d.tipoDocumentoNombre || d.nombre || "",
+        disponible: d.disponible,
+        extension: d.extension || "file",
+        documentoId: d.documentoId !== undefined ? String(d.documentoId) : "",
+      }));
+  }, [disponibilidad]);
+
+ 
+
+  const nivelYAccion = (
+    <div className="flex items-center justify-between gap-3">
+      <div className="text-sm text-muted-foreground">
+        Nivel {level}
+      </div>
+
+      {!isFolder ? (
+        <Badge variant="secondary" className="ml-2 shrink-0">
+          Documentos
+        </Badge>
+      ) : (
+        <Button
+          variant="ghost"
+          size="sm"
+          className="group-hover:bg-muted shrink-0"
+          onClick={handleClick}
+        >
+          Abrir
+          <ChevronRight className="ml-1 h-4 w-4 transition-transform group-hover:translate-x-1" />
+        </Button>
+      )}
+    </div>
+  )
+
+  const periodicityTiposYChildren = (
+    <>
+      {!isFolder && catalogoId && (
+        <div className="mt-4 border-t pt-4">
+          <h4 className="mb-2 text-sm font-medium">Seleccionar período:</h4>
+          <div className="grid grid-cols-2 gap-3">
+            <div className="space-y-1.5">
+              <Label htmlFor="year-selector" className="text-xs">
+                Año
+              </Label>
+              <Select value={selectedYear?.toString() || ""} onValueChange={handleYearChange}>
+                <SelectTrigger id="year-selector" className="h-8 text-sm">
+                  <SelectValue placeholder="Año" />
+                </SelectTrigger>
+                <SelectContent>
+                  {ANIOS_DISPONIBLES.map((year) => (
+                    <SelectItem key={year} value={year.toString()} className="text-sm">
+                      {year}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-1.5">
+              <Label htmlFor="period-selector" className="text-xs">
+                Periodo
+              </Label>
+              <Select
+                value={selectedPeriod?.toString() || ""}
+                onValueChange={handlePeriodChange}
+                disabled={!selectedYear || loading || periodos.length === 0}
+              >
+                <SelectTrigger id="period-selector" className="h-8 text-sm">
+                  <SelectValue placeholder={loading ? "Cargando..." : "Periodo"} />
+                </SelectTrigger>
+                <SelectContent>
+                  {periodos.map((period: { value: number; label: string }) => (
+                    <SelectItem key={period.value} value={period.value.toString()} className="text-sm">
+                      {period.label}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          </div>
+          {!selectedYear && (
+            <p className="mt-1 text-xs text-muted-foreground">
+              Seleccione un año primero para ver los periodos disponibles
+            </p>
+          )}
+        </div>
+      )}
+
+      {children}
+
+      {!isFolder && selectedYear && selectedPeriod !== null && (
+        <div className="mt-4 border-t pt-4">
+          <TiposDocumento
+            tiposDocumento={tiposDocumentoPeriodo}
+            catalogoId={catalogoId}
+            catalogoNombre={""}
+          />
+        </div>
+      )}
+    </>
+  )
+
+  if(icono) {
+    return (
+      <Card
       className={cn(
-        "h-full transition-all hover:shadow-lg cursor-pointer group",
+        "group h-full cursor-pointer overflow-hidden transition-all hover:shadow-lg",
         className
       )}
       onClick={() => !isFolder && onClick?.()}
     >
+      <div className="flex h-full min-h-0 flex-col sm:flex-row">
+    
+        {/* CONTENEDOR IMAGEN - ocupa todo el espacio sin fondo blanco */}
+        <div className="relative h-44 w-full shrink-0 overflow-hidden sm:h-auto sm:w-[42%] md:w-[40%]">
+          <div className="absolute inset-0 bg-[#2f3e3a]" />
+          
+          <Image
+            src={'/images/iconos/' + icono}
+            alt={title}
+            fill
+            className="object-contain p-6"
+          />
+    
+          {/* Gradiente de transición hacia el contenido */}
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/10 to-transparent sm:bg-gradient-to-r sm:from-transparent sm:to-black/5" />
+        </div>
+    
+        {/* CONTENIDO */}
+        <div className="flex min-w-0 flex-1 flex-col">
+          <CardHeader className="space-y-2 pb-2 pt-5 sm:py-6">
+            <CardTitle className="text-balance text-xl font-bold transition-colors group-hover:text-primary">
+              {title}
+            </CardTitle>
+            <CardDescription className="text-pretty line-clamp-3 sm:line-clamp-4">
+              {description}
+            </CardDescription>
+          </CardHeader>
+    
+          <CardContent className="flex flex-1 flex-col gap-0 pt-0">
+            {nivelYAccion}
+            {periodicityTiposYChildren}
+          </CardContent>
+        </div>
+    
+      </div>
+    </Card>
+    )
+  }
+
+  return (
+    <Card
+      className={cn("group h-full cursor-pointer transition-all hover:shadow-lg", className)}
+      onClick={() => !isFolder && onClick?.()}
+    >
       <CardHeader>
         <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-primary/10 text-primary transition-transform group-hover:scale-110">
-          {isFolder ? (
-            <Folder className="h-6 w-6" />
-          ) : (
-            <FileText className="h-6 w-6" />
-          )}
+          {isFolder ? <Folder className="h-6 w-6" /> : <FileText className="h-6 w-6" />}
         </div>
-        <CardTitle className="text-xl font-bold text-balance group-hover:text-primary transition-colors">
-          {title}
-        </CardTitle>
-        <CardDescription className="text-pretty line-clamp-2">
-          {description}
-        </CardDescription>
+        <CardTitle className="text-balance text-xl font-bold transition-colors group-hover:text-primary">{title}</CardTitle>
+        <CardDescription className="line-clamp-2 text-pretty">{description}</CardDescription>
       </CardHeader>
-      
+
       <CardContent>
-        <div className="flex justify-between items-center">
-          <div className="text-sm text-muted-foreground">
-            Nivel {level} 
-          </div>
-          
-          {!isFolder ? (
-            <Badge variant="secondary" className="ml-2">
-              Documentos
-            </Badge>
-          ) : (
-            <Button
-              variant="ghost"
-              size="sm"
-              className="group-hover:bg-muted"
-              onClick={handleClick}
-            >
-              Abrir
-              <ChevronRight className="h-4 w-4 ml-1 transition-transform group-hover:translate-x-1" />
-            </Button>
-          )}
-        </div>
-
-        {/* Document Types Section */}
-        {showDocumentTypes && documentTypes.length > 0 && (
-          <div className="mt-4 pt-4 border-t">
-            <h4 className="text-sm font-medium mb-2">Tipos de documento disponibles:</h4>
-            {/* <div className="flex flex-wrap gap-2">
-              {documentTypes.map((type) => (
-                <span
-                  key={type.id}
-                  className="inline-flex items-center rounded-md px-2 py-1 text-xs font-medium bg-primary/10 text-primary"
-                >
-                  {type.nombre}
-                </span>
-              ))}
-            </div> */}
-          </div>
-        )}
-
-        {/* Custom Children Content */}
-        {children}
+        {nivelYAccion}
+        {periodicityTiposYChildren}
       </CardContent>
     </Card>
   )
 }
+
+export { GenericCatalogCard as InstitutionalCard }

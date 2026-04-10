@@ -3,6 +3,7 @@ export * from './catalogos';
 export * from './estrategias-comunicacion';
 export * from './participacion-ciudadana';
 export * from './busqueda-documentos';
+export * from './periodicidad';
 
 // Utility hooks
 export * from './use-mobile';

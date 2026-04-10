@@ -11,7 +11,6 @@ import { motion } from "framer-motion"
 export interface QuickAccessCardProps {
   title: string
   description: string
-  icon: ReactNode
   href: string
   backgroundImage?: string
   iconBackgroundColor?: string
@@ -65,7 +64,6 @@ const quickAccessCardVariants = {
 export function QuickAccessCard({
   title,
   description,
-  icon,
   href,
   backgroundImage = "/images/Green Texture.png",
   iconBackgroundColor = "bg-secondary/90",
@@ -116,17 +114,7 @@ export function QuickAccessCard({
                   duration: 0.5
                 }}
               >
-                <motion.div 
-                  className="flex h-20 w-20 items-center justify-center rounded-full text-white shadow-lg"
-                  style={{ backgroundColor: iconBackgroundColor }}
-                  whileHover={{ 
-                    scale: 1.1,
-                    rotate: 5,
-                    transition: { type: "spring", stiffness: 200, damping: 10 }
-                  }}
-                >
-                  {icon}
-                </motion.div>
+               
               </motion.div>
             </motion.div>
 

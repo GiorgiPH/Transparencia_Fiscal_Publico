@@ -112,38 +112,7 @@ export function NewsCarousel({
     }
   }, [api])
 
-  // Si no hay noticias, mostrar placeholder
-  if (news.length === 0) {
-    news = [
-      // {
-      //   id: "1",
-      //   title: "Portal de Transparencia Fiscal lanza nueva plataforma",
-      //   date: "15 Feb 2026",
-      //   excerpt: "El Gobierno del Estado de Morelos presenta una plataforma renovada para mejorar el acceso a la información pública.",
-      //   image: "/images/noticia1.jpeg",
-      //   imageAlt: "Lanzamiento de nueva plataforma",
-      //   url: "#"
-      // },
-      // {
-      //   id: "2",
-      //   title: "Más de 1,000 documentos públicos disponibles en línea",
-      //   date: "10 Feb 2026",
-      //   excerpt: "La Secretaría de Finanzas ha digitalizado y publicado más de 1,000 documentos fiscales para consulta ciudadana.",
-      //   image: "/images/noticia2.jpeg",
-      //   imageAlt: "Documentos públicos digitalizados",
-      //   url: "#"
-      // },
-      // {
-      //   id: "3",
-      //   title: "Foro de Participación Ciudadana en transparencia fiscal",
-      //   date: "5 Feb 2026",
-      //   excerpt: "Se realizará un foro abierto para recibir propuestas ciudadanas sobre mejora en la transparencia fiscal.",
-      //   image: "/images/noticia3.jpg",
-      //   imageAlt: "Foro de participación ciudadana",
-      //   url: "#"
-      // }
-    ]
-  }
+ 
 
   // Calcular el tamaño de cada item basado en actualItemsToShow
   const itemWidth = `${100 / actualItemsToShow}%`
