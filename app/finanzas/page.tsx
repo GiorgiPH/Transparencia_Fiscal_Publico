@@ -1,3 +1,5 @@
+"use client";
+
 import { PortalLayout } from "@/components/portal-layout"
 import { CatalogoHierarchySearch } from "@/components/catalogos/catalogo-hierarchy-search"
 
