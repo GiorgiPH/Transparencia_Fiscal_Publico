@@ -40,6 +40,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel"
+import { HeroVideoPortal } from "@/components/HeroVideoPortal"
 
 export function HomeContent() {
   const [sidebarOpen, setSidebarOpen] = useState(false)
@@ -135,23 +136,64 @@ export function HomeContent() {
           </div>
         </section>
 
-        {/* Description Section */}
-        <section className="py-8 lg:py-12 bg-white">
+        {/* Description Section with Video - Wider Video */}
+        <section className="py-8 lg:py-12">
           <div className="max-w-none mx-auto px-4 lg:px-24">
-            <div className="text-center max-w-4xl mx-auto">
-              <motion.p 
-                className="text-lg lg:text-xl text-foreground text-pretty"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
+            <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-center">
+              {/* Left Column - Text (1/3) */}
+              <motion.div
+                className="text-left lg:col-span-1"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
                 transition={{ 
                   duration: 0.8,
                   ease: "easeOut",
                   delay: 0.4
                 }}
               >
-                aAccede a información clara y oportuna sobre el manejo de recursos públicos del Estado de Morelos. Conoce
-                cómo se administra el presupuesto y participa en la construcción de un gobierno transparente.
-              </motion.p>
+               
+                <p className="text-lg lg:text-xl text-foreground text-pretty leading-relaxed">
+                  Accede a información clara y oportuna sobre el manejo de recursos públicos del Estado de Morelos. Conoce
+                  cómo se administra el presupuesto y participa en la construcción de un gobierno transparente.
+                </p>
+                <div className="mt-6 space-y-3">
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-primary"></div>
+                    <span className="text-foreground">Información fiscal actualizada</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                    <span className="text-foreground">Datos abiertos para análisis</span>
+                  </div>
+                  <div className="flex items-center gap-3">
+                    <div className="w-2 h-2 rounded-full bg-tertiary"></div>
+                    <span className="text-foreground">Participación ciudadana activa</span>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right Column - Video (2/3) - Más ancho */}
+              <motion.div
+                className="relative lg:col-span-2"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ 
+                  duration: 0.8,
+                  ease: "easeOut",
+                  delay: 0.6
+                }}
+              >
+                <div className="rounded-2xl overflow-hidden shadow-2xl border border-border">
+                  <HeroVideoPortal
+                    videoSrc="/videos/CLIP_Transparencia_Fiscal.mp4"
+                    posterSrc="/images/BANNER.jpg"
+                    height="600px"
+                    rounded="2xl"
+                    priority={true}
+                  />
+                </div>
+                
+              </motion.div>
             </div>
           </div>
         </section>

@@ -6,6 +6,7 @@ import { Database, Download, Code, FileJson, Shield, Calendar } from "lucide-rea
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { SectionTitle } from "@/components/patterns/SectionTitle"
+import { HeroVideoPortal } from "@/components/HeroVideoPortal"
 
 export default function DatosAbiertosPage() {
   return (
@@ -18,36 +19,63 @@ export default function DatosAbiertosPage() {
           titleClassName="text-3xl lg:text-4xl"
         />
 
-        {/* What are Open Data */}
-        <Card className="mb-6">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <Database className="h-5 w-5" />
-              ¿Qué son los Datos Abiertos?
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <p className="text-muted-foreground leading-relaxed">
-              Los datos abiertos son información pública disponible en formatos digitales que permiten su uso,
-              reutilización y redistribución libre por cualquier persona, sin restricciones de derechos de autor,
-              patentes u otros mecanismos de control.
-            </p>
-            <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-lg border p-4">
-                <h4 className="font-semibold mb-2">Accesibles</h4>
-                <p className="text-sm text-muted-foreground">Disponibles para todos sin discriminación</p>
+        {/* What are Open Data with Video */}
+        <div className="grid lg:grid-cols-2 gap-8 mb-6">
+          {/* Left Column - Card */}
+          <Card className="h-full">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Database className="h-5 w-5" />
+                ¿Qué son los Datos Abiertos?
+              </CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <p className="text-muted-foreground leading-relaxed">
+                Los datos abiertos son información pública disponible en formatos digitales que permiten su uso,
+                reutilización y redistribución libre por cualquier persona, sin restricciones de derechos de autor,
+                patentes u otros mecanismos de control.
+              </p>
+              <div className="mt-6 space-y-3">
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-primary"></div>
+                  <div>
+                    <span className="text-foreground font-medium">Accesibles</span>
+                    <p className="text-sm text-muted-foreground mt-1">Disponibles para todos sin discriminación</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-secondary"></div>
+                  <div>
+                    <span className="text-foreground font-medium">Reutilizables</span>
+                    <p className="text-sm text-muted-foreground mt-1">Sin restricciones de uso</p>
+                  </div>
+                </div>
+                <div className="flex items-center gap-3">
+                  <div className="w-2 h-2 rounded-full bg-tertiary"></div>
+                  <div>
+                    <span className="text-foreground font-medium">Procesables</span>
+                    <p className="text-sm text-muted-foreground mt-1">En formatos estándar legibles por máquinas</p>
+                  </div>
+                </div>
               </div>
-              <div className="rounded-lg border p-4">
-                <h4 className="font-semibold mb-2">Reutilizables</h4>
-                <p className="text-sm text-muted-foreground">Sin restricciones de uso</p>
-              </div>
-              <div className="rounded-lg border p-4">
-                <h4 className="font-semibold mb-2">Procesables</h4>
-                <p className="text-sm text-muted-foreground">En formatos estándar legibles por máquinas</p>
-              </div>
+            </CardContent>
+          </Card>
+
+          {/* Right Column - Video */}
+          <div className="relative">
+            <div className="rounded-2xl overflow-hidden shadow-2xl border border-border h-full">
+              <HeroVideoPortal
+                videoSrc="/videos/CLIP_Datos Abiertos.mp4"
+                height="100%"
+                rounded="2xl"
+                priority={true}
+              />
             </div>
-          </CardContent>
-        </Card>
+            <div className="mt-4 text-center text-sm text-muted-foreground">
+              Video explicativo sobre datos abiertos y transparencia
+            </div>
+          </div>
+        </div>
 
         {/* Open Data Licenses */}
         {/* <Card className="mb-6">

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "skills": {
+    "interface-design": {
+      "source": "dammyjay93/interface-design",
+      "sourceType": "github",
+      "computedHash": "4d5fe1dacfebc0c1b3837b061405150ed2e4971c096543afc46c23161c5a4f7a"
+    },
+    "react-hook-form": {
+      "source": "claude-dev-suite/claude-dev-suite",
+      "sourceType": "github",
+      "computedHash": "faf8af7ded7d51de1b6495597fb0aff4305cc75ae12e7ef86f1c610b9ee8b1df"
+    },
+    "shadcn-best-practices": {
+      "source": "ofershap/shadcn-best-practices",
+      "sourceType": "github",
+      "computedHash": "91b20680b41fbad8f9e12b69cb1c4746a65cee59dde31e14b7b235d690ab01ee"
+    }
+  }
+}
