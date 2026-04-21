@@ -10,7 +10,7 @@ const inter = Inter({ subsets: ["latin"] })
 export const metadata: Metadata = {
   title: "Portal de Transparencia Fiscal - Estado de Morelos",
   description: "Portal oficial de Transparencia Fiscal del Gobierno del Estado de Morelos",
-  generator: "v0.app",
+  //generator: "v0.app",
   icons: {
     icon: [
       {
@@ -26,7 +26,9 @@ export const metadata: Metadata = {
         type: 'image/svg+xml',
       },
     ],
-    apple: '/apple-icon.png',
+    //apple: '/apple-icon.png',
+        apple: '/favicon.ico',
+
   },
 }
 
@@ -49,7 +51,7 @@ export default function RootLayout({
             backgroundAttachment: "fixed",
           }}
         />
-        <div className="relative z-10 backdrop-blur-sm">
+        <div className="relative z-10">
           {children}
         </div>
         <Analytics />

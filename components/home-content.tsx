@@ -149,7 +149,7 @@ export function HomeContent() {
                   delay: 0.4
                 }}
               >
-                Accede a información clara y oportuna sobre el manejo de recursos públicos del Estado de Morelos. Conoce
+                aAccede a información clara y oportuna sobre el manejo de recursos públicos del Estado de Morelos. Conoce
                 cómo se administra el presupuesto y participa en la construcción de un gobierno transparente.
               </motion.p>
             </div>

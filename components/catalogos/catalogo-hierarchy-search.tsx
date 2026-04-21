@@ -109,7 +109,19 @@ export function CatalogoHierarchySearch() {
         className="mb-8"
         titleClassName="text-3xl lg:text-3xl"
       />
-
+      {/* Información de ayuda */}
+      <div className="border rounded-lg p-4 bg-tertiary/70 dark:bg-tertiary/20">
+        <h3 className="font-semibold text-tertiary-foreground mb-2">¿Cómo funciona?</h3>
+        <ul className="text-sm text-tertiary-foreground space-y-1">
+          <li>• Usa el buscador arriba para encontrar catálogos por nombre o descripción</li>
+          <li>• Haz clic en las carpetas (<span className="font-medium">📁</span>) para navegar a niveles más profundos</li>
+          <li>• Los documentos (<span className="font-medium">📄</span>) muestran los formatos disponibles para descargar o visualizar</li>
+          <li>• Usa el breadcrumb en la parte superior para navegar rápidamente entre niveles</li>
+          <li>• El botón "Descargar" solo está activo cuando el documento está disponible</li>
+          <li>• Usa "Limpiar búsqueda" para volver a la navegación normal</li>
+        </ul>
+      </div>
+      
       {/* Buscador */}
       <CatalogoSearch
         onSearch={handleSearch}
@@ -141,18 +153,7 @@ export function CatalogoHierarchySearch() {
         puedeNavegarAtras={puedeNavegarAtras}
       />
 
-      {/* Información de ayuda */}
-      <div className="border rounded-lg p-4 bg-tertiary/70 dark:bg-tertiary/20">
-        <h3 className="font-semibold text-tertiary-foreground mb-2">¿Cómo funciona?</h3>
-        <ul className="text-sm text-tertiary-foreground space-y-1">
-          <li>• Usa el buscador arriba para encontrar catálogos por nombre o descripción</li>
-          <li>• Haz clic en las carpetas (<span className="font-medium">📁</span>) para navegar a niveles más profundos</li>
-          <li>• Los documentos (<span className="font-medium">📄</span>) muestran los formatos disponibles para descargar o visualizar</li>
-          <li>• Usa el breadcrumb en la parte superior para navegar rápidamente entre niveles</li>
-          <li>• El botón "Descargar" solo está activo cuando el documento está disponible</li>
-          <li>• Usa "Limpiar búsqueda" para volver a la navegación normal</li>
-        </ul>
-      </div>
+      
     </div>
   );
 }

@@ -16,10 +16,11 @@ export function PortalLayoutClient({ children, activeSection }: PortalLayoutClie
   return (
     <div className="min-h-screen">
       <PortalHeader onMenuClick={() => setSidebarOpen(!sidebarOpen)} />
+      
+      {/* Sidebar positioned outside the main content flow to avoid filter containment issues */}
+      <PortalSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activeSection={activeSection} />
 
       <div className="flex">
-        <PortalSidebar isOpen={sidebarOpen} onClose={() => setSidebarOpen(false)} activeSection={activeSection} />
-
         <div className="flex-1 flex flex-col min-h-[calc(100vh-4rem)]">
           <main className="flex-1">{children}</main>
           <PortalFooter />
