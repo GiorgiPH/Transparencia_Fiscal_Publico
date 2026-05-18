@@ -1,4 +1,4 @@
-import { apiClient } from '@/lib/api/axios-client';
+import { apiClient, ApiResponse } from '@/lib/api/axios-client';
 import { 
   Documento, 
   BusquedaDocumentosResponse, 
@@ -6,40 +6,44 @@ import {
   OpcionesFiltros,
   OpcionFiltro,
   formatearTamanioArchivo,
-  obtenerUrlDescarga 
+  obtenerUrlDescarga, 
 } from './types';
 
 export const busquedaDocumentosService = {
   // Buscar documentos con filtros
-  async buscarDocumentos(filtros: FiltrosBusqueda = {}): Promise<BusquedaDocumentosResponse['data']> {
-    try {
-      // Construir query params
-      const params = new URLSearchParams();
-      
-      if (filtros.search) params.append('search', filtros.search);
-      if (filtros.catalogoId) params.append('catalogoId', filtros.catalogoId.toString());
-      if (filtros.anio) params.append('anio', filtros.anio.toString());
-      if (filtros.extension) params.append('extension', filtros.extension);
-      if (filtros.periodicidad) params.append('periodicidad', filtros.periodicidad);
-      if (filtros.institucion) params.append('institucion', filtros.institucion);
-      if (filtros.categorias?.length) {
-        filtros.categorias.forEach(id => params.append('categorias', id.toString()));
-      }
-      if (filtros.page) params.append('page', filtros.page.toString());
-      if (filtros.pageSize) params.append('pageSize', filtros.pageSize.toString());
-      if (filtros.orderBy) params.append('orderBy', filtros.orderBy);
-      if (filtros.order) params.append('order', filtros.order);
+  async buscarDocumentos(
+  filtros: FiltrosBusqueda = {},
+): Promise<BusquedaDocumentosResponse> {
 
-      const url = `/busqueda-documentos${params.toString() ? `?${params.toString()}` : ''}`;
-      const resultado = await apiClient.get<BusquedaDocumentosResponse['data']>(url);
+  try {
 
-      
-      return resultado;
-    } catch (error) {
-      console.error('Error al buscar documentos:', error);
-      throw error;
-    }
-  },
+    const payload = {
+      ...filtros,
+      categorias: filtros.categorias?.length
+        ? filtros.categorias
+        : undefined,
+    };
+
+    const resultado =
+      await apiClient.post<
+        BusquedaDocumentosResponse
+      >(
+        '/documentos/buscar',
+        payload,
+      );
+
+    return resultado;
+
+  } catch (error) {
+
+    console.error(
+      'Error al buscar documentos:',
+      error,
+    );
+
+    throw error;
+  }
+},
 
   // Obtener opciones de filtros (datos estáticos que podrían venir de API en el futuro)
   getOpcionesFiltros(): OpcionesFiltros {

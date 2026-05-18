@@ -119,7 +119,8 @@ export function HeroVideoPortal({
           ref={videoRef}
           className="absolute inset-0 w-full h-full object-cover"
           autoPlay
-          muted
+          controls 
+          //muted
           loop
           playsInline
           preload={priority ? "auto" : "metadata"}

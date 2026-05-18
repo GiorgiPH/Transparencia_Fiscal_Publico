@@ -77,7 +77,7 @@ export function useBusquedaDocumentos(filtrosIniciales: Partial<FiltrosBusqueda>
       const resultado = await busquedaDocumentosService.buscarDocumentos(filtros);
       
       // IMPORTANTE: Si el servicio no trae documentos, garantizamos un array vacío
-      setDocumentos(resultado.documentos || []);
+      setDocumentos(resultado.items || []);
       setPaginacion(resultado.paginacion || PAGINACION_POR_DEFECTO);
       
     } catch (err: any) {

@@ -136,13 +136,13 @@ export function HomeContent() {
           </div>
         </section>
 
-        {/* Description Section with Video - Wider Video */}
-        <section className="py-8 lg:py-12">
+        {/* Description Section with Video - Crafted Design */}
+        <section className="py-12 lg:py-16">
           <div className="max-w-none mx-auto px-4 lg:px-24">
-            <div className="grid lg:grid-cols-3 gap-8 lg:gap-12 items-center">
-              {/* Left Column - Text (1/3) */}
+            <div className="grid lg:grid-cols-3 gap-10 lg:gap-16 items-start">
+              {/* Left Column - Text (1/3) with Enhanced Hierarchy */}
               <motion.div
-                className="text-left lg:col-span-1"
+                className="text-left lg:col-span-1 space-y-6"
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ 
@@ -151,28 +151,55 @@ export function HomeContent() {
                   delay: 0.4
                 }}
               >
-               
-                <p className="text-lg lg:text-xl text-foreground text-pretty leading-relaxed">
-                  Accede a información clara y oportuna sobre el manejo de recursos públicos del Estado de Morelos. Conoce
-                  cómo se administra el presupuesto y participa en la construcción de un gobierno transparente.
-                </p>
-                <div className="mt-6 space-y-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-primary"></div>
-                    <span className="text-foreground">Información fiscal actualizada</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-secondary"></div>
-                    <span className="text-foreground">Datos abiertos para análisis</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <div className="w-2 h-2 rounded-full bg-tertiary"></div>
-                    <span className="text-foreground">Participación ciudadana activa</span>
+                <div className="space-y-4">
+                 
+                  <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed text-pretty">
+                    Accede a información clara y oportuna sobre el manejo de recursos públicos del Estado de Morelos. Conoce
+                    cómo se administra el presupuesto y participa en la construcción de un gobierno transparente.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Nuestros compromisos</h3>
+                  <div className="space-y-3">
+                    <div className="group flex items-start gap-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-200">
+                      <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                      <div>
+                        <span className="text-foreground font-medium group-hover:text-primary transition-colors">
+                          Información fiscal actualizada
+                        </span>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Datos públicos accesibles en tiempo real
+                        </p>
+                      </div>
+                    </div>
+                    <div className="group flex items-start gap-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-200">
+                      <div className="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
+                      <div>
+                        <span className="text-foreground font-medium group-hover:text-secondary transition-colors">
+                          Datos abiertos para análisis
+                        </span>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Formatos estándar para investigación
+                        </p>
+                      </div>
+                    </div>
+                    <div className="group flex items-start gap-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-200">
+                      <div className="w-2 h-2 rounded-full bg-tertiary mt-2 flex-shrink-0"></div>
+                      <div>
+                        <span className="text-foreground font-medium group-hover:text-tertiary transition-colors">
+                          Participación ciudadana activa
+                        </span>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Tu voz construye un gobierno transparente
+                        </p>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </motion.div>
 
-              {/* Right Column - Video (2/3) - Más ancho */}
+              {/* Right Column - Video (2/3) with Enhanced Presentation */}
               <motion.div
                 className="relative lg:col-span-2"
                 initial={{ opacity: 0, x: 20 }}
@@ -183,16 +210,19 @@ export function HomeContent() {
                   delay: 0.6
                 }}
               >
-                <div className="rounded-2xl overflow-hidden shadow-2xl border border-border">
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-background">
+                  <div className="absolute inset-0 bg-gradient-to-br from-background/10 to-background/5 z-10 pointer-events-none"></div>
                   <HeroVideoPortal
                     videoSrc="/videos/CLIP_Transparencia_Fiscal.mp4"
                     posterSrc="/images/BANNER.jpg"
                     height="600px"
                     rounded="2xl"
                     priority={true}
+                    showOverlay={true}
                   />
                 </div>
                 
+               
               </motion.div>
             </div>
           </div>
