@@ -11,7 +11,7 @@ import {
 
 export const busquedaDocumentosService = {
   // Buscar documentos con filtros
-  async buscarDocumentos(
+  /*async buscarDocumentos(
   filtros: FiltrosBusqueda = {},
 ): Promise<BusquedaDocumentosResponse> {
 
@@ -28,7 +28,7 @@ export const busquedaDocumentosService = {
       await apiClient.post<
         BusquedaDocumentosResponse
       >(
-        '/busqueda-documentos',
+        '/documentos/buscar',
         payload,
       );
 
@@ -43,7 +43,36 @@ export const busquedaDocumentosService = {
 
     throw error;
   }
-},
+},*/
+ async buscarDocumentos(filtros: FiltrosBusqueda = {}): Promise<BusquedaDocumentosResponse['data']> {
+    try {
+      // Construir query params
+      const params = new URLSearchParams();
+      
+      if (filtros.search) params.append('search', filtros.search);
+      if (filtros.catalogoId) params.append('catalogoId', filtros.catalogoId.toString());
+      if (filtros.anio) params.append('anio', filtros.anio.toString());
+      if (filtros.extension) params.append('extension', filtros.extension);
+      if (filtros.periodicidad) params.append('periodicidad', filtros.periodicidad);
+      if (filtros.institucion) params.append('institucion', filtros.institucion);
+      if (filtros.categorias?.length) {
+        filtros.categorias.forEach(id => params.append('categorias', id.toString()));
+      }
+      if (filtros.page) params.append('page', filtros.page.toString());
+      if (filtros.pageSize) params.append('pageSize', filtros.pageSize.toString());
+      if (filtros.orderBy) params.append('orderBy', filtros.orderBy);
+      if (filtros.order) params.append('order', filtros.order);
+
+      const url = `/busqueda-documentos${params.toString() ? `?${params.toString()}` : ''}`;
+      const resultado = await apiClient.get<BusquedaDocumentosResponse['data']>(url);
+
+      
+      return resultado;
+    } catch (error) {
+      console.error('Error al buscar documentos:', error);
+      throw error;
+    }
+  },
 
   // Obtener opciones de filtros (datos estáticos que podrían venir de API en el futuro)
   getOpcionesFiltros(): OpcionesFiltros {
