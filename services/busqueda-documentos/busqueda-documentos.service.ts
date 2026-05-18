@@ -28,7 +28,7 @@ export const busquedaDocumentosService = {
       await apiClient.post<
         BusquedaDocumentosResponse
       >(
-        '/documentos/buscar',
+        '/busqueda-documentos',
         payload,
       );
 
