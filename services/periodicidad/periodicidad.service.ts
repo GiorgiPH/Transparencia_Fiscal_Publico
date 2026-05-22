@@ -12,7 +12,7 @@ class PeriodicidadService {
   async obtenerPeriodicidadPorAnio(catalogoId: number, anio: number): Promise<Periodicidad | null> {
     try {
       const periodicidad = await apiClient.get<Periodicidad>(
-        `admin/catalogos/${catalogoId}/periodos/${anio}`
+        `catalogos/${catalogoId}/periodos/${anio}`
       );
       return periodicidad;
     } catch (error) {
@@ -55,7 +55,7 @@ class PeriodicidadService {
     periodoId?: number
   ): Promise<DisponibilidadDocumento[]> {
     try {
-      let url = `/admin/documentos/periodo?catalogoId=${catalogoId}&ejercicioFiscal=${ejercicioFiscal}`;
+      let url = `/documentos/periodo?catalogoId=${catalogoId}&ejercicioFiscal=${ejercicioFiscal}`;
       if (periodoId !== undefined) {
         url += `&periodoId=${periodoId}`;
       }
