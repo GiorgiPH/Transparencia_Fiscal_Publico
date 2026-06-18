@@ -34,13 +34,13 @@ export const catalogoService = {
 
   // URLs para descarga y visualización (no usan fetch, solo URL directa)
   getDocumentoDescargaUrl(documentoId: number): string {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
-    return `${baseUrl}/busqueda-documentos/${documentoId}/descargar`;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    return `${baseUrl}/documentos/${documentoId}/descargar`;
   },
 
   getDocumentoVisualizacionUrl(documentoId: number): string {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001/api';
-    return `${baseUrl}/busqueda-documentos/${documentoId}/visualizar`;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
+    return `${baseUrl}/documentos/${documentoId}/visualizar`;
   },
 
   // Helper para obtener icono según tipo de documento

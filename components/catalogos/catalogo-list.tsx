@@ -9,6 +9,8 @@ import { CatalogoBase, CatalogoConDocumentos } from '@/services/catalogos/types'
 import { BuscarCatalogosResponse } from '@/services/catalogos/catalogo.service';
 import { TiposDocumento } from './tipos-documento';
 import { GenericCatalogCard } from '@/components/patterns/InstitutionalCard';
+import Image from 'next/image';
+import Link from 'next/link';
 
 interface CatalogoListProps {
   catalogos: CatalogoBase[] | CatalogoConDocumentos[] | BuscarCatalogosResponse[];
@@ -116,6 +118,42 @@ export function CatalogoList({
             </div>
           );
         })}
+      </div>
+
+      {/* Separador */}
+      <hr className="my-8 border-t border-border/50 sm:my-10" />
+
+      {/* Sección informativa - Portal de Transparencia */}
+      <div className="flex flex-col items-center justify-center gap-4 px-4 py-6 sm:gap-5 sm:py-8">
+        <Link
+          href="https://transparencia.morelos.gob.mx/index.php/s/wTm6A83BCa9dmbC"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="group flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:opacity-80 sm:gap-5"
+        >
+          {/* Logo */}
+          <div className="relative h-24 w-[32rem] transition-transform duration-300 group-hover:scale-105 sm:h-28 sm:w-[36rem]">
+  <Image
+    src="/images/transparenciaLogo.png"
+    alt="Logo Transparencia"
+    fill
+    className="object-contain"
+    sizes="(max-width: 640px) 512px, 576px"
+  />
+</div>
+
+          {/* Texto centrado */}
+          <div className="flex flex-col items-center text-center">
+            <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+              Para acceder a registros históricos, clic aqui.
+            </p>
+          </div>
+
+          {/* Botón de acceso */}
+          <span className="inline-flex items-center gap-2 rounded-lg bg-secondary px-5 py-2.5 text-sm font-medium text-secondary-foreground transition-all duration-300 hover:bg-secondary/90 hover:shadow-md">
+            Ir al portal
+          </span>
+        </Link>
       </div>
     </div>
   );

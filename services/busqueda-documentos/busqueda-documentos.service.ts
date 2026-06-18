@@ -1,4 +1,4 @@
-import { apiClient } from '@/lib/api/axios-client';
+import { apiClient, ApiResponse } from '@/lib/api/axios-client';
 import { 
   Documento, 
   BusquedaDocumentosResponse, 
@@ -6,12 +6,45 @@ import {
   OpcionesFiltros,
   OpcionFiltro,
   formatearTamanioArchivo,
-  obtenerUrlDescarga 
+  obtenerUrlDescarga, 
 } from './types';
 
 export const busquedaDocumentosService = {
   // Buscar documentos con filtros
-  async buscarDocumentos(filtros: FiltrosBusqueda = {}): Promise<BusquedaDocumentosResponse['data']> {
+  /*async buscarDocumentos(
+  filtros: FiltrosBusqueda = {},
+): Promise<BusquedaDocumentosResponse> {
+
+  try {
+
+    const payload = {
+      ...filtros,
+      categorias: filtros.categorias?.length
+        ? filtros.categorias
+        : undefined,
+    };
+
+    const resultado =
+      await apiClient.post<
+        BusquedaDocumentosResponse
+      >(
+        '/documentos/buscar',
+        payload,
+      );
+
+    return resultado;
+
+  } catch (error) {
+
+    console.error(
+      'Error al buscar documentos:',
+      error,
+    );
+
+    throw error;
+  }
+},*/
+ async buscarDocumentos(filtros: FiltrosBusqueda = {}): Promise<BusquedaDocumentosResponse['data']> {
     try {
       // Construir query params
       const params = new URLSearchParams();

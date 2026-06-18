@@ -38,15 +38,11 @@ export interface Documento {
     usuario_modif_id: number | null;
   };
 }
-
-export interface Paginacion {
-  page: number;
-  pageSize: number;
-  total: number;
-  totalPages: number;
-  hasNextPage: boolean;
-  hasPrevPage: boolean;
-}
+/*
+export interface BusquedaDocumentosResponse {
+  items: Documento[];
+  paginacion: Paginacion;
+}*/
 
 export interface BusquedaDocumentosResponse {
   statusCode: number;
@@ -58,6 +54,17 @@ export interface BusquedaDocumentosResponse {
   timestamp: string;
   path: string;
 }
+export interface Paginacion {
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
+}
+
+
+
 
 export interface FiltrosBusqueda {
   search?: string;

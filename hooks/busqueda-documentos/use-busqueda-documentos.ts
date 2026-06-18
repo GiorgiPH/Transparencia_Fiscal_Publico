@@ -63,7 +63,35 @@ export function useBusquedaDocumentos(filtrosIniciales: Partial<FiltrosBusqueda>
 
   // 2. Función de carga centralizada
   // No recibe parámetros, usa directamente el estado 'filtros'
-  const ejecutarBusqueda = useCallback(async () => {
+  /*const ejecutarBusqueda = useCallback(async () => {
+    // Cancelar petición anterior si aún está en curso
+    if (abortControllerRef.current) {
+      abortControllerRef.current.abort();
+    }
+    abortControllerRef.current = new AbortController();
+
+    try {
+      setLoading(true);
+      setError(null);
+
+      const resultado = await busquedaDocumentosService.buscarDocumentos(filtros);
+      
+      // IMPORTANTE: Si el servicio no trae documentos, garantizamos un array vacío
+      setDocumentos(resultado.items || []);
+      setPaginacion(resultado.paginacion || PAGINACION_POR_DEFECTO);
+      
+    } catch (err: any) {
+      if (err.name === 'AbortError') return; // Ignorar si fue cancelada manualmente
+      
+      console.error('Error al buscar documentos:', err);
+      setError(err?.message || 'Error al buscar documentos.');
+      setDocumentos([]); // Limpiar tabla en caso de error
+      setPaginacion(PAGINACION_POR_DEFECTO);
+    } finally {
+      setLoading(false);
+    }
+  }, [filtros]); // Se recrea cada vez que 'filtros' cambia*/
+   const ejecutarBusqueda = useCallback(async () => {
     // Cancelar petición anterior si aún está en curso
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
