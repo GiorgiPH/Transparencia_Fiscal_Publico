@@ -18,7 +18,7 @@ class PeriodicidadService {
   async obtenerPeriodicidadPorAnio(catalogoId: number, anio: number): Promise<PeriodicidadConPeriodos | null> {
     try {
       const periodicidad = await apiClient.get<PeriodoCalculado[] | PeriodicidadConPeriodos>(
-        `admin/catalogos/${catalogoId}/periodos/${anio}`
+        `admin/catalogos/${catalogoId}/periodosPublic/${anio}`
       );
 
       if (Array.isArray(periodicidad)) {
