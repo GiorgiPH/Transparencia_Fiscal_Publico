@@ -1,8 +1,13 @@
 import { useState, useCallback } from 'react';
-import { periodicidadService, type Periodicidad, type PeriodoOption, type DisponibilidadDocumento } from '../../services/periodicidad';
+import {
+  periodicidadService,
+  type PeriodicidadConPeriodos,
+  type PeriodoOption,
+  type DisponibilidadDocumento,
+} from '../../services/periodicidad';
 
 interface UsePeriodicidadReturn {
-  periodicidad: Periodicidad | null;
+  periodicidad: PeriodicidadConPeriodos | null;
   periodos: PeriodoOption[];
   disponibilidad: DisponibilidadDocumento[];
   loading: boolean;
@@ -14,7 +19,7 @@ interface UsePeriodicidadReturn {
 }
 
 export function usePeriodicidad(): UsePeriodicidadReturn {
-  const [periodicidad, setPeriodicidad] = useState<Periodicidad | null>(null);
+  const [periodicidad, setPeriodicidad] = useState<PeriodicidadConPeriodos | null>(null);
   const [periodos, setPeriodos] = useState<PeriodoOption[]>([]);
   const [disponibilidad, setDisponibilidad] = useState<DisponibilidadDocumento[]>([]);
   const [loading, setLoading] = useState(false);

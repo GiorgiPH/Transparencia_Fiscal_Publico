@@ -7,6 +7,21 @@ export interface Periodicidad {
   activo: boolean;
 }
 
+export interface PeriodoCalculado {
+  numeroPeriodo: number;
+  nombre: string;
+}
+
+export interface PeriodicidadConPeriodos {
+  id?: number;
+  nombre?: string;
+  nombrePortal?: string;
+  mesesPorPeriodo?: number;
+  periodosPorAnio?: number;
+  activo?: boolean;
+  periodos?: PeriodoCalculado[];
+}
+
 export interface PeriodoOption {
   value: number;
   label: string;

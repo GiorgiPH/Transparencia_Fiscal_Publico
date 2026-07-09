@@ -1,5 +1,11 @@
 import { apiClient } from '../../lib/api/axios-client';
-import { Periodicidad, PeriodoOption, DisponibilidadDocumento } from './types';
+import {
+  Periodicidad,
+  PeriodoOption,
+  DisponibilidadDocumento,
+  PeriodicidadConPeriodos,
+  PeriodoCalculado,
+} from './types';
 
 interface DisponibilidadPeriodoResponse {
   disponibilidadTiposDocumento?: DisponibilidadDocumento[];
@@ -9,12 +15,23 @@ class PeriodicidadService {
   /**
    * Obtiene la periodicidad de un catálogo para un año específico
    */
-  async obtenerPeriodicidadPorAnio(catalogoId: number, anio: number): Promise<Periodicidad | null> {
+  async obtenerPeriodicidadPorAnio(catalogoId: number, anio: number): Promise<PeriodicidadConPeriodos | null> {
     try {
-      const periodicidad = await apiClient.get<Periodicidad>(
+      const periodicidad = await apiClient.get<PeriodoCalculado[] | PeriodicidadConPeriodos>(
         `admin/catalogos/${catalogoId}/periodos/${anio}`
       );
-      return periodicidad;
+
+      if (Array.isArray(periodicidad)) {
+        return {
+          periodos: periodicidad,
+        };
+      }
+
+      if (periodicidad && Array.isArray(periodicidad.periodos)) {
+        return periodicidad;
+      }
+
+      return periodicidad ?? null;
     } catch (error) {
       console.error('Error al obtener periodicidad:', error);
       return null;
@@ -24,20 +41,27 @@ class PeriodicidadService {
   /**
    * Genera las opciones de periodo basadas en la periodicidad
    */
-  generarOpcionesPeriodo(periodicidad: Periodicidad | null): PeriodoOption[] {
+  generarOpcionesPeriodo(periodicidad: PeriodicidadConPeriodos | null): PeriodoOption[] {
     const opciones: PeriodoOption[] = [];
 
-    if (periodicidad && periodicidad.periodosPorAnio > 0) {
-      // Generar periodos según la periodicidad
-      for (let i = 1; i <= periodicidad.periodosPorAnio; i++) {
-        opciones.push({
-          value: i,
-          label: `${i} ${periodicidad.nombrePortal?.toLowerCase() || 'periodo'}`,
-        });
-      }
+    if (periodicidad?.periodos?.length) {
+      return periodicidad.periodos.map((periodo) => ({
+        value: periodo.numeroPeriodo,
+        label: periodo.nombre,
+      }));
     }
 
-    // Siempre agregar opción "Anual"
+    // Lógica anterior comentada para reutilizarla más adelante si se requiere.
+    // if (periodicidad && periodicidad.periodosPorAnio > 0) {
+    //   for (let i = 1; i <= periodicidad.periodosPorAnio; i++) {
+    //     opciones.push({
+    //       value: i,
+    //       label: `${i} ${periodicidad.nombrePortal?.toLowerCase() || 'periodo'}`,
+    //     });
+    //   }
+    // }
+
+    // Siempre agregar opción "Anual" como respaldo.
     opciones.push({
       value: 0,
       label: 'Anual',
