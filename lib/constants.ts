@@ -16,7 +16,7 @@ export const CONTACT_INFO = {
 // Años disponibles para visualización de documentos (2025 hasta el año actual)
 export const ANIOS_DISPONIBLES = (() => {
   const currentYear = new Date().getFullYear();
-  const startYear = 2025;
+  const startYear = 2026;
   const years = [];
   for (let year = startYear; year <= currentYear; year++) {
     years.push(year);

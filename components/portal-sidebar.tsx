@@ -6,11 +6,11 @@ import { cn } from "@/lib/utils"
 import Link from "next/link"
 import { useEffect } from "react"
 
-const sections = [
+export const navigationSections = [
   { id: "finanzas", label: "Infórmate", icon: BarChart3, href: "/finanzas" },
   { id: "mecanismos", label: "Conoce tu Portal", icon: Lock, href: "/mecanismos-acceso" },
   { id: "participacion", label: "Participa y Opina", icon: Users, href: "/participacion-ciudadana" },
-  { id: "comunicacion", label: "Estrategias de Comunicación", icon: Megaphone, href: "/estrategias-comunicacion" },
+  { id: "comunicacion", label: "Cómo te informamos", icon: Megaphone, href: "/estrategias-comunicacion" },
   { id: "datos-abiertos", label: "Política de Datos Abiertos", icon: Database, href: "/datos-abiertos" },
   { id: "marco-normativo", label: "Conoce las Leyes", icon: Scale, href: "/marco-normativo" },
   { id: "busqueda-documentos", label: "Explora los Datos", icon: Search, href: "/busqueda-documentos" },
@@ -57,7 +57,7 @@ export function PortalSidebar({ isOpen, onClose, activeSection }: PortalSidebarP
             <p className="px-3 text-xs font-semibold text-sidebar-foreground/60 uppercase tracking-wider mb-3">
               MTTF - Etapas
             </p>
-            {sections.map((section) => {
+            {navigationSections.map((section) => {
               const Icon = section.icon
               const isActive = activeSection === section.id
 

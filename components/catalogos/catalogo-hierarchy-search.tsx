@@ -121,6 +121,13 @@ export function CatalogoHierarchySearch() {
           <li>• Usa "Limpiar búsqueda" para volver a la navegación normal</li>
         </ul>
       </div>
+
+      <div className="rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-700 dark:border-red-800/50 dark:bg-red-950/30 dark:text-red-300">
+        <p className="font-semibold">Nota importante</p>
+        <p className="mt-1">
+          No todos los formatos de archivo aplican a todos los rubros o categorías. Revisa la disponibilidad del documento antes de descargar o visualizarlo.
+        </p>
+      </div>
       
       {/* Buscador */}
       <CatalogoSearch

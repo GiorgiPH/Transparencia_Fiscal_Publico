@@ -27,15 +27,17 @@ export const catalogoService = {
   async getFullCatalogoRaiz(): Promise<CatalogoRaizResponse> {
     return apiClient.getFullResponse<CatalogoBase[]>('/catalogos/raiz');
   },
-
+  
   async getFullCatalogoHijos(catalogoId: number): Promise<CatalogoHijosResponse> {
     return apiClient.getFullResponse<CatalogoConDocumentos[]>(`/catalogos/${catalogoId}/hijos`);
   },
 
   // URLs para descarga y visualización (no usan fetch, solo URL directa)
   getDocumentoDescargaUrl(documentoId: number): string {
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3001';
-    return `${baseUrl}/documentos/${documentoId}/descargar`;
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://app.administracionyfinanzas.morelos.gob.mx/transparencia-fiscal-api';
+    //return `${baseUrl}/documentos/${documentoId}/descargar`;
+        return `${baseUrl}/busqueda-documentos/${documentoId}/descargar`;
+
   },
 
   getDocumentoVisualizacionUrl(documentoId: number): string {

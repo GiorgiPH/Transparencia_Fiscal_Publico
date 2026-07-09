@@ -193,13 +193,17 @@ export function GenericCatalogCard({
                 <SelectTrigger id="period-selector" className="h-8 text-sm">
                   <SelectValue placeholder={loading ? "Cargando..." : "Periodo"} />
                 </SelectTrigger>
-                <SelectContent>
-                  {periodos.map((period: { value: number; label: string }) => (
-                    <SelectItem key={period.value} value={period.value.toString()} className="text-sm">
-                      {period.label}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
+               <SelectContent>
+  {periodos.map((period: { value: number; label: string }) => (
+            <SelectItem
+              key={period.value}
+              value={period.value.toString()}
+              className="text-sm"
+            >
+              {period.label.replace(/periodo/gi, "Trimestre")}
+            </SelectItem>
+          ))}
+        </SelectContent>
               </Select>
             </div>
           </div>
