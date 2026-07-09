@@ -70,7 +70,7 @@ export function HomeContent() {
       href: "/participacion-ciudadana",
     },
     {
-      title: "Conoce cómo te informamos",
+      title: "Cómo te informamos",
       subtitle: "Mantente Informado",
       description: "Mantente informado a través de nuestros canales oficiales, redes sociales y campañas de comunicación.",
       color: "tertiary",
