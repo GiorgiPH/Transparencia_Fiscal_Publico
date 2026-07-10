@@ -18,7 +18,7 @@ export function PortalHeader({ onMenuClick }: PortalHeaderProps) {
     <header className="sticky top-0 z-50 border-b border-border bg-white shadow-sm">
       <div className="flex h-20 items-center justify-between px-4 lg:px-8">
         <div className="flex items-center gap-4">
-          <Button variant="ghost" size="icon" onClick={onMenuClick} aria-label="Abrir menú">
+          <Button variant="ghost" size="icon" onClick={onMenuClick} aria-label="Abrir menú" className="lg:hidden">
             <Menu className="h-5 w-5" />
           </Button>
           <Link href="/" className="flex items-center">
@@ -47,7 +47,7 @@ export function PortalHeader({ onMenuClick }: PortalHeaderProps) {
                 key={section.id}
                 href={section.href}
                 className={cn(
-                  "group relative px-1 py-2 text-sm font-medium transition-all duration-300",
+                  "group relative px-1 py-2 text-md font-medium transition-all duration-300",
                   isActive
                     ? "text-[#b8860b]"
                     : "text-muted-foreground hover:text-[#b8860b]",

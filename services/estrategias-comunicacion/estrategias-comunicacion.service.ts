@@ -1,18 +1,31 @@
 import { apiClient } from '@/lib/api/axios-client';
-import { RedSocial, NoticiaCarousel } from './types';
+import { RedSocial, NoticiaCarousel, RedesSocialesResponse } from './types';
 
 export const estrategiasComunicacionService = {
   // Obtener redes sociales activas
-  async getRedesSociales(): Promise<RedSocial[]> {
+  async getRedesSociales(): Promise<RedesSocialesResponse> {
     try {
-      const redesSociales = await apiClient.get<RedSocial[]>('/estrategias-comunicacion/redes-sociales');
+      const resultado = await apiClient.get<RedesSocialesResponse>('/estrategias-comunicacion/redes-sociales');
       // Filtrar solo las redes sociales activas y ordenar por el campo 'orden'
-      return redesSociales
-        .filter((red: RedSocial) => red.activo)
-        .sort((a: RedSocial, b: RedSocial) => a.orden - b.orden);
+      return {
+        ...resultado,
+        items: resultado.items
+          .filter((red: RedSocial) => red.activo)
+          .sort((a: RedSocial, b: RedSocial) => a.orden - b.orden),
+      };
     } catch (error) {
       console.error('Error al obtener redes sociales:', error);
-      return [];
+      return {
+        items: [],
+        paginacion: {
+          page: 1,
+          pageSize: 10,
+          total: 0,
+          totalPages: 0,
+          hasNextPage: false,
+          hasPrevPage: false,
+        },
+      };
     }
   },
 

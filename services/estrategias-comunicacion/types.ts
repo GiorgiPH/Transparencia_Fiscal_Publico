@@ -24,13 +24,20 @@ export interface NoticiaCarousel {
   fecha_publicacion: Date;
 }
 
-// Respuesta de la API para redes sociales
+// Respuesta de la API para redes sociales con paginación
 export interface RedesSocialesResponse {
-  statusCode: number;
-  message: string;
-  data: RedSocial[];
-  timestamp: string;
-  path: string;
+  items: RedSocial[];
+  paginacion: PaginacionRedes;
+}
+
+// Paginación para redes sociales
+export interface PaginacionRedes {
+  page: number;
+  pageSize: number;
+  total: number;
+  totalPages: number;
+  hasNextPage: boolean;
+  hasPrevPage: boolean;
 }
 
 // Respuesta de la API para noticias del carrusel

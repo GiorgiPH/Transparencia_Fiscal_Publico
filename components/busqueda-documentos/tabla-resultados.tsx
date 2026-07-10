@@ -217,7 +217,7 @@ export function TablaResultados({
                     <ArrowUpDown className="h-3 w-3" />
                   </Button>
                 </TableHead>
-                <TableHead>
+                {/* <TableHead>
                   <Button
                     variant="ghost"
                     size="sm"
@@ -227,7 +227,7 @@ export function TablaResultados({
                     Publicación
                     <ArrowUpDown className="h-3 w-3" />
                   </Button>
-                </TableHead>
+                </TableHead> */}
                 <TableHead>Tamaño</TableHead>
                 <TableHead>Acción</TableHead>
               </TableRow>
@@ -265,9 +265,9 @@ export function TablaResultados({
                         {doc.ejercicio_fiscal}
                       </span>
                     </TableCell>
-                    <TableCell className="text-sm text-muted-foreground">
+                   {/*  <TableCell className="text-sm text-muted-foreground">
                       {fechaFormateada}
-                    </TableCell>
+                    </TableCell> */}
                     <TableCell className="text-sm text-muted-foreground">
                       {tamanioFormateado}
                     </TableCell>
