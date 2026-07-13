@@ -10,11 +10,11 @@ export function PortalFooter() {
       {/* Pleca superior */}
   <div className="w-full">
     <Image
-      src="/images/pleca.png"
+      src="/images/Cenefa.png"
       alt="Pleca decorativa"
       width={1920}
       height={120}
-      className="w-full h-10 object-cover"
+      className="w-full h-7 object-cover"
       priority
     />
   </div>
