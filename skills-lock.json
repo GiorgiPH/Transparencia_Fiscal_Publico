@@ -4,7 +4,8 @@
     "interface-design": {
       "source": "dammyjay93/interface-design",
       "sourceType": "github",
-      "computedHash": "4d5fe1dacfebc0c1b3837b061405150ed2e4971c096543afc46c23161c5a4f7a"
+      "skillPath": ".claude/skills/interface-design/SKILL.md",
+      "computedHash": "55a83a96d1e3d161b8c3630dab8ae2dd4547d92636d3d9b4b447d7d59163e084"
     },
     "react-hook-form": {
       "source": "claude-dev-suite/claude-dev-suite",

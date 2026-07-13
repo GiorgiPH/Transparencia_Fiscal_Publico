@@ -61,15 +61,17 @@ export function NewsCard({
               </div>
             </div>
       
-            {/* Contenedor de Texto - Exactamente igual al de ligas de interés */}
+            {/* Contenedor de Texto - flex-1 asegura altura uniforme entre cards */}
             <div className="p-4 flex flex-col flex-1">
-              <div className="mb-2">
+              {/* min-h-[3rem] asegura que todas las cards tengan el mismo espacio para el título aunque tenga menos líneas */}
+              <div className="mb-2 min-h-[3rem] flex items-start justify-center">
                 <h3 className="text-center font-semibold text-foreground text-sm lg:text-base line-clamp-2 group-hover:text-primary transition-colors">
                   {title}
                 </h3>
               </div>
               
-              <p className="text-center text-sm text-muted-foreground line-clamp-3">
+              {/* flex-1 hace que el excerpt ocupe todo el espacio restante, igualando la altura entre cards */}
+              <p className="text-center text-sm text-muted-foreground line-clamp-3 flex-1">
                 {excerpt}
               </p>
             </div>

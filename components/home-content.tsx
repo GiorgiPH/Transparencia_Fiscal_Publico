@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { HomeHeader } from "@/components/home-header"
 import { PortalSidebar } from "@/components/portal-sidebar"
 import { PortalFooter } from "@/components/portal-footer"
+import { Container } from "@/components/ui/container"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import {
@@ -126,112 +127,18 @@ export function HomeContent() {
       {/* Main Content */}
       <main className="flex-1">
         {/* Hero Section */}
-        <section className="relative  min-h-[40vh] bg-cover bg-center bg-no-repeat border-b" style={{ backgroundImage: "url('/images/BANNER.jpg')" }}>
+        <section className="relative min-h-[40vh] bg-cover bg-center bg-no-repeat border-b" style={{ backgroundImage: "url('/images/BANNER.jpg')" }}>
           <div className="absolute inset-0 bg-black/30"></div>
-          <div className="max-w-none mx-auto px-4 lg:px-24 py-12 lg:py-20 relative z-10">
+          <Container fullWidth className="py-12 lg:py-20 relative z-10">
             <div className="text-center max-w-4xl mx-auto mb-10">
               
             </div>
-
-          </div>
+          </Container>
         </section>
 
-        {/* Description Section with Video - Crafted Design */}
+         {/* Two Column Section - Estatua Morelos + Vertical Cards */}
         <section className="py-12 lg:py-16">
-          <div className="max-w-none mx-auto px-4 lg:px-24">
-            <div className="grid lg:grid-cols-3 gap-10 lg:gap-16 items-start">
-              {/* Left Column - Text (1/3) with Enhanced Hierarchy */}
-              <motion.div
-                className="text-left lg:col-span-1 space-y-6"
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ 
-                  duration: 0.8,
-                  ease: "easeOut",
-                  delay: 0.4
-                }}
-              >
-                <div className="space-y-4">
-                 
-                  <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed text-pretty">
-                    Accede a información clara y oportuna sobre el manejo de recursos públicos del Estado de Morelos. Conoce
-                    cómo se administra el presupuesto y participa en la construcción de un gobierno transparente.
-                  </p>
-                </div>
-
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold text-foreground">Nuestros compromisos</h3>
-                  <div className="space-y-3">
-                    <div className="group flex items-start gap-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-200">
-                      <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
-                      <div>
-                        <span className="text-foreground font-medium group-hover:text-primary transition-colors">
-                          Información fiscal actualizada
-                        </span>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Datos públicos accesibles en tiempo real
-                        </p>
-                      </div>
-                    </div>
-                    <div className="group flex items-start gap-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-200">
-                      <div className="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
-                      <div>
-                        <span className="text-foreground font-medium group-hover:text-secondary transition-colors">
-                          Datos abiertos para análisis
-                        </span>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Formatos estándar para investigación
-                        </p>
-                      </div>
-                    </div>
-                    <div className="group flex items-start gap-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-200">
-                      <div className="w-2 h-2 rounded-full bg-tertiary mt-2 flex-shrink-0"></div>
-                      <div>
-                        <span className="text-foreground font-medium group-hover:text-tertiary transition-colors">
-                          Participación ciudadana activa
-                        </span>
-                        <p className="text-sm text-muted-foreground mt-1">
-                          Tu voz construye un gobierno transparente
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </motion.div>
-
-              {/* Right Column - Video (2/3) with Enhanced Presentation */}
-              <motion.div
-                className="relative lg:col-span-2"
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ 
-                  duration: 0.8,
-                  ease: "easeOut",
-                  delay: 0.6
-                }}
-              >
-                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-background">
-                  <div className="absolute inset-0 bg-gradient-to-br from-background/10 to-background/5 z-10 pointer-events-none"></div>
-                  <HeroVideoPortal
-                    videoSrc="/videos/CLIP_Transparencia_Fiscal.mp4"
-                    posterSrc="/images/BANNER.jpg"
-                    height="600px"
-                    rounded="2xl"
-                    priority={true}
-                    showOverlay={true}
-                  />
-                </div>
-                
-               
-              </motion.div>
-            </div>
-          </div>
-        </section>
-
-
-        {/* Two Column Section - Estatua Morelos + Vertical Cards */}
-        <section className="py-12 lg:py-16">
-          <div className="max-w-none mx-auto px-4 lg:px-24">
+          <Container fullWidth>
             <div className="grid lg:grid-cols-5 gap-16 items-start">
               {/* Left Column - Estatua Morelos Image with Title and Search (3/5) */}
               <div className="lg:col-span-3 relative">
@@ -405,80 +312,173 @@ export function HomeContent() {
                 </div>
               </div>
             </div>
-
-            {/* Catálogos más consultados (full width) */}
-            <div className="mt-14">
-              <h3 className="text-3xl font-bold text-center mb-8 text-foreground">Catálogos más consultados</h3>
-
-              {loadingTopCatalogos && (
-                <div className="flex flex-wrap justify-center gap-8">
-                  {[1, 2, 3].map((i) => (
-                    <div
-                      key={i}
-                      className="flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl"
-                    >
-                      <Skeleton className="w-8 h-8 rounded-full" />
-                      <div className="text-left">
-                        <Skeleton className="h-6 w-32 mb-2" />
-                        <Skeleton className="h-4 w-24" />
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              )}
-
-              {errorTopCatalogos && (
-                <div className="text-center">
-                  <Alert variant="destructive" className="max-w-md mx-auto">
-                    <AlertCircle className="h-4 w-4" />
-                    <AlertDescription>Error al cargar los catálogos más consultados</AlertDescription>
-                  </Alert>
-                </div>
-              )}
-
-              {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length > 0 && (
-                <div className="flex flex-wrap justify-center gap-8">
-                  {topCatalogos.slice(0, 5).map((catalogo) => (
-                    <button
-                      key={catalogo.id}
-                      onClick={() => handleTopCatalogoClick(catalogo.id)}
-                      className="group flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
-                    >
-                      <div className="relative">
-                        <div className="text-3xl text-gray-300 group-hover:text-yellow-400 transition-colors">★</div>
-                        <div className="absolute inset-0 text-3xl text-yellow-500 opacity-0 group-hover:opacity-100 transition-opacity">
-                          ★
-                        </div>
-                      </div>
-                      <div className="text-left">
-                        <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors block">
-                          {catalogo.nombre}
-                        </span>
-                        <span className="text-lg text-muted-foreground font-medium">
-                          ({catalogo.totalDocumentos} descargas)
-                        </span>
-                      </div>
-                    </button>
-                  ))}
-                </div>
-              )}
-
-              {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length === 0 && (
-                <div className="text-center text-muted-foreground">No hay catálogos disponibles</div>
-              )}
-            </div>
-          </div>
+          </Container>
         </section>
 
+        {/* Catálogos más consultados - Full width section with light green background */}
+        <section className="py-16 bg-primary/5">
+          <Container fullWidth>
+            <h3 className="text-3xl font-bold text-center mb-10 text-foreground">Catálogos más consultados</h3>
+
+            {loadingTopCatalogos && (
+              <div className="flex flex-wrap justify-center gap-8">
+                {[1, 2, 3].map((i) => (
+                  <div
+                    key={i}
+                    className="flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl"
+                  >
+                    <Skeleton className="w-8 h-8 rounded-full" />
+                    <div className="text-left">
+                      <Skeleton className="h-6 w-32 mb-2" />
+                      <Skeleton className="h-4 w-24" />
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+
+            {errorTopCatalogos && (
+              <div className="text-center">
+                <Alert variant="destructive" className="max-w-md mx-auto">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertDescription>Error al cargar los catálogos más consultados</AlertDescription>
+                </Alert>
+              </div>
+            )}
+
+            {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length > 0 && (
+              <div className="flex flex-wrap justify-center gap-8">
+                {topCatalogos.slice(0, 5).map((catalogo) => (
+                  <button
+                    key={catalogo.id}
+                    onClick={() => handleTopCatalogoClick(catalogo.id)}
+                    className="group flex items-center gap-4 px-8 py-6 bg-white border-2 border-primary/10 rounded-2xl hover:border-primary/30 hover:shadow-2xl transition-all duration-300 hover:scale-[1.02] cursor-pointer"
+                  >
+                    <div className="relative">
+                      <div className="text-3xl text-tertiary">★</div>
+                    </div>
+                    <div className="text-left">
+                      <span className="text-xl font-bold text-foreground group-hover:text-primary transition-colors block">
+                        {catalogo.nombre}
+                      </span>
+                      <span className="text-lg text-muted-foreground font-medium">
+                        ({catalogo.totalDocumentos} descargas)
+                      </span>
+                    </div>
+                  </button>
+                ))}
+              </div>
+            )}
+
+            {!loadingTopCatalogos && !errorTopCatalogos && topCatalogos.length === 0 && (
+              <div className="text-center text-primary-foreground/70">No hay catálogos disponibles</div>
+            )}
+          </Container>
+        </section>
+
+        {/* Description Section with Video - Crafted Design */}
+        <section className="py-12 lg:py-16">
+          <Container fullWidth>
+            <div className="grid lg:grid-cols-3 gap-10 lg:gap-16 items-center">
+              {/* Left Column - Text (1/3) with Enhanced Hierarchy */}
+              <motion.div
+                className="text-left lg:col-span-1 space-y-6"
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ 
+                  duration: 0.8,
+                  ease: "easeOut",
+                  delay: 0.4
+                }}
+              >
+                <div className="space-y-4">
+                  <h2 className="text-2xl lg:text-3xl font-bold text-foreground">
+                    ¿Qué encontrarás en este portal?
+                  </h2>
+                  <p className="text-lg lg:text-xl text-muted-foreground leading-relaxed text-pretty">
+                    Accede a información clara y oportuna sobre el manejo de recursos públicos del Estado de Morelos. Conoce
+                    cómo se administra el presupuesto y participa en la construcción de un gobierno transparente.
+                  </p>
+                </div>
+
+                <div className="space-y-4">
+                  <h3 className="text-lg font-semibold text-foreground">Nuestros compromisos</h3>
+                  <div className="space-y-3">
+                    <div className="group flex items-start gap-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-200">
+                      <div className="w-2 h-2 rounded-full bg-primary mt-2 flex-shrink-0"></div>
+                      <div>
+                        <span className="text-foreground font-medium group-hover:text-primary transition-colors">
+                          Información fiscal actualizada
+                        </span>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Datos públicos accesibles en tiempo real
+                        </p>
+                      </div>
+                    </div>
+                    <div className="group flex items-start gap-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-200">
+                      <div className="w-2 h-2 rounded-full bg-secondary mt-2 flex-shrink-0"></div>
+                      <div>
+                        <span className="text-foreground font-medium group-hover:text-secondary transition-colors">
+                          Datos abiertos para análisis
+                        </span>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Formatos estándar para investigación
+                        </p>
+                      </div>
+                    </div>
+                    <div className="group flex items-start gap-3 p-3 rounded-lg hover:bg-accent/5 transition-colors duration-200">
+                      <div className="w-2 h-2 rounded-full bg-tertiary mt-2 flex-shrink-0"></div>
+                      <div>
+                        <span className="text-foreground font-medium group-hover:text-tertiary transition-colors">
+                          Participación ciudadana activa
+                        </span>
+                        <p className="text-sm text-muted-foreground mt-1">
+                          Tu voz construye un gobierno transparente
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+
+              {/* Right Column - Video (2/3) with Enhanced Presentation */}
+              <motion.div
+                className="relative lg:col-span-2"
+                initial={{ opacity: 0, x: 20 }}
+                animate={{ opacity: 1, x: 0 }}
+                transition={{ 
+                  duration: 0.8,
+                  ease: "easeOut",
+                  delay: 0.6
+                }}
+              >
+                <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-border/50 bg-background">
+                  <div className="absolute inset-0 bg-gradient-to-br from-background/10 to-background/5 z-10 pointer-events-none"></div>
+                  <HeroVideoPortal
+                    videoSrc="/videos/CLIP_Transparencia_Fiscal.mp4"
+                    posterSrc="/images/BANNER.jpg"
+                    height="600px"
+                    rounded="2xl"
+                    priority={true}
+                    showOverlay={true}
+                  />
+                </div>
+                
+               
+              </motion.div>
+            </div>
+          </Container>
+        </section>
+
+
+       
         {/* Quick Access Block */}
         <section className="py-12 lg:py-16">
-          <div className="mx-auto px-4 lg:px-24">
-            <div className="max-w-7xl mx-auto">
+          <Container fullWidth>
             <SectionTitle
               title="Accede a tu Información"
               subtitle="Acceso directo a las herramientas de fiscalización y datos abiertos."
               titleClassName="text-3xl lg:text-4xl"
-
             />
 
             <div className="grid gap-8 md:grid-cols-2 mx-auto">
@@ -500,13 +500,12 @@ export function HomeContent() {
                 ariaLabel="Ir al módulo de búsqueda de datos y documentos"
               />
             </div>
-            </div>
-          </div>
+          </Container>
         </section>
 
         {/* Citizen Participation Section */}
         <section className="py-12 lg:py-16 bg-tertiary/5">
-          <div className="max-w-none mx-auto px-4 lg:px-24">
+          <Container fullWidth>
             <div className="grid lg:grid-cols-2 gap-8 items-center">
               {/* Left Column - Chica Image (más pequeña) */}
               <div className="relative">
@@ -586,13 +585,13 @@ export function HomeContent() {
                 </div>
               </motion.div>
             </div>
-          </div>
+          </Container>
         </section>
 
         {/* News Section - NewsCarousel consume noticias desde estrategias-comunicacion API */}
         {loading && (
           <section className="py-12 lg:py-16">
-            <div className="max-w-none mx-auto px-4 lg:px-24">
+            <Container fullWidth>
               <Skeleton className="h-10 w-64 mb-2" />
               <Skeleton className="h-5 w-96 mb-8" />
               <div className="grid gap-4 grid-cols-1 md:grid-cols-2 lg:grid-cols-3">
@@ -600,18 +599,18 @@ export function HomeContent() {
                   <Skeleton key={i} className="h-[320px] rounded-xl" />
                 ))}
               </div>
-            </div>
+            </Container>
           </section>
         )}
 
         {error && (
           <section className="py-12 lg:py-16">
-            <div className="max-w-none mx-auto px-4 lg:px-24">
+            <Container fullWidth>
               <Alert variant="destructive">
                 <AlertCircle className="h-4 w-4" />
                 <AlertDescription>{error}</AlertDescription>
               </Alert>
-            </div>
+            </Container>
           </section>
         )}
 
