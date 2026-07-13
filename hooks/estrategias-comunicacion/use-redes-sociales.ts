@@ -13,8 +13,8 @@ export function useRedesSociales() {
     try {
       setLoading(true);
       setError(null);
-      const data = await estrategiasComunicacionService.getRedesSociales();
-      setRedesSociales(data);
+      const response = await estrategiasComunicacionService.getRedesSociales();
+      setRedesSociales(response.items);
     } catch (err) {
       console.error('Error al cargar redes sociales:', err);
       setError('No se pudieron cargar las redes sociales. Por favor, intenta nuevamente.');

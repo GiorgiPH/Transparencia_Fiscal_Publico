@@ -1,6 +1,7 @@
-import { Mail, Phone, MapPin, Facebook, Twitter, Youtube } from "lucide-react"
+import { Facebook, Twitter, Youtube } from "lucide-react"
 import Link from "next/link"
 import Image from "next/image"
+import { Container } from "@/components/ui/container"
 
 
 export function PortalFooter() {
@@ -8,16 +9,16 @@ export function PortalFooter() {
     <footer className="border-t border-border bg-primary text-primary-foreground mt-16">
       {/* Pleca superior */}
   <div className="w-full">
-  <Image
-    src="/images/Cenefa.png"
-    alt="Pleca decorativa"
-    width={1920}
-    height={120}
-    className="w-full h-6 object-cover" // ← Cambiado de h-10 a h-6
-    priority
-  />
-</div>
-      <div className="container mx-auto px-4 lg:px-8 py-12">
+    <Image
+      src="/images/pleca.png"
+      alt="Pleca decorativa"
+      width={1920}
+      height={120}
+      className="w-full h-10 object-cover"
+      priority
+    />
+  </div>
+      <Container className="py-12">
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {/* About Section */}
           <div>
@@ -155,7 +156,7 @@ export function PortalFooter() {
             </div>
           </div>
         </div>
-      </div>
+      </Container>
     </footer>
   )
 }

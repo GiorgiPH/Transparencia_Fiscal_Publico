@@ -153,7 +153,7 @@ export function FiltrosBusqueda({
         </div>
 
         {/* Filtro por periodicidad */}
-        <div className="space-y-2">
+       {/*  <div className="space-y-2">
           <Label htmlFor="periodicity">Periodicidad</Label>
           <Select
             value={textSelectHelper.toFrontend(filtros.periodicidad)}
@@ -171,7 +171,7 @@ export function FiltrosBusqueda({
               ))}
             </SelectContent>
           </Select>
-        </div>
+        </div> */}
 
         {/* Filtro por institución */}
         {/* <div className="space-y-2">

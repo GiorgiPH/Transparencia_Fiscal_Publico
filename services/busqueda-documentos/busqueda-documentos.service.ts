@@ -11,7 +11,7 @@ import {
 
 export const busquedaDocumentosService = {
   // Buscar documentos con filtros
-  /*async buscarDocumentos(
+  async buscarDocumentos(
   filtros: FiltrosBusqueda = {},
 ): Promise<BusquedaDocumentosResponse> {
 
@@ -23,7 +23,7 @@ export const busquedaDocumentosService = {
         ? filtros.categorias
         : undefined,
     };
-
+console.log('Payload de búsqueda de documentos:', payload);
     const resultado =
       await apiClient.post<
         BusquedaDocumentosResponse
@@ -31,7 +31,7 @@ export const busquedaDocumentosService = {
         '/documentos/buscar',
         payload,
       );
-
+console.log('Resultado de la búsqueda de documentos:', resultado);
     return resultado;
 
   } catch (error) {
@@ -43,8 +43,8 @@ export const busquedaDocumentosService = {
 
     throw error;
   }
-},*/
- async buscarDocumentos(filtros: FiltrosBusqueda = {}): Promise<BusquedaDocumentosResponse['data']> {
+},
+ /*async buscarDocumentos(filtros: FiltrosBusqueda = {}): Promise<BusquedaDocumentosResponse['data']> {
     try {
       // Construir query params
       const params = new URLSearchParams();
@@ -72,7 +72,7 @@ export const busquedaDocumentosService = {
       console.error('Error al buscar documentos:', error);
       throw error;
     }
-  },
+  },*/
 
   // Obtener opciones de filtros (datos estáticos que podrían venir de API en el futuro)
   getOpcionesFiltros(): OpcionesFiltros {
@@ -90,10 +90,18 @@ export const busquedaDocumentosService = {
       extensiones: [
         //{ value: 'pdf', label: 'PDF' },
         
-        { value: '1', label: 'CSV' },
+      /*   { value: '1', label: 'CSV' },
         { value: '2', label: 'JSON' },
         { value: '3', label: 'XML' },
         { value: '4', label: 'Excel (XLSX)' },
+        { value: '4', label: 'PDF' }, */
+
+        { value: 'csv', label: 'CSV' },
+        { value: 'json', label: 'JSON' },
+        { value: 'xml', label: 'XML' },
+        { value: 'xlsx', label: 'Excel (XLSX)' },
+        { value: 'pdf', label: 'PDF' }, 
+
         //{ value: 'docx', label: 'Word (DOCX)' },
         //{ value: 'txt', label: 'Texto (TXT)' },
       ],

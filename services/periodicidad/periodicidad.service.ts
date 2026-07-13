@@ -18,7 +18,7 @@ class PeriodicidadService {
   async obtenerPeriodicidadPorAnio(catalogoId: number, anio: number): Promise<PeriodicidadConPeriodos | null> {
     try {
       const periodicidad = await apiClient.get<PeriodoCalculado[] | PeriodicidadConPeriodos>(
-        `admin/catalogos/${catalogoId}/periodosPublic/${anio}`
+        `/catalogos/${catalogoId}/periodos/${anio}`
       );
 
       if (Array.isArray(periodicidad)) {
@@ -79,7 +79,7 @@ class PeriodicidadService {
     periodoId?: number
   ): Promise<DisponibilidadDocumento[]> {
     try {
-      let url = `/admin/documentos/periodo?catalogoId=${catalogoId}&ejercicioFiscal=${ejercicioFiscal}`;
+      let url = `/documentos/periodo?catalogoId=${catalogoId}&ejercicioFiscal=${ejercicioFiscal}`;
       if (periodoId !== undefined) {
         url += `&periodoId=${periodoId}`;
       }

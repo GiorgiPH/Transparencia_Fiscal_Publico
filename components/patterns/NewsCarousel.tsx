@@ -4,6 +4,7 @@ import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Container } from "@/components/ui/container"
 import { SectionTitle } from "@/components/patterns/SectionTitle"
 import { NewsCard } from "@/components/patterns/NewsCard"
 import {
@@ -119,7 +120,7 @@ export function NewsCarousel({
 
   return (
     <section className={`py-12 lg:py-16 ${className}`}>
-      <div className="max-w-none mx-auto px-4 lg:px-24">
+      <Container fullWidth>
         <SectionTitle
           title={title}
           subtitle={subtitle}
@@ -147,6 +148,7 @@ export function NewsCarousel({
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: index * 0.1 }}
+                    className="h-full"
                   >
                     <NewsCard
                       title={item.title}
@@ -217,7 +219,7 @@ export function NewsCarousel({
             Desplaza el carrusel para ver más noticias. Haz clic en cualquier noticia para leerla completa.
           </p>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

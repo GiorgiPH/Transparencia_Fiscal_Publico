@@ -6,6 +6,7 @@ import Link from "next/link"
 import { motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
 import { Button } from "@/components/ui/button"
+import { Container } from "@/components/ui/container"
 import { SectionTitle } from "@/components/patterns/SectionTitle"
 import {
   Carousel,
@@ -174,7 +175,7 @@ export function LinksCarousel({
 
   return (
     <section className={`py-12 lg:py-16 ${className}`}>
-      <div className="max-w-none mx-auto px-4 lg:px-24">
+      <Container fullWidth>
         <SectionTitle
           title={title}
           subtitle={subtitle}
@@ -293,7 +294,7 @@ export function LinksCarousel({
             Desplaza el carrusel para ver más ligas de interés. Haz clic en cualquier imagen para visitar el portal.
           </p>
         </div>
-      </div>
+      </Container>
     </section>
   )
 }

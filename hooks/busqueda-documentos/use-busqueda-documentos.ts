@@ -63,7 +63,7 @@ export function useBusquedaDocumentos(filtrosIniciales: Partial<FiltrosBusqueda>
 
   // 2. Función de carga centralizada
   // No recibe parámetros, usa directamente el estado 'filtros'
-  /*const ejecutarBusqueda = useCallback(async () => {
+  const ejecutarBusqueda = useCallback(async () => {
     // Cancelar petición anterior si aún está en curso
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -90,8 +90,8 @@ export function useBusquedaDocumentos(filtrosIniciales: Partial<FiltrosBusqueda>
     } finally {
       setLoading(false);
     }
-  }, [filtros]); // Se recrea cada vez que 'filtros' cambia*/
-   const ejecutarBusqueda = useCallback(async () => {
+  }, [filtros]); // Se recrea cada vez que 'filtros' cambia
+   /*const ejecutarBusqueda = useCallback(async () => {
     // Cancelar petición anterior si aún está en curso
     if (abortControllerRef.current) {
       abortControllerRef.current.abort();
@@ -118,7 +118,7 @@ export function useBusquedaDocumentos(filtrosIniciales: Partial<FiltrosBusqueda>
     } finally {
       setLoading(false);
     }
-  }, [filtros]); // Se recrea cada vez que 'filtros' cambia
+  }, [filtros]); // Se recrea cada vez que 'filtros' cambia*/
 
   // 3. Efecto reactivo: Cualquier cambio en filtros dispara la búsqueda
   useEffect(() => {

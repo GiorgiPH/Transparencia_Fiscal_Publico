@@ -2,12 +2,17 @@
 
 import { PortalLayout } from "@/components/portal-layout"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Phone, Mail, MessageCircle, Calendar } from "lucide-react"
-import Image from "next/image"
+import { Skeleton } from "@/components/ui/skeleton"
+import { Alert, AlertDescription } from "@/components/ui/alert"
+import { AlertCircle } from "lucide-react"
 import { RedesSocialesDinamicas } from "@/components/estrategias-comunicacion/redes-sociales-dinamicas"
 import { SectionTitle } from "@/components/patterns/SectionTitle"
+import { NewsCard } from "@/components/patterns/NewsCard"
+import { useNoticiasCarouselMapped } from "@/hooks/estrategias-comunicacion"
 
 export default function EstrategiasComunicacionPage() {
+  const { noticias, loading, error } = useNoticiasCarouselMapped(5)
+
   return (
     <PortalLayout activeSection="comunicacion">
       <div className="p-6 lg:p-12 max-w-6xl mx-auto">
@@ -18,49 +23,54 @@ export default function EstrategiasComunicacionPage() {
           titleClassName="text-3xl lg:text-4xl"
         />
 
-        {/* News Section with government event images - Using same news as home page */}
+        {/* News Section - Dinámica desde la API */}
         <Card className="mb-8">
           <CardHeader>
             <CardTitle>Noticias y Eventos Recientes</CardTitle>
           </CardHeader>
-          {/* <CardContent>
-            <div className="flex gap-6 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-thin">
-              {newsItems.map((news) => (
-                <div key={news.id} className="group flex-shrink-0 w-80 space-y-3 snap-start">
-                  <div className="relative aspect-[4/3] overflow-hidden rounded-lg border">
-                    <Image
-                      src={news.image}
-                      alt={news.imageAlt}
-                      fill
-                      className="object-cover transition-transform group-hover:scale-105"
-                    />
+          <CardContent>
+            {loading && (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="space-y-3">
+                    <Skeleton className="aspect-video w-full rounded-lg" />
+                    <Skeleton className="h-4 w-3/4" />
+                    <Skeleton className="h-3 w-full" />
+                    <Skeleton className="h-3 w-1/2" />
                   </div>
-                  <div>
-                    <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
-                      <Calendar className="h-3 w-3" />
-                      <span>{news.date}</span>
-                    </div>
-                    <h3 className="font-semibold text-sm mb-1 group-hover:text-primary">
-                      {news.title}
-                    </h3>
-                    <p className="text-xs text-muted-foreground">
-                      {news.excerpt}
-                    </p>
-                    {news.url && (
-                      <a
-                        href={news.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-block mt-2 text-xs text-primary hover:underline"
-                      >
-                        Ver noticia completa →
-                      </a>
-                    )}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </CardContent> */}
+                ))}
+              </div>
+            )}
+
+            {error && (
+              <Alert variant="destructive">
+                <AlertCircle className="h-4 w-4" />
+                <AlertDescription>{error}</AlertDescription>
+              </Alert>
+            )}
+
+            {!loading && !error && noticias.length === 0 && (
+              <div className="text-center py-8">
+                <p className="text-muted-foreground">No hay noticias disponibles en este momento.</p>
+              </div>
+            )}
+
+            {!loading && !error && noticias.length > 0 && (
+              <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {noticias.slice(0, 3).map((noticia) => (
+                  <NewsCard
+                    key={noticia.id}
+                    title={noticia.title}
+                    date={noticia.date}
+                    excerpt={noticia.excerpt}
+                    image={noticia.image}
+                    imageAlt={noticia.imageAlt}
+                    url={noticia.url}
+                  />
+                ))}
+              </div>
+            )}
+          </CardContent>
         </Card>
 
         {/* Social Media Section - Dinámica */}
