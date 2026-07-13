@@ -13,7 +13,7 @@ export default function DatosAbiertosPage() {
     <PortalLayout activeSection="datos-abiertos">
       <div className="p-6 lg:p-12 max-w-6xl mx-auto">
         <SectionTitle
-          title="Política de Datos Abiertos"
+          title="Datos Abiertos"
           subtitle="Acceso libre y reutilización de datos fiscales del Estado de Morelos en formatos abiertos y estándares internacionales."
           className="mb-8"
           titleClassName="text-3xl lg:text-4xl"

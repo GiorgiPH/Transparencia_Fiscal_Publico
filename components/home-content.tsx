@@ -57,28 +57,41 @@ export function HomeContent() {
   const infoCards = [
     {
       title: "Conoce tu portal",
+<<<<<<< HEAD
       subtitle: "Navega y Explora",
+=======
+      subtitle: "Navega y explora",
+>>>>>>> secondary1
       description:
         "Descubre las secciones, funcionalidades y contenidos disponibles para consultar información de manera clara y organizada.",
       color: "tertiary",
       href: "/mecanismos-acceso",
     },
     {
+<<<<<<< HEAD
       title: "Participa y opina",
       subtitle: "Tu Voz Importa",
+=======
+      title: "¡Queremos escucharte!",
+      subtitle: "Tu voz importa",
+>>>>>>> secondary1
       description: "Participa en el envio de comentarios y contribuye al presupuesto participativo.",
       color: "tertiary",
       href: "/participacion-ciudadana",
     },
     {
-      title: "Cómo te informamos",
-      subtitle: "Mantente Informado",
+      title: "¡Así te informamos!",
+      subtitle: "Mantente informado",
       description: "Mantente informado a través de nuestros canales oficiales, redes sociales y campañas de comunicación.",
       color: "tertiary",
       href: "/estrategias-comunicacion",
     },
     {
+<<<<<<< HEAD
       title: "Política de datos abiertos",
+=======
+      title: "Datos abiertos",
+>>>>>>> secondary1
       subtitle: "Datos para Análisis",
       description: "Accede y reutiliza conjuntos de datos públicos en formatos abiertos para análisis e investigación.",
       color: "tertiary",
@@ -493,7 +506,7 @@ export function HomeContent() {
 
               {/* Data Search Card */}
               <QuickAccessCard
-                title="Explora los Datos"
+                title="Explora los datos"
                 description="Encuentra documentos fiscales, informes y datos específicos de manera rápida y eficiente."
                 href="/busqueda-documentos"
                 backgroundImage="/images/BANNER_EXPLORA_DATOS.jpg"

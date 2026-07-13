@@ -14,7 +14,7 @@ function BusquedaContent() {
     <PortalLayout activeSection="busqueda-documentos">
       <div className="p-6 lg:p-12 max-w-[1600px] mx-auto">
         <SectionTitle
-          title="Explora los Datos"
+          title=""
           subtitle="Encuentra documentos fiscales, informes y datos específicos utilizando filtros avanzados."
           className="mb-8"
           titleClassName="text-3xl lg:text-4xl"
