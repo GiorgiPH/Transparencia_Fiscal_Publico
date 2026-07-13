@@ -56,36 +56,36 @@ export function HomeContent() {
 
   const infoCards = [
     {
-      title: "Conoce tu Portal",
-      subtitle: "Navega y Explora",
+      title: "Conoce tu portal",
+      subtitle: "Navega y explora",
       description:
         "Descubre las secciones, funcionalidades y contenidos disponibles para consultar información de manera clara y organizada.",
       color: "tertiary",
       href: "/mecanismos-acceso",
     },
     {
-      title: "Participa y Opina",
-      subtitle: "Tu Voz Importa",
+      title: "Participa y opina",
+      subtitle: "Tu voz importa",
       description: "Participa en el envio de comentarios y contribuye al presupuesto participativo.",
       color: "tertiary",
       href: "/participacion-ciudadana",
     },
     {
       title: "Cómo te informamos",
-      subtitle: "Mantente Informado",
+      subtitle: "Mantente informado",
       description: "Mantente informado a través de nuestros canales oficiales, redes sociales y campañas de comunicación.",
       color: "tertiary",
       href: "/estrategias-comunicacion",
     },
     {
-      title: "Política de Datos Abiertos",
+      title: "Política de datos abiertos",
       subtitle: "Datos para Análisis",
       description: "Accede y reutiliza conjuntos de datos públicos en formatos abiertos para análisis e investigación.",
       color: "tertiary",
       href: "/datos-abiertos",
     },
     {
-      title: "Conoce las Leyes",
+      title: "Conoce las leyes",
       subtitle: "Fundamentos Legales",
       description: "Consulta las leyes, reglamentos y normativas que fundamentan la transparencia fiscal en Morelos.",
       color: "tertiary",
@@ -493,7 +493,7 @@ export function HomeContent() {
 
               {/* Data Search Card */}
               <QuickAccessCard
-                title="Explora los Datos"
+                title="Explora los datos"
                 description="Encuentra documentos fiscales, informes y datos específicos de manera rápida y eficiente."
                 href="/busqueda-documentos"
                 backgroundImage="/images/BANNER_EXPLORA_DATOS.jpg"
