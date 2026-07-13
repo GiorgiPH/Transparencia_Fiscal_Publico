@@ -13,7 +13,7 @@ export default function ParticipacionCiudadanaPage() {
     <PortalLayout activeSection="participacion">
       <div className="p-6 lg:p-12 max-w-6xl mx-auto">
         <SectionTitle
-          title="Participa y Opina"
+          title="Participa y opina"
           subtitle="Tu opinión es importante. Este espacio está abierto para conocer comentarios y propuestas que contribuyan a mejorar el portal de transparencia fiscal y facilitar el acceso a la información pública."
           className="mb-8"
           titleClassName="text-3xl lg:text-4xl"

@@ -56,7 +56,7 @@ export function HomeContent() {
 
   const infoCards = [
     {
-      title: "Conoce tu Portal",
+      title: "Conoce tu portal",
       subtitle: "Navega y Explora",
       description:
         "Descubre las secciones, funcionalidades y contenidos disponibles para consultar información de manera clara y organizada.",
@@ -64,7 +64,7 @@ export function HomeContent() {
       href: "/mecanismos-acceso",
     },
     {
-      title: "Participa y Opina",
+      title: "Participa y opina",
       subtitle: "Tu Voz Importa",
       description: "Participa en el envio de comentarios y contribuye al presupuesto participativo.",
       color: "tertiary",
@@ -78,14 +78,14 @@ export function HomeContent() {
       href: "/estrategias-comunicacion",
     },
     {
-      title: "Política de Datos Abiertos",
+      title: "Política de datos abiertos",
       subtitle: "Datos para Análisis",
       description: "Accede y reutiliza conjuntos de datos públicos en formatos abiertos para análisis e investigación.",
       color: "tertiary",
       href: "/datos-abiertos",
     },
     {
-      title: "Conoce las Leyes",
+      title: "Conoce las leyes",
       subtitle: "Fundamentos Legales",
       description: "Consulta las leyes, reglamentos y normativas que fundamentan la transparencia fiscal en Morelos.",
       color: "tertiary",
