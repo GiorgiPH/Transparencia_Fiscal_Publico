@@ -17,7 +17,7 @@ export default function EstrategiasComunicacionPage() {
     <PortalLayout activeSection="comunicacion">
       <div className="p-6 lg:p-12 max-w-6xl mx-auto">
         <SectionTitle
-          title="Cómo te informamos"
+          title="¡Así te informamos!"
           subtitle="Mantente informado sobre transparencia fiscal a través de nuestros canales oficiales de comunicación y redes sociales."
           className="mb-8"
           titleClassName="text-3xl lg:text-4xl"
