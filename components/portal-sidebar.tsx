@@ -9,9 +9,9 @@ import { useEffect } from "react"
 export const navigationSections = [
   { id: "finanzas", label: "Infórmate", icon: BarChart3, href: "/finanzas" },
   { id: "mecanismos", label: "Conoce tu portal", icon: Lock, href: "/mecanismos-acceso" },
-  { id: "participacion", label: "Participa y opina", icon: Users, href: "/participacion-ciudadana" },
-  { id: "comunicacion", label: "Cómo te informamos", icon: Megaphone, href: "/estrategias-comunicacion" },
-  { id: "datos-abiertos", label: "Política de datos abiertos", icon: Database, href: "/datos-abiertos" },
+  { id: "participacion", label: "¡Queremos escucharte!", icon: Users, href: "/participacion-ciudadana" },
+  { id: "comunicacion", label: "¡Así te informamos!", icon: Megaphone, href: "/estrategias-comunicacion" },
+  { id: "datos-abiertos", label: "Datos abiertos", icon: Database, href: "/datos-abiertos" },
   { id: "marco-normativo", label: "Conoce las leyes", icon: Scale, href: "/marco-normativo" },
   { id: "busqueda-documentos", label: "Explora los datos", icon: Search, href: "/busqueda-documentos" },
 ]
