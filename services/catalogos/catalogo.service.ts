@@ -35,8 +35,7 @@ export const catalogoService = {
   // URLs para descarga y visualización (no usan fetch, solo URL directa)
   getDocumentoDescargaUrl(documentoId: number): string {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'https://app.administracionyfinanzas.morelos.gob.mx/transparencia-fiscal-api';
-    //return `${baseUrl}/documentos/${documentoId}/descargar`;
-        return `${baseUrl}/busqueda-documentos/${documentoId}/descargar`;
+    return `${baseUrl}/documentos/${documentoId}/descargar`;
 
   },
 
